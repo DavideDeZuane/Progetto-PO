@@ -1,22 +1,30 @@
 import Controller.ApiController;
 import Controller.Lavoro;
+import Controller.*;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
+import Controller.*;
 
 public class Main {
     public static void main(String[] args) {
         String url = "";
+        String[] param = new String[2];
+
         ApiController controller = null;
         HashSet<Lavoro> offerte = new HashSet<>();
         try {
             Scanner input = new Scanner(System.in);
 
             do {
-                 System.out.println("Inserisci l'url");
-                 url = input.nextLine();
+                 System.out.print("Inserisci la località: ");
+                 param[0] = input.nextLine();
+                 System.out.print("Inserisci la località: ");
+                 param[1] = input.nextLine();
+                 EnumSet<PARAMETERES> flag = EnumSet.of(PARAMETERES.LOCATION, PARAMETERES.TITLE);
+                 url = ApiController.query(param,flag);
                  controller = new ApiController(url);
             }while(!controller.isValidUrl(url));
             /*offerte = (ArrayList<Lavoro>) controller.parsing();
