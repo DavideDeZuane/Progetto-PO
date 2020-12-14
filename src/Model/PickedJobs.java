@@ -1,16 +1,17 @@
 package Model;
 
-import Controller.ApiController;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
-import java.io.*;
-import java.util.HashSet;
-
+/**
+ * @author Chiara
+ */
 public class PickedJobs extends JobBoard{
 
     public PickedJobs() throws IOException {
         //se il file non esiste, lo creo
         //apro il file e carico i lavori salvati
-        try
+        /*try
         {
             int next;
             FileReader reader = new FileReader("job.txt");
@@ -22,28 +23,32 @@ public class PickedJobs extends JobBoard{
         finally {
             FileWriter writer = new FileWriter("jobs.txt");
             writer.close();
-        }
+        }*/
     }
 
     public void saveOnFile() throws IOException {
         //copia la attuale versione di picked jobs su file
-        FileWriter writer = new FileWriter("jobs.txt");
-        writer.write(jobs.toString());
+        /*FileWriter writer = new FileWriter("jobs.txt");
+        writer.write(jobs.toString());*/
 
     }
 
-    public void deleteAll ()
-    {
+    public void deleteAll () throws FileNotFoundException {
+        /*PrintWriter writer = new PrintWriter("jobs.txt");
+        writer.print("");
+        writer.close();*/
         //cancella tutti i lavori
     }
 
     public void add(Job job)
     {
+
         //aggiunge un lavoro al'hash e salva
     }
 
     public void deleteJob(Job job)
     {
+
         //elimina un lavoro
     }
 }

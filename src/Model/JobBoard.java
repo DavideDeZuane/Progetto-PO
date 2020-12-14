@@ -2,16 +2,38 @@ package Model;
 
 import java.util.HashSet;
 
+/**
+ * @author Chiara
+ */
 public class JobBoard {
 
-    public HashSet<Job> jobs;
+    protected HashSet<Job> jobs;
     protected int numOfJobs;
+    protected float fullTimePercentage;
+    protected String dateOfCreation;
+    protected String keyWord;
 
-    public JobBoard()
-    {
+    /**
+     * constructor
+     */
+    public JobBoard() {
     }
 
-    //elaborare le statistiche:
+    public HashSet<Job> getJobs() {
+        return jobs;
+    }
+
+    public int getNumOfJobs() {
+        return numOfJobs;
+    }
+
+    public float typeStats ()
+    {
+        //Iterator<Job> it = jobs.iterator();
+        return fullTimePercentage;
+    }
+
+    //todo elaborare le statistiche:
     //- % tipo
     //- datacreazione
     //- parole chiave
