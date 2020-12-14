@@ -23,8 +23,8 @@ public class Main {
                  param[0] = input.nextLine();
                  System.out.print("Inserisci la località: ");
                  param[1] = input.nextLine();
-                 EnumSet<PARAMETERES> flag = EnumSet.of(PARAMETERES.LOCATION, PARAMETERES.TITLE);
-                 url = ApiController.query(param,flag);
+                 EnumSet<PARAMETERES> flags = EnumSet.of(PARAMETERES.LOCATION, PARAMETERES.TITLE);
+                 url = ApiController.query(param,flags);
                  controller = new ApiController(url);
             }while(!controller.isValidUrl(url));
             /*offerte = (ArrayList<Lavoro>) controller.parsing();

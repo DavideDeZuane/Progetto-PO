@@ -10,5 +10,5 @@ public enum PARAMETERES {
     TITLE,
     DESCRIPTION;
 
-    public static final EnumSet<PARAMETERES> parametri = EnumSet.allOf(PARAMETERES.class);
+    public static final EnumSet<PARAMETERES> parametri = EnumSet.noneOf(PARAMETERES.class);
 }
