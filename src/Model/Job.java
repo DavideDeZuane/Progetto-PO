@@ -16,6 +16,8 @@ public class Job{
     private String how_to_apply;
     private URL company_logo;
 
+    public Job()
+    {}
     /**
      *
      * @param id
