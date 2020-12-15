@@ -18,3 +18,11 @@ della nostra Applicazione.
 
 
 + **Sequence Diagram**
+
+
+##Autori
++ [Chiara Gobbi]()
++ [Daniele Benfatto]()
++ [Davide De Zuane](https://github.com/DavideDeZuane)
+
+
