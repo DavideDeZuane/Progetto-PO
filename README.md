@@ -10,7 +10,11 @@ E' possibile utilzzare l'applicazione:
 
 ## UML
 In prima istanza abbiamo realizzato dei Diagrammi UML per modellare il funzionamento 
-della nostra Applicazione
-![Use-Case Diagram]("Images/UseCase.png")
+della nostra Applicazione.
++ **Use-Case Diagram**
+![](Images/UseCase.png)
+
++ **Class Diagram**
 
 
++ **Sequence Diagram**
