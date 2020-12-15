@@ -23,7 +23,7 @@ public class WareHouse extends JobBoard{
 
     public WareHouse() throws MalformedURLException {
         numOfJobs = 0;
-        controller = new ApiController("https://jobs.github.com/positions.json/");
+        //controller = new ApiController("https://jobs.github.com/positions.json/");
     }
 
     public int fill() throws IOException {
@@ -31,7 +31,7 @@ public class WareHouse extends JobBoard{
         {
             this.jobs.clear();
         }
-        this.jobs= (HashSet<Job>) this.controller.parsing();
+        //this.jobs= (HashSet<Job>) this.controller.parsing();
         numOfJobs = jobs.size();
         return numOfJobs;
     }

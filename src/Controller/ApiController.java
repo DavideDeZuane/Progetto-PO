@@ -1,113 +1,134 @@
 package Controller;
 
+import Model.Job;
+import Model.WareHouse;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.EnumSet;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Vector;
+import java.net.http.HttpClient;
+import java.util.*;
 
-//todo File di configurazione per il base URL
-//todo Formattare la Stringa per le chiamate all'API
-
-//bits Flag per fare la query
+//todo migliorare il metodo query
+//todo implementare il metodo fill per riempire wareHouse
 
 
 //questa classe si occuperà di effettuare ed elaborare le chiamate all'Api
 public class ApiController {
-    //formato base delle stringhe necessario per fare le chiamte con filtri
+
     private static final String baseUrl_id = "https://jobs.github.com/positions/%s.json";
     private static final String hostname =  "https://jobs.github.com/positions.json?";
+    //formato base delle stringhe necessario per fare le chiamte con filtri
+    //potrebbero essere anche messi dentro ad un file di configurazione
 
-    private ObjectMapper mapper; //necessario per convertire il file Json in Oggetti o Array di oggetti
-    private URL url;
+    private ObjectMapper mapper;  //effettua il parsing dei file Json
+                                 //utilizzeremo lo stesso mapper per fare più azioni perchè è molto dispendioso a livello di risorse
 
-    public ApiController(String url) throws MalformedURLException{
+    public ApiController(){
         mapper = new ObjectMapper();
-        setUrl(url);
-    }
-    public Object parsing() throws IOException{
-        return mapper.readValue(this.url, new TypeReference<HashSet<Lavoro>>(){});
+        mapper.enable(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT);
     }
 
-    public Lavoro parsing(Boolean flag) throws IOException{
-        return mapper.readValue(this.url, Lavoro.class);
+    public HashSet<Job> parsing(URL url) throws IOException{
+        HashSet<Job> obj = new HashSet<>();
+        try {
+            obj = mapper.readValue(url, new TypeReference<HashSet<Job>>() {});
+            if (obj.isEmpty())
+                System.out.println("Non è stata trovata alcuna offerta di lavoro"); //metodo GUI che lo presenta all'utente
+
+        }catch(Exception e){  //sarà un eccezione personalizzata
+            System.out.println("Sto elaborando.....");
+            obj.add(mapper.readValue(url, Job.class));
+        }
+        return obj;
     }
 
+    public void fill(WareHouse temp, HashSet<Job> result){
+        temp.jobs.addAll(result);
+
+    }
 
     //metodi per l'analisi e la creazione delle richieste
+    //metodi statici che servono per la creazione delle richieste da fare aall'api
 
-    public void setUrl(String url) throws MalformedURLException {
-        if(isValidUrl(url))
-            this.url = new URL(url);
-        else
-            System.out.println("Vi sono errori di sintassi nell'URL");
-    }
-
-
-    public boolean isValidUrl(String url) {
+    public static URL createUrl(String url) throws Exception {
         try {
             URL obj = new URL(url);
             obj.toURI(); //converte l'URL in URI, se l'URL non è nel formato specificato generano un errore se convertiti in URI
-            this.url = obj;
-            return true;
-        } catch (MalformedURLException  | URISyntaxException ex){
-            return false;
+            return obj;
+        } catch(MalformedURLException | URISyntaxException ex){
+            throw new Exception();
         }
     }
-    public URL getUrl(){ return url;}
 
-
+    /**
+     *
+     * @param s contiene i parametri
+     * @param flags contiene quali filtri l'uente ha inserito
+     * @return una
+     */
     //metodo che si occuperà di riempire le richieste in base ai parametri passati dall'utente
-    public static String query(String[] s, EnumSet<PARAMETERES> flags){
+    //è necessario stabilire un ordine con cui vengono passati i parametri
+    public static URL query(String[] s, EnumSet<PARAMETERES> flags) throws Exception {
         String temp = hostname;
         boolean first = true;
         int cont = 0;
-        if(flags.contains(PARAMETERES.ID)) {
-            temp = String.format(baseUrl_id, s);
-            return temp;
-        }
+
         if(flags.contains(PARAMETERES.TYPE)) {
             if(!first)
                 temp += "&";
-            temp +="type=%s";   //%s è il placeholder
-            temp = String.format(temp, s[cont++]);
-            first = false;
+            if(s[cont] != "/n") {
+                temp += "full_time=%s";   //%s è il placeholder
+                temp = String.format(temp, s[cont++]);
+                first = false;
+            }
         }
-        if(flags.contains(PARAMETERES.TITLE)){
-            if(!first)
-                temp += "&";
-            temp += "title=%s";
-            temp = String.format(temp, s[cont++]);
-            first = false;
-        }
-        if(flags.contains(PARAMETERES.COMPANY)){
-            if(!first)
-                temp += "&";
-            temp += "company=%s";
-            temp = String.format(temp, s[cont++]);
-            first = false;
-        }
+
         if(flags.contains(PARAMETERES.DESCRIPTION)){
             if(!first)
                 temp += "&";
-            temp += "description=%s";
+            temp += "search=%s";
             temp = String.format(temp, s[cont++]);
             first = false;
         }
-        if(flags.contains(PARAMETERES.LOCATION)){
+
+        if(flags.contains(PARAMETERES.LOCATION)){  //se è presente la località non dobbiamo far inserire le coordinate
             if(!first)
                 temp += "&";
             temp += "location=%s";
             temp = String.format(temp, s[cont++]);
-            first = false;
         }
+        if(flags.contains(PARAMETERES.LATITUDINE)){  //<----
+            temp += "lat=%s";
+            temp = String.format(temp, s[cont++]);      //devono essere utilizzate entrambe obbligatoriamente se non si incerisce la località
+        }
+        if(flags.contains(PARAMETERES.LONGITUDINE)) { //<----
+            temp += "&long=%s";
+            temp = String.format(temp, s[cont]);
+        }
+        return createUrl(temp);  //una volta creata la stringa genera un URL
+    }
+
+    public static String idQuery(String id){
+        String temp = String.format(baseUrl_id, id);
         return temp;
+    }
+
+    public static boolean verifyOffer(String id) throws Exception{  //realizzabile anche con la classe HTTPClient
+        //leggo gli id dal file su cui sono stati salvati e faccio delle richieste per verificare se le offerte sono ancora valide
+            HttpURLConnection conn = (HttpURLConnection) new URL(idQuery(id)).openConnection();
+            if(conn.getResponseCode() == 200) { //dopo lo status code 299 la richiesta o è reindirizzata o non può esser soddisfatta
+                System.out.println("Le offerte selezionate precedentemente sono ancora presenti"); // presenta finestra pop-up sulla GUI
+                return true;
+            }
+            System.out.println(conn.getResponseCode());
+            System.out.println("Metodo per presentare una finestra pop-up che l'offerta non è più presente");
+            return false;
     }
 
 }
