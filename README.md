@@ -12,7 +12,7 @@ E' possibile utilzzare l'applicazione:
 In prima istanza abbiamo realizzato dei Diagrammi UML per modellare il funzionamento 
 della nostra Applicazione.
 + **Use-Case Diagram**
-![](Images/UseCase.png)
+> ![](Images/UseCase.png)
 
 + **Class Diagram**
 
