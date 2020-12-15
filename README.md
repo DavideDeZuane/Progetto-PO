@@ -20,7 +20,7 @@ della nostra Applicazione.
 + **Sequence Diagram**
 
 
-##Autori
+## Autori
 + [Chiara Gobbi](https://github.com/chiaragii)
 + [Daniele Benfatto](https://github.com/benFactotum99)
 + [Davide De Zuane](https://github.com/DavideDeZuane)
