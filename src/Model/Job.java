@@ -2,7 +2,9 @@ package Model;
 
 import java.net.URL;
 
-
+/**
+ * @author Chiara
+ */
 public class Job{
     private String id;
     private String type;
@@ -16,7 +18,7 @@ public class Job{
     private String how_to_apply;
     private URL company_logo;
 
-    public Job()
+        public Job()
     {}
     /**
      *
@@ -222,6 +224,10 @@ public class Job{
         this.company_logo = company_logo;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return "Job{" +
