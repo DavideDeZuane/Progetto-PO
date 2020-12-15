@@ -20,7 +20,7 @@ della nostra Applicazione.
 + **Sequence Diagram**
 
 
-## Autori
+## Autori e Riferimenti
 
 | **Autori**  | **Email**| **GitHub**  | **Contributo**  | LinkedIn |
 |---|---|---|---|---|
