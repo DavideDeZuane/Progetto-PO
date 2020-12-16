@@ -5,12 +5,12 @@ import java.util.EnumSet;
  * enumeratore che contiene i filtri che possono essere applicati per la ricerca del lavoro
  */
 
-public enum PARAMETERES {
+public enum Parameters {
     TYPE,
     LOCATION,
     LATITUDINE,
     LONGITUDINE,
     DESCRIPTION;
 
-    public static final EnumSet<PARAMETERES> parametri = EnumSet.noneOf(PARAMETERES.class);
+    public static final EnumSet<Parameters> parametri = EnumSet.noneOf(Parameters.class);
 }

@@ -1,19 +1,12 @@
-import Controller.ApiController;
-import Controller.Lavoro;
-import Controller.*;
+package MainProgram;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URL;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.util.*;
-import Controller.*;
-import Model.Job;
+import Controller.ApiController;
+//import Controller.Lavoro;
+
+import GUI.BootStrapPanel;
 
 public class Main {
+/*
     static{
         System.out.println("Ciao sono prima del programma");
         try {
@@ -21,8 +14,12 @@ public class Main {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
+
     public static void main(String[] args) throws Exception{
+        BootStrapPanel bootstrapPanel = null;
+        bootstrapPanel = new BootStrapPanel();
+/*
         URL url = null;
         String[] param = new String[10];
 
@@ -42,11 +39,11 @@ public class Main {
                 url = ApiController.query(param, flags);
                 break;
             }while(true);
-            /*offerte = (ArrayList<Lavoro>) controller.parsing();
+            offerte = (ArrayList<Lavoro>) controller.parsing();
             for(Lavoro l: offerte) {
                 System.out.println(l);
             }
-            */
+
             try {
                 offerte.addAll(controller.parsing(url));
             }catch(Exception e){
@@ -61,7 +58,7 @@ public class Main {
             e.printStackTrace();
             System.out.println("Problema nella deserializzazione");
         }
-
+*/
 
     }
 }

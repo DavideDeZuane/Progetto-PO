@@ -11,7 +11,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.net.http.HttpClient;
 import java.util.*;
 
 //todo migliorare il metodo query
@@ -75,7 +74,7 @@ public class ApiController {
     //metodo che si occuperà di riempire le richieste in base ai parametri passati dall'utente
     //è necessario stabilire un ordine con cui vengono passati i parametri
 
-    public static URL query(String[] s, EnumSet<PARAMETERES> flags) throws MalformedURLException{
+    public static URL query(String[] s, EnumSet<Parameters> flags, boolean flagFullTime) throws MalformedURLException{
         String temp = hostname;
         boolean first = true;
         int cont = 0;
@@ -84,17 +83,17 @@ public class ApiController {
             throw new MalformedURLException();
         }
 
-        if(flags.contains(PARAMETERES.TYPE)) {
+        if(flags.contains(Parameters.TYPE)) {
+        //if(flagFullTime){
             if(!first)
                 temp += "&";
-            if(s[cont] != "/n") {
-                temp += "full_time=%s";   //%s è il placeholder
-                temp = String.format(temp, s[cont++]);
-                first = false;
-            }
+            //if(s[cont] != "/n") {
+            temp += "full_time=true";   //%s è il placeholder
+            temp = String.format(temp, s[cont++]);
+            first = false;
         }
 
-        if(flags.contains(PARAMETERES.DESCRIPTION)){
+        if(flags.contains(Parameters.DESCRIPTION)){
             if(!first)
                 temp += "&";
             temp += "search=%s";
@@ -102,20 +101,24 @@ public class ApiController {
             first = false;
         }
 
-        if(flags.contains(PARAMETERES.LOCATION)){  //se è presente la località non dobbiamo far inserire le coordinate
+        if(flags.contains(Parameters.LOCATION)){  //se è presente la località non dobbiamo far inserire le coordinate
             if(!first)
                 temp += "&";
             temp += "location=%s";
             temp = String.format(temp, s[cont++]);
+            first = false;
         }
-        if(flags.contains(PARAMETERES.LATITUDINE)){  //<----
+        if(flags.contains(Parameters.LATITUDINE)){  //<----
             temp += "lat=%s";
             temp = String.format(temp, s[cont++]);      //devono essere utilizzate entrambe obbligatoriamente se non si incerisce la località
+            first = false;
         }
-        if(flags.contains(PARAMETERES.LONGITUDINE)) { //<----
+        if(flags.contains(Parameters.LONGITUDINE)) { //<----
             temp += "&long=%s";
             temp = String.format(temp, s[cont]);
+            first = false;
         }
+
         return createUrl(temp);  //una volta creata la stringa genera un URL
     }
 
