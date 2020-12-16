@@ -18,6 +18,7 @@ della nostra Applicazione.
 
 
 + **Sequence Diagram**
+> ![](Images/SequenceDiagram.png)
 
 
 ## Developers
