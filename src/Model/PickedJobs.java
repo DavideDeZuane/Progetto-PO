@@ -1,6 +1,8 @@
 package Model;
 
-import java.io.FileNotFoundException;
+import Controller.ApiController;
+import Controller.FileController;
+
 import java.io.IOException;
 
 /**
@@ -8,47 +10,50 @@ import java.io.IOException;
  */
 public class PickedJobs extends JobBoard{
 
+    private FileController fileController;
+
     public PickedJobs() throws IOException {
-        //se il file non esiste, lo creo
-        //apro il file e carico i lavori salvati
-        /*try
+        fileController = new FileController("PickedJobs.txt");
+
+        //this.jobs = new HashSet<>();
+        if (fileController.readJobsFromFile()!=null)
+            jobs.addAll(fileController.readJobsFromFile());
+    }
+
+    //aggiunge un lavoro all'hash e salva
+    public void add(Job job) throws IOException {
+        for(Job j : jobs)
+            fileController.saveJobsOnFile(this.jobs);
+        if(!jobs.contains(job))
         {
-            int next;
-            FileReader reader = new FileReader("job.txt");
-            reader.close();
-        }catch (FileNotFoundException e)
-        {
-            System.out.println("Il file è in fase di creazione...");
+            jobs.add(job);
+            fileController.saveJobsOnFile(this.jobs);
         }
-        finally {
-            FileWriter writer = new FileWriter("jobs.txt");
-            writer.close();
-        }*/
     }
 
-    public void saveOnFile() throws IOException {
-        //copia la attuale versione di picked jobs su file
-        /*FileWriter writer = new FileWriter("jobs.txt");
-        writer.write(jobs.toString());*/
+    //elimina un lavoro
+    public void deleteJob(String id) throws IOException {
+        boolean found = false;
+        for(Job j : jobs)
+            if(j.getId().equals(id))
+            {
+                jobs.remove(j);
+                fileController.saveJobsOnFile(jobs);
+                return;
+            }
 
     }
 
-    public void deleteAll () throws FileNotFoundException {
-        /*PrintWriter writer = new PrintWriter("jobs.txt");
-        writer.print("");
-        writer.close();*/
-        //cancella tutti i lavori
-    }
+    public void Update() throws Exception {
+        //scorre jobs e per ogni lavoro se non è più presente lo cancella
+        for(Job j : jobs)
+        {
+            if (!ApiController.verifyOffer(j.getId()))
+            {
+                this.deleteJob(j.getId());
+                fileController.saveJobsOnFile(jobs);
+            }
+        }
 
-    public void add(Job job)
-    {
-
-        //aggiunge un lavoro al'hash e salva
-    }
-
-    public void deleteJob(Job job)
-    {
-
-        //elimina un lavoro
     }
 }

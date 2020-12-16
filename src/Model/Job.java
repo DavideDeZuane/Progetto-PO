@@ -234,6 +234,8 @@ public class Job{
                 ", type='" + type + '\'' +
                 ", company='" + company + '\'' +
                 ", location='" + location + '\'' +
+                ", created_At='" + created_at + '\'' +
+                ", Description='" + description + '\'' +
                 '}';
     }
 }
