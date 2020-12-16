@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
 import java.util.EnumSet;
+import java.util.Vector;
 
 public class BootstrapPanel extends JFrame{
 
@@ -36,24 +37,21 @@ public class BootstrapPanel extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                inserisciCampi();
                 apiController = new ApiController();
-
-/*
-                if(!txtDescription.equals("")){
-                    EnumSet<PARAMETERES> flags = EnumSet.of(PARAMETERES.LOCATION, PARAMETERES.DESCRIPTION);
-                }*/
-                EnumSet<PARAMETERES> flags = EnumSet.of(PARAMETERES.LOCATION, PARAMETERES.DESCRIPTION);
+                EnumSet<PARAMETERES> flags = setEumFilters();
 
                 try {
 
                     url = ApiController.query(filters, flags);
+                    new JobsFoundPanel(url);
 
                 } catch (Exception exception) {
-                    exception.printStackTrace();
+
+                    JOptionPane.showMessageDialog(rootPanel, "bro non hai scritto niente");
+                    //exception.printStackTrace();
                 }
 
-                new JobsFoundPanel();
+
             }
         });
 
@@ -65,8 +63,44 @@ public class BootstrapPanel extends JFrame{
         });
     }
 
-    public void inserisciCampi(){
-        filters[0] = txtDescription.getText();
-        filters[1] = txtLocation.getText();
+    public EnumSet setEumFilters(){
+
+        if(txtDescription.getText().equals("") && !txtLocation.getText().equals("")){
+            filters[0] = txtLocation.getText();
+            return EnumSet.of(PARAMETERES.LOCATION);
+        }
+
+        else if(!txtDescription.getText().equals("") && txtLocation.getText().equals("")){
+            filters[0] = txtDescription.getText();
+            return EnumSet.of(PARAMETERES.DESCRIPTION);
+        }
+
+        else if(!txtDescription.getText().equals("") && !txtLocation.getText().equals("")){
+            filters[0] = txtDescription.getText();
+            filters[1] = txtLocation.getText();
+            return EnumSet.of(PARAMETERES.LOCATION, PARAMETERES.DESCRIPTION);
+        }
+
+        else{
+            return null;
+        }
+
+        /*
+        if(!txtDescription.getText().equals("")){
+            filters[0] = txtDescription.getText();
+        }
+        else
+            if(!txtLocation.getText().equals("")){
+                filters[0] = txtLocation.getText();
+            }
+
+        if(!txtLocation.getText().equals("")){
+            filters[1] = txtLocation.getText();
+        }
+        else
+            if(!txtDescription.getText().equals("")){
+                filters[0] = txtDescription.getText();
+            }
+        */
     }
 }
