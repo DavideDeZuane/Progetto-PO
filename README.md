@@ -18,7 +18,7 @@ della nostra Applicazione.
 > ![](Images/ClassDiagram.png)
 
 + **Sequence Diagram**
-> ![]
+> ![](Images/SequenceDiagramUpdate.png)
 
 
 ## Developers
