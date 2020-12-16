@@ -19,6 +19,11 @@ public class FileController {
     private String filename;
     private File file;
 
+    /**
+     *
+     * @param filename nome del file su cui scrivo
+     * @throws IOException genera un'eccezione se le I/O operations falliscono
+     */
     public FileController(String filename) throws IOException {
         //se il file non esiste, lo creo
         this.filename = filename;
@@ -27,6 +32,11 @@ public class FileController {
             file.createNewFile();
     }
 
+    /**
+     *
+     * @param jobs hashset di Job
+     * @throws IOException genera un'eccezione se le I/O operations falliscono
+     */
     public void saveJobsOnFile(HashSet<Job> jobs) throws IOException {
         if(jobs.isEmpty())
             System.out.println("Non ci sono lavori disponibili");
@@ -40,6 +50,11 @@ public class FileController {
         }
     }
 
+    /**
+     *
+     * @return
+     * @throws IOException
+     */
     public HashSet<Job> readJobsFromFile() throws IOException {
         if(file.length()==0)
         {
@@ -50,7 +65,8 @@ public class FileController {
                 ObjectMapper mapper = new ObjectMapper();
                 //return mapper.readValue(file, new TypeReference<HashSet<Job>>(){});
                 //InputStream input = new FileInputStream(filename);
-                return mapper.readValue(file, new TypeReference<HashSet<Job>>(){});
+                return mapper.readValue(file, new TypeReference<>() {
+                });
             }
     }
 

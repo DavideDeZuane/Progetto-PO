@@ -69,7 +69,7 @@ public class JobBoard {
         {
             for (Job j : jobs)
             {
-                Date date = new Date(j.getCreated_at());
+                Date date = new Date(j.getCreated_at()); //deprecated
                 long diffInMillies = Math.abs(new Date(System.currentTimeMillis()).getTime() - date.getTime());
                 long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
                 if(diff<=period)
@@ -79,7 +79,7 @@ public class JobBoard {
         return recent;
     }
 
-    //questa funzione genera statistiche in base a quale parole chiavi l'utente immette
+    /*//questa funzione genera statistiche in base a quale parole chiavi l'utente immette
     // restituendo il numero di occorrenze di quella parola chiave nella description del lavoro
     public int keyWords (String word)
     {
@@ -99,11 +99,7 @@ public class JobBoard {
                 s = s.replaceAll("[.,]","");
                 // split the string by spaces in a
                 String a[] = s.split(" ");
-
-                // search for pattern in a
-
                 for (String value : a) {
-                    // if match found increase count
                     if (word.equals(value))
                         count++;
                 }
@@ -112,15 +108,14 @@ public class JobBoard {
         }
         return count;
 
-    }
+    }*/
 
     //questa funzione genera statistiche in base a quale parole chiavi l'utente immette
     // restituendo il numero di occorrenze di quella parola chiave nella description del lavoro
     //(case sensitive case)
-    public int keyWords (String word, boolean cs)
+    public int keyWords (String word/*, boolean cs*/)
     {
         int count = 0;
-
         if(jobs.size()==0)
             return -1;
         else
@@ -140,9 +135,9 @@ public class JobBoard {
 
                 for (String value : a) {
                     // if match found increase count
-                    if (!cs)
+                    //if (!cs)
                     {
-                        word=word.toLowerCase();
+                        //word=word.toLowerCase();
                         value=value.toLowerCase();
                     }
                     if (word.equals(value))
