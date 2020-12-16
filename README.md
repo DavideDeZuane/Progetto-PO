@@ -19,6 +19,10 @@ della nostra Applicazione.
 
 + **Sequence Diagram**
 > ![](Images/SequenceDiagramUpdate.png)
+Sarà presente anche un file di configurazione contenente gli URL per effettuare le chiamte all'API.
+In questo modo nell'eventualità che venga cambiato l'URL dell'API basterà cambiarlo nel file configurazione senza intervenire direttamente sul programma.
+
+
 
 
 ## Developers
