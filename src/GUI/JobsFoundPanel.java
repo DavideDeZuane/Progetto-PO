@@ -3,6 +3,7 @@ package GUI;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 
 public class JobsFoundPanel extends JFrame{
     private JPanel jobsFoundPanel;
@@ -13,8 +14,11 @@ public class JobsFoundPanel extends JFrame{
     private JButton btnInternetPage;
     private JButton btnExit;
     private JButton btnStats;
+    private URL url;
 
-    public JobsFoundPanel(){
+    public JobsFoundPanel(URL url){
+
+        this.url = url;
 
         add(jobsFoundPanel);
         setTitle("Jobs Found");
