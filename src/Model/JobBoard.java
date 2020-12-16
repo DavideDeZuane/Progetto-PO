@@ -69,7 +69,8 @@ public class JobBoard {
         {
             for (Job j : jobs)
             {
-                Date date = new Date(j.getCreated_at()); //deprecated
+                Date date = new Date();
+                //Date date = new Date(j.getCreated_at()); //deprecated
                 long diffInMillies = Math.abs(new Date(System.currentTimeMillis()).getTime() - date.getTime());
                 long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
                 if(diff<=period)

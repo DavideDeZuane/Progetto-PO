@@ -2,11 +2,15 @@ package Controller;
 
 import Model.Job;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.json.JsonMapper;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashSet;
+
+//todo usare il mapper di ApiController
+//todo classe per leggere da file configuration file
 
 public class FileController {
 
@@ -14,10 +18,9 @@ public class FileController {
     //salavre e leggere i dati sui lavori trovati e sui
     //lavori salvati dall'utente
 
-    //private FileReader reader;
-    //private FileWriter writer;
     private String filename;
     private File file;
+    private ApiController controller;
 
     /**
      *
@@ -25,7 +28,6 @@ public class FileController {
      * @throws IOException genera un'eccezione se le I/O operations falliscono
      */
     public FileController(String filename) throws IOException {
-        //se il file non esiste, lo creo
         this.filename = filename;
         file = new File(filename);
         if(!file.exists())
@@ -41,12 +43,13 @@ public class FileController {
         if(jobs.isEmpty())
             System.out.println("Non ci sono lavori disponibili");
         else {
-            JsonMapper mapper = new JsonMapper();
-            //FileOutputStream stream = new FileOutputStream(file);
-            //JsonGenerator g = mapper.getFactory().createGenerator(stream);
-            //mapper.writeValue(g, jobs);
-            //g.close();
-            mapper.writeValue(file, jobs);
+            //controller = new ApiController();
+            /*JsonMapper mapper = new JsonMapper();
+            mapper.writeValue(file, jobs);*/
+            /*ObjectMapper mapper = new ObjectMapper();
+            mapper.writeValue(file, jobs);*/
+            controller = new ApiController();
+            controller.getMapper().writeValue(file, jobs);
         }
     }
 
@@ -62,11 +65,13 @@ public class FileController {
             return null;
         }
         else {
-                ObjectMapper mapper = new ObjectMapper();
+                /*ObjectMapper mapper = new ObjectMapper();
                 //return mapper.readValue(file, new TypeReference<HashSet<Job>>(){});
                 //InputStream input = new FileInputStream(filename);
                 return mapper.readValue(file, new TypeReference<>() {
-                });
+                });*/
+                controller = new ApiController();
+                return controller.getMapper().readValue(file, new TypeReference<HashSet<Job>>() {});
             }
     }
 
@@ -79,11 +84,9 @@ public class FileController {
         writer.close();
     }
 
-    /*public void saveId(HashSet<Job> jobs) throws IOException {
-        for(Job j : jobs)
-        {
-            writer.write(j.getId());
-        }
+    /*public void  readFile(String filename) throws FileNotFoundException {
+
     }*/
+
 
 }

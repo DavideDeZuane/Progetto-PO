@@ -41,7 +41,6 @@ public class PickedJobs extends JobBoard{
                 fileController.saveJobsOnFile(jobs);
                 return;
             }
-
     }
 
     public void Update() throws Exception {
