@@ -49,20 +49,20 @@ public class ApiController {
     }
 
     public void fill(WareHouse temp, HashSet<Job> result){
-        temp.jobs.addAll(result);
+        //temp.jobs.addAll(result);
 
     }
 
     //metodi per l'analisi e la creazione delle richieste
     //metodi statici che servono per la creazione delle richieste da fare aall'api
 
-    public static URL createUrl(String url) throws Exception {
+    public static URL createUrl(String url) throws MalformedURLException{
         try {
             URL obj = new URL(url);
             obj.toURI(); //converte l'URL in URI, se l'URL non è nel formato specificato generano un errore se convertiti in URI
             return obj;
         } catch(MalformedURLException | URISyntaxException ex){
-            throw new Exception();
+            throw new MalformedURLException();
         }
     }
 
@@ -74,10 +74,15 @@ public class ApiController {
      */
     //metodo che si occuperà di riempire le richieste in base ai parametri passati dall'utente
     //è necessario stabilire un ordine con cui vengono passati i parametri
-    public static URL query(String[] s, EnumSet<PARAMETERES> flags) throws Exception {
+
+    public static URL query(String[] s, EnumSet<PARAMETERES> flags) throws MalformedURLException{
         String temp = hostname;
         boolean first = true;
         int cont = 0;
+
+        if(flags == null){
+            throw new MalformedURLException();
+        }
 
         if(flags.contains(PARAMETERES.TYPE)) {
             if(!first)

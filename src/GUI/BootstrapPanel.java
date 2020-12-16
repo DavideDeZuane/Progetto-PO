@@ -6,11 +6,13 @@ import Controller.PARAMETERES;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.EnumSet;
 import java.util.Vector;
 
-public class BootstrapPanel extends JFrame{
+public class BootStrapPanel extends JFrame{
 
     private JPanel rootPanel;
     private JTextField txtLocation;
@@ -24,8 +26,7 @@ public class BootstrapPanel extends JFrame{
     private ApiController apiController = null;
 
 
-    public BootstrapPanel() {
-
+    public BootStrapPanel() {
 
         add(rootPanel);
         setTitle("IT Found Jobs");
@@ -43,9 +44,9 @@ public class BootstrapPanel extends JFrame{
                 try {
 
                     url = ApiController.query(filters, flags);
-                    new JobsFoundPanel(url);
+                    new JobsFoundPanel(url); //passo l'url come parametro alla classe in modo da utilizzarlo in Jobs Found Panel
 
-                } catch (Exception exception) {
+                } catch (MalformedURLException exception) {
 
                     JOptionPane.showMessageDialog(rootPanel, "bro non hai scritto niente");
                     //exception.printStackTrace();
@@ -84,23 +85,5 @@ public class BootstrapPanel extends JFrame{
         else{
             return null;
         }
-
-        /*
-        if(!txtDescription.getText().equals("")){
-            filters[0] = txtDescription.getText();
-        }
-        else
-            if(!txtLocation.getText().equals("")){
-                filters[0] = txtLocation.getText();
-            }
-
-        if(!txtLocation.getText().equals("")){
-            filters[1] = txtLocation.getText();
-        }
-        else
-            if(!txtDescription.getText().equals("")){
-                filters[0] = txtDescription.getText();
-            }
-        */
     }
 }

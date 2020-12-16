@@ -15,7 +15,7 @@ della nostra Applicazione.
 > ![](Images/UseCase.png)
 
 + **Class Diagram**
-
+> ![](Images/ClassDiagram.png)
 
 + **Sequence Diagram**
 > ![](Images/SequenceDiagram.png)
