@@ -19,7 +19,7 @@ public class PickedJobs extends JobBoard{
             this.jobs.addAll(fileController.readJobsFromFile());
         }
     }
-
+//bdihcbeihbcihebrihcbeibci
     //aggiunge un lavoro all'hash e salva
     public void add(Job job) throws IOException {
         for(Job j : jobs)

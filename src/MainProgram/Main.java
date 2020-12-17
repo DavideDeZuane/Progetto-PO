@@ -1,8 +1,9 @@
-/*
+
 package MainProgram;
 
 import Controller.ApiController;
 import Controller.Parameters;
+import GUI.BootStrapPanel;
 import Model.JobBoard;
 
 import java.net.URL;
@@ -14,7 +15,7 @@ import static Controller.Parameters.parametri;
 //import GUI.BootStrapPanel;
 
 public class Main {
-
+/*
     static{
         System.out.println("Ciao sono prima del programma");
         try {
@@ -22,9 +23,10 @@ public class Main {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     public static void main(String[] args) throws Exception{
+        /*
         JobBoard offerte = new JobBoard();
         ApiController controller = new ApiController();
         String[] filtri = new String[10];
@@ -34,9 +36,9 @@ public class Main {
         parametri.add(Parameters.LOCATION);
         URL url =  ApiController.query(filtri, parametri);
         controller.fill(offerte, url);
-        System.out.println(offerte);
-        //BootStrapPanel bootstrapPanel = null;
-        //bootstrapPanel = new BootStrapPanel();
+        System.out.println(offerte);*/
+        BootStrapPanel bootstrapPanel = null;
+        bootstrapPanel = new BootStrapPanel();
 /*
         URL url = null;
         String[] param = new String[10];
@@ -76,9 +78,8 @@ public class Main {
             e.printStackTrace();
             System.out.println("Problema nella deserializzazione");
         }
-
+*/
 
     }
 }
 
-*/

@@ -1,5 +1,5 @@
 package GUI;
-/*
+
 import Controller.ApiController;
 import Model.Job;
 
@@ -99,7 +99,7 @@ public class JobsFoundPanel extends JFrame{
                 }
             }
         });
-
+//ciao
         btnSaveAll.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -143,4 +143,3 @@ public class JobsFoundPanel extends JFrame{
 }
 
 
- */
