@@ -14,10 +14,10 @@ public class PickedJobs extends JobBoard{
 
     public PickedJobs() throws IOException {
         fileController = new FileController("PickedJobs.txt");
-
-        //this.jobs = new HashSet<>();
-        if (fileController.readJobsFromFile()!=null)
-            jobs.addAll(fileController.readJobsFromFile());
+        if(this.jobs==null)
+        {
+            this.jobs.addAll(fileController.readJobsFromFile());
+        }
     }
 //bdihcbeihbcihebrihcbeibci
     //aggiunge un lavoro all'hash e salva
