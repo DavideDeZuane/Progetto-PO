@@ -12,5 +12,5 @@ public enum Parameters {
     LONGITUDINE,
     DESCRIPTION;
 
-    public static final EnumSet<Parameters> parametri = EnumSet.noneOf(Parameters.class);
+    public static EnumSet<Parameters> parametri = EnumSet.noneOf(Parameters.class);
 }

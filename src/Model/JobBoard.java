@@ -1,5 +1,6 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.concurrent.TimeUnit;
@@ -7,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author Chiara
  */
-public class JobBoard {
+public class JobBoard implements Serializable {
 
     protected HashSet<Job> jobs;
     protected int numOfJobs;
@@ -28,6 +29,8 @@ public class JobBoard {
     public HashSet<Job> getJobs() {
         return jobs;
     }
+
+    public void setJobs(HashSet<Job> temp){ this.jobs=temp; }
 
     @Override
     public String toString() {
