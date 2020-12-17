@@ -1,7 +1,7 @@
 package GUI;
 
 import Controller.ApiController;
-import Controller.PARAMETERES;
+import Controller.Parameters;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -39,7 +39,7 @@ public class BootStrapPanel extends JFrame{
             public void actionPerformed(ActionEvent e) {
 
                 apiController = new ApiController();
-                EnumSet<PARAMETERES> flags = setEumFilters();
+                EnumSet<Parameters> flags = setEumFilters();
 
                 try {
 
@@ -68,18 +68,18 @@ public class BootStrapPanel extends JFrame{
 
         if(txtDescription.getText().equals("") && !txtLocation.getText().equals("")){
             filters[0] = txtLocation.getText();
-            return EnumSet.of(PARAMETERES.LOCATION);
+            return EnumSet.of(Parameters.LOCATION);
         }
 
         else if(!txtDescription.getText().equals("") && txtLocation.getText().equals("")){
             filters[0] = txtDescription.getText();
-            return EnumSet.of(PARAMETERES.DESCRIPTION);
+            return EnumSet.of(Parameters.DESCRIPTION);
         }
 
         else if(!txtDescription.getText().equals("") && !txtLocation.getText().equals("")){
             filters[0] = txtDescription.getText();
             filters[1] = txtLocation.getText();
-            return EnumSet.of(PARAMETERES.LOCATION, PARAMETERES.DESCRIPTION);
+            return EnumSet.of(Parameters.LOCATION, Parameters.DESCRIPTION);
         }
 
         else{

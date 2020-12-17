@@ -1,5 +1,5 @@
 package GUI;
-/*
+
 import Controller.ApiController;
 import Model.Job;
 
@@ -143,4 +143,3 @@ public class JobsFoundPanel extends JFrame{
 }
 
 
- */
