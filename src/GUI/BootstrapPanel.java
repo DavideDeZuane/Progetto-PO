@@ -1,14 +1,16 @@
 package GUI;
 
 import Controller.ApiController;
-import Controller.Parameters;
+import Controller.PARAMETERES;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.EnumSet;
+import java.util.Vector;
 
 public class BootStrapPanel extends JFrame{
 
@@ -26,9 +28,6 @@ public class BootStrapPanel extends JFrame{
 
     public BootStrapPanel() {
 
-        FullTime = new JCheckBox();
-        FullTime.setFocusable(false);
-add(FullTime);
         add(rootPanel);
         setTitle("IT Found Jobs");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -40,11 +39,11 @@ add(FullTime);
             public void actionPerformed(ActionEvent e) {
 
                 apiController = new ApiController();
-                EnumSet<Parameters> flags = setEumFilters();
+                EnumSet<PARAMETERES> flags = setEumFilters();
 
                 try {
-                    System.out.println(FullTime.isSelected());
-                    url = ApiController.query(filters, flags, FullTime.isSelected());
+
+                    url = ApiController.query(filters, flags);
                     new JobsFoundPanel(url); //passo l'url come parametro alla classe in modo da utilizzarlo in Jobs Found Panel
 
                 } catch (MalformedURLException exception) {
@@ -67,22 +66,20 @@ add(FullTime);
 
     public EnumSet setEumFilters(){
 
-        FullTime = new JCheckBox();
-
         if(txtDescription.getText().equals("") && !txtLocation.getText().equals("")){
             filters[0] = txtLocation.getText();
-            return EnumSet.of(Parameters.LOCATION);
+            return EnumSet.of(PARAMETERES.LOCATION);
         }
 
         else if(!txtDescription.getText().equals("") && txtLocation.getText().equals("")){
             filters[0] = txtDescription.getText();
-            return EnumSet.of(Parameters.DESCRIPTION);
+            return EnumSet.of(PARAMETERES.DESCRIPTION);
         }
 
         else if(!txtDescription.getText().equals("") && !txtLocation.getText().equals("")){
             filters[0] = txtDescription.getText();
             filters[1] = txtLocation.getText();
-            return EnumSet.of(Parameters.LOCATION, Parameters.DESCRIPTION);
+            return EnumSet.of(PARAMETERES.LOCATION, PARAMETERES.DESCRIPTION);
         }
 
         else{
