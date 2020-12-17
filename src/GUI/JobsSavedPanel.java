@@ -1,8 +1,11 @@
 package GUI;
 
+import Model.Job;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashSet;
 
 public class JobsSavedPanel extends JFrame{
 
@@ -13,7 +16,10 @@ public class JobsSavedPanel extends JFrame{
     private JButton btnDeleteAll;
     private JButton btnExit;
 
-    public JobsSavedPanel(){
+    private String keyWord;
+
+    public JobsSavedPanel(String keyWord){
+        this.keyWord = keyWord;
 
         add(JobsSavedPanel);
         setTitle("Saved Jobs");
@@ -23,7 +29,8 @@ public class JobsSavedPanel extends JFrame{
         btnStats.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new StatsPanel();
+                HashSet<Job> offerte = null;
+                new StatsPanel(offerte, keyWord);
             }
         });
     }

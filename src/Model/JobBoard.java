@@ -64,6 +64,8 @@ public class JobBoard implements Serializable {
     }
 
     //questa funzione genera le statistiche in base a quanti lavori sono stati caricati sull'hashset period giorni fa
+
+    //quante offerte di lavoro sono state generate negli ultimi 7 giorni (esempio)
     public int dateOfCreation(int period) {
         int recent = 0;
         if(jobs.size()==0)
@@ -72,8 +74,8 @@ public class JobBoard implements Serializable {
         {
             for (Job j : jobs)
             {
-                Date date = new Date();
-                //Date date = new Date(j.getCreated_at()); //deprecated
+                //Date date = new Date();
+                Date date = new Date(j.getCreated_at()); //deprecated
                 long diffInMillies = Math.abs(new Date(System.currentTimeMillis()).getTime() - date.getTime());
                 long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
                 if(diff<=period)
