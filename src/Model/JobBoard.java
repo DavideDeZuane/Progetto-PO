@@ -1,6 +1,6 @@
 package Model;
 
-import java.io.Serializable;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.concurrent.TimeUnit;
@@ -8,14 +8,13 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author Chiara
  */
-public class JobBoard implements Serializable {
+public class JobBoard {
 
     protected HashSet<Job> jobs;
     protected int numOfJobs;
     protected float fullTimePercentage;
     protected String dateOfCreation;
     protected String keyWord;
-    //protected FileController fileController;
 
     /**
      * constructor
@@ -47,39 +46,48 @@ public class JobBoard implements Serializable {
         return jobs.size();
     }
 
+    public boolean checkJobSize ()
+    {
+        return jobs.size() == 0;
+    }
+
     //questa funzione calcola la percentuale di lavori full time rispetto a quelli part time
     public float calculatePercentage() {
-        int cont1 = 0;
-        if(jobs.size()==0)
+        int cont = 0;
+        if(checkJobSize())
             return -1;
         else
         {
         for (Job j : jobs)
         {
             if (j.getType().equals("Full Time"))
-                cont1++;
+                cont++;
         }
         }
-        return fullTimePercentage = (float) ((cont1*100)/ jobs.size());
+        return fullTimePercentage = (float) ((cont*100)/ jobs.size());
     }
 
     //questa funzione genera le statistiche in base a quanti lavori sono stati caricati sull'hashset period giorni fa
-
-    //quante offerte di lavoro sono state generate negli ultimi 7 giorni (esempio)
-    public int dateOfCreation(int period) {
+    public int dateOfCreation(int period) throws ParseException {
         int recent = 0;
-        if(jobs.size()==0)
+        if(checkJobSize())
             return -1;
         else
         {
             for (Job j : jobs)
             {
-                //Date date = new Date();
-                Date date = new Date(j.getCreated_at()); //deprecated
+
+                //DateFormat df = new SimpleDateFormat("EEE MMM dd hh:mm:ss ZZZ yyyy");
+               // Date date = df.parse(j.getCreated_at());
+                Date date = new Date(j.getCreated_at());
                 long diffInMillies = Math.abs(new Date(System.currentTimeMillis()).getTime() - date.getTime());
                 long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
                 if(diff<=period)
                     recent++;
+                /*DateFormat alfrescoDateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
+                Date dataRispostaDate = alfrescoDateFormat.parse(j.getCreated_at());*/
+                /*DateFormatter formatter = new DateFormatter();
+                formatter.stringToValue(j.getCreated_at());*/
             }
         }
         return recent;
@@ -122,7 +130,7 @@ public class JobBoard implements Serializable {
     public int keyWords (String word/*, boolean cs*/)
     {
         int count = 0;
-        if(jobs.size()==0)
+        if(checkJobSize())
             return -1;
         else
         {

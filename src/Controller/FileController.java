@@ -25,7 +25,7 @@ public class FileController {
     private ApiController controller;
 
     /**
-     *
+     * the constructor creates a new file if it does not exist
      * @param filename name of the file I write on
      * @throws IOException generates an exception if the I/O operations fail
      */
@@ -92,4 +92,3 @@ public class FileController {
         writer.close();
     }
 }
-
