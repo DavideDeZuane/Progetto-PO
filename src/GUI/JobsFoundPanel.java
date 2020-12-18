@@ -4,6 +4,7 @@ import Controller.ApiController;
 import Model.Job;
 
 import javax.swing.*;
+import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -108,6 +109,8 @@ public class JobsFoundPanel extends JFrame{
                 } catch (URISyntaxException uriSyntaxException) {
                     JOptionPane.showMessageDialog(jobsFoundPanel, "The link is wrong");
                     //uriSyntaxException.printStackTrace();
+                }catch(Exception exception){
+                    JOptionPane.showMessageDialog(jobsFoundPanel,"     Bro, jobs ain't found");
                 }
             }
         });

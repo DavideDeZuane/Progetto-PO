@@ -9,7 +9,7 @@ import java.util.HashSet;
 
 public class JobsSavedPanel extends JFrame{
 
-    private JPanel JobsSavedPanel;
+    private JPanel jobsSavedPanel;
     private JTable table1;
     private JButton btnStats;
     private JButton deleteButton;
@@ -19,9 +19,9 @@ public class JobsSavedPanel extends JFrame{
     private String keyWord;
 
     public JobsSavedPanel(String keyWord){
-        this.keyWord = keyWord;
+        setKeyWord(keyWord);
 
-        add(JobsSavedPanel);
+        add(jobsSavedPanel);
         setTitle("Saved Jobs");
         setSize(600, 300);
         setVisible(true);
@@ -30,8 +30,23 @@ public class JobsSavedPanel extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 HashSet<Job> offerte = null;
-                new StatsPanel(offerte, keyWord);
+
+                try{
+                    new StatsPanel(offerte, getKeyWord());
+                }catch (Exception exception){
+                    JOptionPane.showMessageDialog(jobsSavedPanel,"     Bro, jobs ain't saved");
+                }
+
             }
         });
+    }
+
+
+    public String getKeyWord() {
+        return keyWord;
+    }
+
+    public void setKeyWord(String keyWord) {
+        this.keyWord = keyWord;
     }
 }
