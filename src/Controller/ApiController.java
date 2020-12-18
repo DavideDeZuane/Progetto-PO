@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import javax.swing.*;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -17,12 +18,14 @@ import java.util.*;
 //todo implementare il metodo fill per riempire wareHouse
 //todo estrarre campo how_to_apply
 
-public class ApiController {
+public abstract class ApiController{
 
     private static String requestIdUrl;
     private static String baseUrl;
     private static final Properties prop = new Properties();
     private static final File configFile = new File("Resources/Configuration/config.properties");
+
+    protected static EnumSet<Parameters> flags = EnumSet.noneOf(Parameters.class);
 
     private URL url;
     private final ObjectMapper mapper;
@@ -32,6 +35,7 @@ public class ApiController {
         mapper.enable(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT);
     }
 
+    public abstract String[] setFilters(JTextField txtLocation, JTextField txtDescription, boolean banner);
     //getter e setter
     public ObjectMapper getMapper(){ return mapper; }
     public URL getUrl(){ return url; }
@@ -88,7 +92,7 @@ public class ApiController {
      *              chiavi aggiungere alla chiamata
      * @return Ritorna un URL per poter effettuare una chiamata filtrata
      */
-    public static URL query(String[] s, EnumSet<Parameters> flags) throws MalformedURLException{
+    public static URL query(String[] s) throws MalformedURLException{
         String temp = baseUrl;
         boolean first = true;
         int cont = 0;
