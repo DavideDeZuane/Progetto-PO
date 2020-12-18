@@ -4,11 +4,6 @@ L'obbiettivo del progetto è quello di creare un applicazione che permetta all'u
 offerte di lavoro e su tali offerte generare delle statistiche.
 
 ## L'Applicazione
-E' possibile utilzzare l'applicazione:
-+ tramite l'eseguibile
-+ tramite un IDE
-
-
 L'API [GitHub Jobs](https://jobs.github.com/api) consente di cercare lavori in formato JSON, dove ad ogni **`chiave`** è associato un **`valore`**.
 L'offerta di lavoro generica restituita dall'API ha la seguente forma:
 ```JSON
