@@ -39,7 +39,7 @@ public class JobsFoundPanel extends JFrame{
 
     //private String keyWord = null; //utilizzata nelle statistiche
 
-    private URL url;
+    //private URL url;
 
     private Object[] columnHeaders = {"Type","Company","Location"};
     private Object[][] rowData = null;
@@ -54,13 +54,21 @@ public class JobsFoundPanel extends JFrame{
     private PickedJobs pickedJobs = new PickedJobs();
 
 
-    public JobsFoundPanel(URL url, String keyWord) throws IOException {
-        this.url = url;
+    public JobsFoundPanel(HashSet<Job> offerte, String keyWord) throws IOException {
 
+        this.offerte.addAll(offerte);
+        //this.url = url;
+/*
         try {
-            offerte.addAll(controller.parsing(url));
+            controller.setUrl(url);
+            offerte.addAll(controller.parsing());
+
+           // if(controller.parsing().isEmpty()){
+             //   JOptionPane.showMessageDialog(jobsFoundPanel,"     Bro, jobs ain't found");
+            //}
+
         }catch(Exception e){
-        }
+        }*/
 
 
         //tabella aggiunta da codice e non dal form per motivi di grafica

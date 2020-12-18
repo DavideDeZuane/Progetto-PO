@@ -20,8 +20,8 @@ import java.util.*;
 
 public abstract class ApiController{
 
-    private static String requestIdUrl;
-    private static String baseUrl;
+    private static String requestIdUrl = "https://jobs.github.com/positions/%s.json";
+    private static String baseUrl = "https://jobs.github.com/positions.json?";
     private static final Properties prop = new Properties();
     private static final File configFile = new File("Resources/Configuration/config.properties");
 
@@ -36,6 +36,7 @@ public abstract class ApiController{
     }
 
     public abstract String[] setFilters(JTextField txtLocation, JTextField txtDescription, boolean banner);
+
     //getter e setter
     public ObjectMapper getMapper(){ return mapper; }
     public URL getUrl(){ return url; }
@@ -46,9 +47,8 @@ public abstract class ApiController{
         HashSet<Job> obj = new HashSet<>();
         try {
             obj = mapper.readValue(this.url, new TypeReference<HashSet<Job>>() {});
-            if (obj.isEmpty())
-                System.out.println("Non è stata trovata alcuna offerta di lavoro");
 
+                //JOptionPane.showMessageDialog(jobsFoundPanel,"     Bro, jobs ain't found");
         }catch(Exception e){
             System.out.println("Sto elaborando.....");
             obj.add(mapper.readValue(this.url, Job.class));
@@ -88,7 +88,7 @@ public abstract class ApiController{
     /**
      * Questo metodo grazie all'utilizzo di un Bit Flag permette di generare una chiamata con filtri
      * @param s contiene i parametri da inserire come valori nella chiamata
-     * @param flags contiene quali filtri l'uente ha inserito e quindi quali
+     * //@param flags contiene quali filtri l'uente ha inserito e quindi quali
      *              chiavi aggiungere alla chiamata
      * @return Ritorna un URL per poter effettuare una chiamata filtrata
      */
