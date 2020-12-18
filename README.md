@@ -6,7 +6,24 @@ offerte di lavoro e su tali offerte generare delle statistiche.
 ## L'Applicazione
 E' possibile utilzzare l'applicazione:
 + tramite l'eseguibile
-+ trmite un IDE
++ tramite un IDE
+
+L'Applicazione nasce con l'idea di rendere il più semplice possibile la ricerca, da parte di un utente, di offerte di lavoro.
+L'API [GitHub Jobs](https://jobs.github.com/api) consente di cercare lavori con JSON.
+L'offerta di lavoro generica restituita dall'API ha la seguente forma:
+![Risposta Api]()
+
+
+---
+
+Attraverso dei filtri abbiamo la possibilità di scegliere solo la catecoria che ci interessa. I possibili filtri sono i seguenti:
+>+ **Description**: un termine contenuto all'interno della descrizione dell'offerta.
+>+ **Location**: città in cui siamo intenzionati a fare la ricerca delle offerte.
+>+ **Latitudine** e **Longitudine**: utilizzabili in sostituzinone alla località a patto che vengano utilizzati entrambi.
+>+ **Full Time**: per limitari i risultati a solo offerte di lavoro full time.
+
+
+Per rendere il più astratto possibile l'inserimento dei filtri da applicare alla ricerca abbiamo realizzato una GUI.
 
 ## UML
 In prima istanza abbiamo realizzato dei Diagrammi UML per modellare il funzionamento 
