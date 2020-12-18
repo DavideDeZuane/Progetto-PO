@@ -12,6 +12,8 @@ import java.net.URL;
 import java.util.EnumSet;
 import java.util.Vector;
 
+import static Controller.Parameters.parametri;
+
 public class BootStrapPanel extends JFrame{
 
     private JPanel rootPanel;
@@ -19,7 +21,12 @@ public class BootStrapPanel extends JFrame{
     private JTextField txtDescription;
     private JButton btnSearch;
     private JButton btnShowJobsSaved;
-    private JCheckBox FullTime;
+    private JCheckBox fullTime;
+
+    public EnumSet<Parameters> flags = EnumSet.noneOf(Parameters.class);
+
+    private boolean fProva = true;
+
     URL url = null;
     private String filters[] = new String[100];
 
@@ -34,56 +41,62 @@ public class BootStrapPanel extends JFrame{
         setSize(600, 200);
         setVisible(true);
 
+
         btnSearch.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
                 apiController = new ApiController();
-                EnumSet<Parameters> flags = setEumFilters();
+                setEumFilters();
 
                 try {
-
+                    url = null;
                     url = ApiController.query(filters, flags);
-                    new JobsFoundPanel(url); //passo l'url come parametro alla classe in modo da utilizzarlo in Jobs Found Panel
+                    new JobsFoundPanel(url,getTxtDescription());
 
                 } catch (MalformedURLException exception) {
 
-                    JOptionPane.showMessageDialog(rootPanel, "bro non hai scritto niente");
+                    JOptionPane.showMessageDialog(rootPanel,"Invalid filters");
                     //exception.printStackTrace();
                 }
-
-
             }
         });
 
         btnShowJobsSaved.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new JobsSavedPanel();
+                System.out.println(fullTime.isSelected());
+                new JobsSavedPanel(getTxtDescription());
             }
         });
     }
 
-    public EnumSet setEumFilters(){
+    public String getTxtDescription(){
+        return txtDescription.getText();
+    }
+
+    public void setEumFilters(){
+        flags = EnumSet.noneOf(Parameters.class);
+
+        if(fullTime.isSelected()){
+            flags.add(Parameters.TYPE);
+        }
 
         if(txtDescription.getText().equals("") && !txtLocation.getText().equals("")){
             filters[0] = txtLocation.getText();
-            return EnumSet.of(Parameters.LOCATION);
+            flags.add(Parameters.LOCATION);
         }
 
         else if(!txtDescription.getText().equals("") && txtLocation.getText().equals("")){
             filters[0] = txtDescription.getText();
-            return EnumSet.of(Parameters.DESCRIPTION);
+            flags.add(Parameters.DESCRIPTION);
         }
 
-        else if(!txtDescription.getText().equals("") && !txtLocation.getText().equals("")){
+        else if(!txtDescription.getText().equals("") && !txtLocation.getText().equals("")) {
             filters[0] = txtDescription.getText();
             filters[1] = txtLocation.getText();
-            return EnumSet.of(Parameters.LOCATION, Parameters.DESCRIPTION);
-        }
-
-        else{
-            return null;
+            flags.add(Parameters.LOCATION);
+            flags.add(Parameters.DESCRIPTION);
         }
     }
 }
