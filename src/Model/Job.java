@@ -1,12 +1,8 @@
 package Model;
 
-import java.io.Serializable;
 import java.net.URL;
 
-/**
- * @author Chiara
- */
-public class Job implements Serializable {
+public class Job {
     private String id;
     private String type;
     private URL url;
@@ -19,8 +15,8 @@ public class Job implements Serializable {
     private String how_to_apply;
     private URL company_logo;
 
-        public Job()
-    {}
+    public Job() {}
+
     /**
      *
      * @param id
