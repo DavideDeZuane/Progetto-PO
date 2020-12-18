@@ -8,22 +8,39 @@ E' possibile utilzzare l'applicazione:
 + tramite l'eseguibile
 + tramite un IDE
 
-L'Applicazione nasce con l'idea di rendere il più semplice possibile la ricerca, da parte di un utente, di offerte di lavoro.
-L'API [GitHub Jobs](https://jobs.github.com/api) consente di cercare lavori con JSON.
+
+L'API [GitHub Jobs](https://jobs.github.com/api) consente di cercare lavori in formato JSON, dove ad ogni **`chiave`** è associato un **`valore`**.
 L'offerta di lavoro generica restituita dall'API ha la seguente forma:
-![Risposta Api]()
-
-
----
-
-Attraverso dei filtri abbiamo la possibilità di scegliere solo la catecoria che ci interessa. I possibili filtri sono i seguenti:
+```JSON
+{
+    "id": "b1691d49-ee1d-4793-9c1d-7a10a9b8b84a",
+    "type": "Full Time",
+    "url": "https://jobs.github.com/positions/b1691d49-ee1d-4793-9c1d-7a10a9b8b84a",
+    "created_at": "Mon Dec 07 19:23:19 UTC 2020",
+    "company": "EME Hive",
+    "company_url": "http://emehive.co",
+    "location": "New York City",
+    "title": "Infrastructure Engineer for Social Livestreaming App",
+    "description": "<p>...</p>\n",
+    "how_to_apply": "<p>...</p>\n",
+    "company_logo": "https://....png"
+}
+```
+Attraverso dei filtri abbiamo la possibilità di scegliere solo la categoria che ci interessa. I possibili filtri sono i seguenti:
 >+ **Description**: un termine contenuto all'interno della descrizione dell'offerta.
 >+ **Location**: città in cui siamo intenzionati a fare la ricerca delle offerte.
 >+ **Latitudine** e **Longitudine**: utilizzabili in sostituzinone alla località a patto che vengano utilizzati entrambi.
 >+ **Full Time**: per limitari i risultati a solo offerte di lavoro full time.
 
+Tali filtri vanno inseiri con una certa sintassi all'interno della richiesta; un esempio è il seguente:
+> https://jobs.github.com/positions.json?description=python&full_time=true&location=sf
 
-Per rendere il più astratto possibile l'inserimento dei filtri da applicare alla ricerca abbiamo realizzato una GUI.
+Per un utente medio risulta difficoltoso riuscire a compilare una richiesta simile e leggerne il risultato. 
+Per ovviera a questo problema abbiamo pensato di integrare nel nostro programma:
++ **Frontend**: un interfaccia che permetta all'utente di inserire facilmente i filtri da applicare alla ricerca;
++ **Backend**: un insieme di classi e strutture dati che permettono all'utente di visualizzare, in un formato a cui è abituato, il risultato della ricerca.
+
+---
 
 ## UML
 In prima istanza abbiamo realizzato dei Diagrammi UML per modellare il funzionamento 
@@ -38,6 +55,11 @@ della nostra Applicazione.
 > ![](Images/SequenceDiagramUpdate.png)
 Sarà presente anche un file di configurazione contenente gli URL per effettuare le chiamte all'API.
 In questo modo nell'eventualità che venga cambiato l'URL dell'API basterà cambiarlo nel file configurazione senza intervenire direttamente sul programma.
+
+## FrameWork
+I prinicipali framework utilizzati per la realizzazione dell'applicazione sono i seguenti:
++ [Swing](https://docs.oracle.com/javase/7/docs/api/javax/swing/package-summary.html) 
++ [Jackson JSON](https://github.com/FasterXML/jackson/wiki/Jackson-Release-2.12)
 
 
 
