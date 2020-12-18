@@ -17,11 +17,13 @@ public class StatsPanel extends JFrame {
     private JButton check;
     private HashSet<Job> offers;
     private JobBoard jobBoard = new JobBoard();
+
     private String keyWord;
 
     public StatsPanel(HashSet<Job> offers, String keyWord){
         this.setOffers(offers);
         this.setKeyWord(keyWord);
+
 
         jobBoard.setJobs(this.getOffers());
 
@@ -50,19 +52,10 @@ public class StatsPanel extends JFrame {
                                 txtPeriod.getText() + " days.");
 
                 }catch (Exception exception){
-                    JOptionPane.showMessageDialog(statsPanel, "Carattere inserito non valido!");
+                    JOptionPane.showMessageDialog(statsPanel,"  Bro, you can't write this.");
                 }
             }
         });
-    }
-
-
-    public String getKeyWord() {
-        return keyWord;
-    }
-
-    public void setKeyWord(String keyWord) {
-        this.keyWord = keyWord;
     }
 
     public HashSet<Job> getOffers() {
@@ -71,5 +64,13 @@ public class StatsPanel extends JFrame {
 
     public void setOffers(HashSet<Job> offers) {
         this.offers = offers;
+    }
+
+    public String getKeyWord() {
+        return keyWord;
+    }
+
+    public void setKeyWord(String keyWord) {
+        this.keyWord = keyWord;
     }
 }

@@ -16,10 +16,8 @@ public class JobsSavedPanel extends JFrame{
     private JButton btnDeleteAll;
     private JButton btnExit;
 
-    private String keyWord;
-
     public JobsSavedPanel(String keyWord){
-        setKeyWord(keyWord);
+
 
         add(jobsSavedPanel);
         setTitle("Saved Jobs");
@@ -32,21 +30,12 @@ public class JobsSavedPanel extends JFrame{
                 HashSet<Job> offerte = null;
 
                 try{
-                    new StatsPanel(offerte, getKeyWord());
+                    new StatsPanel(offerte, keyWord);
                 }catch (Exception exception){
                     JOptionPane.showMessageDialog(jobsSavedPanel,"     Bro, jobs ain't saved");
                 }
 
             }
         });
-    }
-
-
-    public String getKeyWord() {
-        return keyWord;
-    }
-
-    public void setKeyWord(String keyWord) {
-        this.keyWord = keyWord;
     }
 }

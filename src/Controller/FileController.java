@@ -50,7 +50,7 @@ public class FileController {
             mapper.writeValue(file, jobs);*/
             /*ObjectMapper mapper = new ObjectMapper();
             mapper.writeValue(file, jobs);*/
-            controller = new ApiController();
+            controller = new GuiApiController();
             controller.getMapper().writeValue(file, jobs);
             ObjectMapper mapper = new ObjectMapper();
             ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
@@ -76,7 +76,7 @@ public class FileController {
                 //InputStream input = new FileInputStream(filename);
                 return mapper.readValue(file, new TypeReference<>() {
                 });*/
-                controller = new ApiController();
+                controller = new GuiApiController();
                 return controller.getMapper().readValue(file, new TypeReference<HashSet<Job>>() {});
             }
     }

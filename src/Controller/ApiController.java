@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import javax.swing.*;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -19,7 +20,7 @@ import java.util.*;
 //todo implementare il metodo fill per riempire wareHouse
 //todo file di configurazione
 
-public class ApiController {
+public abstract class ApiController {
 
     private static String requestIdUrl = "https://jobs.github.com/positions/%s.json";
     private static String baseUrl =  "https://jobs.github.com/positions.json?";
@@ -27,10 +28,14 @@ public class ApiController {
     private File configFile;
     private ObjectMapper mapper;
 
+    protected static EnumSet<Parameters> flags = EnumSet.noneOf(Parameters.class);
+
     public ApiController(){
         mapper = new ObjectMapper();
         mapper.enable(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT);
     }
+
+    public abstract String[] setFilters(JTextField txtLocation, JTextField txtDescription, boolean banner);
 
     public ObjectMapper getMapper(){ return mapper; }
 
@@ -84,14 +89,16 @@ public class ApiController {
     /**
      * Questo metodo grazie all'utilizzo di un Bit Flag permette di generare una chiamata con filtri
      * @param s contiene i parametri da inserire come valori nella chiamata
-     * @param flags contiene quali filtri l'uente ha inserito e quindi quali
+     * //@param flags contiene quali filtri l'uente ha inserito e quindi quali
      *              chiavi aggiungere alla chiamata
      * @return Ritorna un URL per poter effettuare una chiamata filtrata
      */
-    public static URL query(String[] s, EnumSet<Parameters> flags) throws MalformedURLException{
+    public static URL query(String[] s) throws MalformedURLException{
         String temp = baseUrl;
         boolean first = true;
         int cont = 0;
+
+
         if(flags != null){
             if (flags.contains(Parameters.TYPE)) {
                 if (!first)
@@ -166,5 +173,30 @@ public class ApiController {
         //prop.store(writer, "Ultima modifica: " +data);
 
     }
+/*
+    public void setEumFilters(){
+        flags = EnumSet.noneOf(Parameters.class);
+
+        if(fullTime.isSelected()){
+            flags.add(Parameters.TYPE);
+        }
+
+        if(txtDescription.getText().equals("") && !txtLocation.getText().equals("")){
+            filters[0] = txtLocation.getText();
+            flags.add(Parameters.LOCATION);
+        }
+
+        else if(!txtDescription.getText().equals("") && txtLocation.getText().equals("")){
+            filters[0] = txtDescription.getText();
+            flags.add(Parameters.DESCRIPTION);
+        }
+
+        else if(!txtDescription.getText().equals("") && !txtLocation.getText().equals("")) {
+            filters[0] = txtDescription.getText();
+            filters[1] = txtLocation.getText();
+            flags.add(Parameters.LOCATION);
+            flags.add(Parameters.DESCRIPTION);
+        }
+    }*/
 
 }

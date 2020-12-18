@@ -1,7 +1,9 @@
 package GUI;
 
 import Controller.ApiController;
+import Controller.GuiApiController;
 import Model.Job;
+import Model.PickedJobs;
 
 import javax.swing.*;
 import javax.swing.table.JTableHeader;
@@ -10,9 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
+import java.util.*;
 
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -21,6 +21,7 @@ import java.net.URL;
 
 import java.awt.Desktop;
 import java.net.URL;
+import java.util.stream.Collector;
 
 public class JobsFoundPanel extends JFrame{
     private JPanel jobsFoundPanel;
@@ -32,11 +33,11 @@ public class JobsFoundPanel extends JFrame{
     private JButton btnStats;
     private JTable tableJobs;
     private JPanel buttonPanel;
-
-    private URL[] companyUrl = null;
+    private JButton btnHowToApply;
 
     private final static int COLUMNS = 3;
-    private String keyWord = null; //utilizzata nelle statistiche
+
+    //private String keyWord = null; //utilizzata nelle statistiche
 
     private URL url;
 
@@ -47,18 +48,23 @@ public class JobsFoundPanel extends JFrame{
 
 
     private HashSet<Job> offerte = new HashSet<>();
-    private ApiController controller = new ApiController();
+    private ApiController controller = new GuiApiController();
 
-    public JobsFoundPanel(URL url, String keyWord){
+
+    private PickedJobs pickedJobs = new PickedJobs();
+
+
+    public JobsFoundPanel(URL url, String keyWord) throws IOException {
         this.url = url;
-        setKeyWord(keyWord);
 
         try {
-            offerte.addAll(controller.parsing(this.url));
+            offerte.addAll(controller.parsing(url));
         }catch(Exception e){
         }
 
-        companyUrl = new URL[offerte.size()];
+
+        //tabella aggiunta da codice e non dal form per motivi di grafica
+        //companyUrl = new URL[offerte.size()];
         rowData = new String[offerte.size()][COLUMNS];
 
         this.tableJobs = new JTable(setTable(offerte.iterator()), columnHeaders);
@@ -70,9 +76,11 @@ public class JobsFoundPanel extends JFrame{
         setSize(600, 600);
         setVisible(true);
 
+
+        //impostazioni del panel
         add(jobsFoundPanel);
         setTitle("Jobs Found");
-        setSize(600, 700);
+        setSize(600, 725);
         setResizable(false);
         setVisible(true);
 
@@ -80,14 +88,14 @@ public class JobsFoundPanel extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                new StatsPanel(offerte, getKeyWord());
+                new StatsPanel(offerte, keyWord);
             }
         });
 
         btnShowSavedJobs.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new JobsSavedPanel(getKeyWord());
+                new JobsSavedPanel(keyWord);
             }
         });
 
@@ -97,18 +105,18 @@ public class JobsFoundPanel extends JFrame{
 
                 try {
 
-                    if(companyUrl[tableJobs.getSelectedRow()].toString().equals("http://http")){
+                    if(getUrl(tableJobs.getSelectedRow()).toString().equals("http://http")){
                         JOptionPane.showMessageDialog(jobsFoundPanel, "The link is not available");
                     }
                     else{
-                        desktop.browse(companyUrl[tableJobs.getSelectedRow()].toURI());
+                        desktop.browse(getUrl(tableJobs.getSelectedRow()).toURI());
                     }
 
                 }catch (IOException ioException) {
                     ioException.printStackTrace();
+
                 } catch (URISyntaxException uriSyntaxException) {
                     JOptionPane.showMessageDialog(jobsFoundPanel, "The link is wrong");
-                    //uriSyntaxException.printStackTrace();
                 }catch(Exception exception){
                     JOptionPane.showMessageDialog(jobsFoundPanel,"     Bro, jobs ain't found");
                 }
@@ -125,6 +133,15 @@ public class JobsFoundPanel extends JFrame{
         btnSave.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+               // Job job = null;
+/*
+
+                if(job.){
+
+                }*/
+                getJob(tableJobs.getSelectedRow());
+                //pickedJobs.add();
+
                 /*
                 System.out.println(tableJobs.getSelectedRow()); //implementare l'accesso al'offerta
                 System.out.println(tableJobs.getModel().getValueAt(tableJobs.getSelectedRow(), tableJobs.getSelectedColumn()).toString());
@@ -140,14 +157,13 @@ public class JobsFoundPanel extends JFrame{
 
             }
         });
-    }
 
-    public String getKeyWord(){
-        return this.keyWord;
-    }
+        btnHowToApply.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
 
-    public void setKeyWord(String keyWord){
-        this.keyWord = keyWord;
+            }
+        });
     }
 
     public Object[][] setTable(Iterator iterator){
@@ -159,11 +175,21 @@ public class JobsFoundPanel extends JFrame{
             rowData[i][count++] = tmp.getType();
             rowData[i][count++] = tmp.getCompany();
             rowData[i][count++] = tmp.getLocation();
-            companyUrl[i] = tmp.getCompany_url();
             count = 0;
         }
-
         return rowData;
+    }
+
+    public URL getUrl(int index) {
+        Vector<Job> jobs = new Vector<>();
+        jobs.addAll(offerte);
+        return jobs.elementAt(index).getCompany_url();
+    }
+
+    public Job getJob(int index) {
+        Vector<Job> jobs = new Vector<>();
+        jobs.addAll(offerte);
+        return jobs.elementAt(index);
     }
 }
 

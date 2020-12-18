@@ -1,11 +1,13 @@
 package GUI;
 
 import Controller.ApiController;
+import Controller.GuiApiController;
 import Controller.Parameters;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -23,12 +25,7 @@ public class BootStrapPanel extends JFrame{
     private JButton btnShowJobsSaved;
     private JCheckBox fullTime;
 
-    public EnumSet<Parameters> flags = EnumSet.noneOf(Parameters.class);
-
-    private boolean fProva = true;
-
     URL url = null;
-    private String filters[] = new String[100];
 
     private ApiController apiController = null;
 
@@ -46,18 +43,18 @@ public class BootStrapPanel extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                apiController = new ApiController();
-                setEumFilters();
+                apiController = new GuiApiController();
 
                 try {
                     url = null;
-                    url = ApiController.query(filters, flags);
-                    new JobsFoundPanel(url,getTxtDescription());
+                    url = ApiController.query(apiController.setFilters(txtLocation,txtDescription,fullTime.isSelected()));
+                    new JobsFoundPanel(url, txtDescription.getText());
 
                 } catch (MalformedURLException exception) {
 
                     JOptionPane.showMessageDialog(rootPanel,"Invalid filters");
-                    //exception.printStackTrace();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
                 }
             }
         });
@@ -65,38 +62,12 @@ public class BootStrapPanel extends JFrame{
         btnShowJobsSaved.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println(fullTime.isSelected());
-                new JobsSavedPanel(getTxtDescription());
+                new JobsSavedPanel(txtDescription.getText());
             }
         });
     }
 
     public String getTxtDescription(){
         return txtDescription.getText();
-    }
-
-    public void setEumFilters(){
-        flags = EnumSet.noneOf(Parameters.class);
-
-        if(fullTime.isSelected()){
-            flags.add(Parameters.TYPE);
-        }
-
-        if(txtDescription.getText().equals("") && !txtLocation.getText().equals("")){
-            filters[0] = txtLocation.getText();
-            flags.add(Parameters.LOCATION);
-        }
-
-        else if(!txtDescription.getText().equals("") && txtLocation.getText().equals("")){
-            filters[0] = txtDescription.getText();
-            flags.add(Parameters.DESCRIPTION);
-        }
-
-        else if(!txtDescription.getText().equals("") && !txtLocation.getText().equals("")) {
-            filters[0] = txtDescription.getText();
-            filters[1] = txtLocation.getText();
-            flags.add(Parameters.LOCATION);
-            flags.add(Parameters.DESCRIPTION);
-        }
     }
 }
