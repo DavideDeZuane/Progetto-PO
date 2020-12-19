@@ -31,7 +31,7 @@ Tali filtri vanno inseiri con una certa sintassi all'interno della richiesta; un
 > https://jobs.github.com/positions.json?description=python&full_time=true&location=sf
 
 Per un utente medio risulta difficoltoso riuscire a compilare una richiesta simile e leggerne il risultato. 
-Per ovviera a questo problema abbiamo pensato di integrare nel nostro programma:
+Per ovviere a questo problema abbiamo pensato di integrare nel nostro programma:
 + **Frontend**: un interfaccia che permetta all'utente di inserire facilmente i filtri da applicare alla ricerca;
 + **Backend**: un insieme di classi e strutture dati che permettono all'utente di visualizzare, in un formato a cui è abituato, il risultato della ricerca.
 
