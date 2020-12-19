@@ -47,7 +47,6 @@ public abstract class ApiController{
         HashSet<Job> obj = new HashSet<>();
         try {
             obj = mapper.readValue(this.url, new TypeReference<HashSet<Job>>() {});
-
                 //JOptionPane.showMessageDialog(jobsFoundPanel,"     Bro, jobs ain't found");
         }catch(Exception e){
             System.out.println("Sto elaborando.....");
@@ -80,7 +79,7 @@ public abstract class ApiController{
             obj.toURI(); //converte l'URL in URI, se l'URL non è nel formato specificato generano un errore se convertiti in URI
             return obj;
         } catch(MalformedURLException | URISyntaxException ex){
-            System.out.println("C' è un errore nella sintassi");
+            System.out.println("C'è un errore nella sintassi");
             throw new MalformedURLException();
         }
     }

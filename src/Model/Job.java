@@ -3,9 +3,7 @@ package Model;
 import org.jsoup.Jsoup;
 
 import java.net.URL;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Vector;
+
 
 public class Job {
     private String id;
@@ -20,21 +18,24 @@ public class Job {
     private String how_to_apply;
     private URL company_logo;
 
+    /**
+     * default constructor
+     */
     public Job() {}
 
     /**
      *
-     * @param id
-     * @param type
-     * @param url
-     * @param created_at
-     * @param company
-     * @param company_url
-     * @param location
-     * @param title
-     * @param description
-     * @param how_to_apply
-     * @param company_logo
+     * @param id is the id of the Job
+     * @param type is the type of the Job (for example Full Time or Part Time)
+     * @param url is the url of the Job
+     * @param created_at is the date when the job was created
+     * @param company name of the company that offers the Job
+     * @param company_url is the url of the company website
+     * @param location is the location where the job takes place
+     * @param title is the title of the Job
+     * @param description describes what the Job is like
+     * @param how_to_apply are instructions to apply for the Job
+     * @param company_logo is the company logo
      */
     public Job(String id, String type, URL url, String created_at, String company, URL company_url, String location, String title, String description, String how_to_apply, URL company_logo) {
         this.id = id;
@@ -52,7 +53,7 @@ public class Job {
 
     /**
      *
-     * @return
+     * @return the id of the Job
      */
     public String getId() {
         return id;
@@ -60,7 +61,7 @@ public class Job {
 
     /**
      *
-     * @return
+     * @return the type of the Job
      */
     public String getType() {
         return type;
@@ -68,7 +69,7 @@ public class Job {
 
     /**
      *
-     * @return
+     * @return the url of the offer
      */
     public URL getUrl() {
         return url;
@@ -76,7 +77,7 @@ public class Job {
 
     /**
      *
-     * @return
+     * @return the date of creation of the offer
      */
     public String getCreated_at() {
         return created_at;
@@ -84,7 +85,7 @@ public class Job {
 
     /**
      *
-     * @return
+     * @return the name of the company
      */
     public String getCompany() {
         return company;
@@ -92,7 +93,7 @@ public class Job {
 
     /**
      *
-     * @return
+     * @return the url of the company
      */
     public URL getCompany_url() {
         return company_url;
@@ -100,7 +101,7 @@ public class Job {
 
     /**
      *
-     * @return
+     * @return the location of the Job
      */
     public String getLocation() {
         return location;
@@ -108,7 +109,7 @@ public class Job {
 
     /**
      *
-     * @return
+     * @return the title of the offer
      */
     public String getTitle() {
         return title;
@@ -116,7 +117,7 @@ public class Job {
 
     /**
      *
-     * @return
+     * @return the offer description
      */
     public String getDescription() {
         return description;
@@ -124,7 +125,7 @@ public class Job {
 
     /**
      *
-     * @return
+     * @return the instructions to apply for the Job
      */
     public String getHow_to_apply() {
         return Jsoup.parse(how_to_apply).text();
@@ -132,7 +133,7 @@ public class Job {
 
     /**
      *
-     * @return
+     * @return the company logo
      */
     public URL getCompany_logo() {
         return company_logo;

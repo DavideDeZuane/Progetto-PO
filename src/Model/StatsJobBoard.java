@@ -116,7 +116,6 @@ public class StatsJobBoard extends JobBoard{
                     if (word.equals(value))
                         count++;
                 }
-
             }
         }
         return count;

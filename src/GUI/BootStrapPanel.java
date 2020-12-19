@@ -2,7 +2,6 @@ package GUI;
 
 import Controller.ApiController;
 import Controller.GuiApiController;
-import Controller.Parameters;
 import Model.Job;
 import Model.JobBoard;
 
@@ -10,13 +9,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.EnumSet;
 import java.util.HashSet;
-import java.util.Vector;
-import static Controller.Parameters.parametri;
 
 public class BootStrapPanel extends JFrame{
 

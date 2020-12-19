@@ -1,8 +1,12 @@
 package GUI;
 
 import Model.Job;
-import Model.JobBoard;
 import Model.StatsJobBoard;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PiePlot;
+import org.jfree.data.general.DefaultPieDataset;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -17,19 +21,32 @@ public class StatsPanel extends JFrame {
     private JTextField txtPeriod;
     private JButton check;
     private JLabel lblKeyWordRepeat;
-    private StatsJobBoard statsJobBoard;
+    private JButton showChartButton;
+    private final StatsJobBoard statsJobBoard;
+    JFreeChart chart;
+    private DefaultPieDataset dataset;
+
 
     public StatsPanel(HashSet<Job> jobs, String keyWord){
 
         statsJobBoard = new StatsJobBoard();
-
         statsJobBoard.setJobs(jobs);
         statsJobBoard.setKeyWord(keyWord);
+
+        dataset = new DefaultPieDataset();
+        this.dataset.setValue("Full Time", statsJobBoard.calculatePercentage());
+        this.dataset.setValue("Part time", 100.0-statsJobBoard.calculatePercentage());
+        chart = ChartFactory.createPieChart("Pie Chart", dataset, true, true, true);
 
         lblJobTot.setText(String.valueOf(statsJobBoard.getNumOfJobs()));
         lblFullTimePercent.setText(String.valueOf(statsJobBoard.calculatePercentage()) + "%");
         lblKeyWordRepeat.setText("The key word " + statsJobBoard.getKeyWord() + " was repeated " +
                 statsJobBoard.keyWords(statsJobBoard.getKeyWord()) + " times in the job descriptions.");
+
+        ChartFrame frame = new ChartFrame("Chart", chart);
+        frame.pack();
+        PiePlot plot = (PiePlot) chart.getPlot();
+        plot.setIgnoreNullValues(true);
 
         add(statsPanel);
         setTitle("Stats");
@@ -55,6 +72,13 @@ public class StatsPanel extends JFrame {
                 }catch (Exception exception){
                     JOptionPane.showMessageDialog(statsPanel,"  Bro, you can't write this.");
                 }
+            }
+        });
+
+        showChartButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.setVisible(true);
             }
         });
     }

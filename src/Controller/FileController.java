@@ -45,11 +45,6 @@ public class FileController {
         if(jobs.isEmpty())
             System.out.println("Non ci sono lavori disponibili");
         else {
-            //controller = new ApiController();
-            /*JsonMapper mapper = new JsonMapper();
-            mapper.writeValue(file, jobs);*/
-            /*ObjectMapper mapper = new ObjectMapper();
-            mapper.writeValue(file, jobs);*/
             controller = new GuiApiController();
             controller.getMapper().writeValue(file, jobs);
             ObjectMapper mapper = new ObjectMapper();
@@ -71,11 +66,6 @@ public class FileController {
             return null;
         }
         else {
-                /*ObjectMapper mapper = new ObjectMapper();
-                //return mapper.readValue(file, new TypeReference<HashSet<Job>>(){});
-                //InputStream input = new FileInputStream(filename);
-                return mapper.readValue(file, new TypeReference<>() {
-                });*/
                 controller = new GuiApiController();
                 return controller.getMapper().readValue(file, new TypeReference<HashSet<Job>>() {});
             }
@@ -86,7 +76,6 @@ public class FileController {
      * @throws FileNotFoundException generates an exception if the file is not found
      */
     public void deleteAll () throws FileNotFoundException {
-        //cancella tutti i lavori
         PrintWriter writer = new PrintWriter("jobs.txt");
         writer.print("");
         writer.close();

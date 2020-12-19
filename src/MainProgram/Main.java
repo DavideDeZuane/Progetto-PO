@@ -1,18 +1,11 @@
 
 package MainProgram;
 
-import Controller.ApiController;
-import Controller.Parameters;
-import GUI.BootStrapPanel;
-import Model.JobBoard;
-
-import java.net.URL;
-import java.util.Scanner;
-
-import static Controller.Parameters.parametri;
 //import Controller.Lavoro;
 
 //import GUI.BootStrapPanel;
+
+import GUI.BootStrapPanel;
 
 public class Main {
 /*
@@ -37,8 +30,8 @@ public class Main {
         URL url =  ApiController.query(filtri, parametri);
         controller.fill(offerte, url);
         System.out.println(offerte);*/
-        BootStrapPanel bootstrapPanel = null;
-        bootstrapPanel = new BootStrapPanel();
+        BootStrapPanel bootStrapPanel = new BootStrapPanel();
+
 /*
         URL url = null;
         String[] param = new String[10];
