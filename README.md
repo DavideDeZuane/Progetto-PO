@@ -55,6 +55,7 @@ In questo modo nell'eventualità che venga cambiato l'URL dell'API basterà camb
 I prinicipali framework utilizzati per la realizzazione dell'applicazione sono i seguenti:
 + [Swing](https://docs.oracle.com/javase/7/docs/api/javax/swing/package-summary.html) 
 + [Jackson JSON](https://github.com/FasterXML/jackson/wiki/Jackson-Release-2.12)
++ [Jsoup](https://jsoup.org)
 
 
 
