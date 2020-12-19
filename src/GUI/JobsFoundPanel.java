@@ -110,34 +110,59 @@ public class JobsFoundPanel extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                try {
+                    PickedJobs pickedJobs = new PickedJobs();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+
+                if(job.getJobs().isEmpty()){
+                    JOptionPane.showMessageDialog(jobsFoundPanel, "Any job to save.");
+                }else {
+                    pickedJobs.addAll(job.getJobs());
+                    JOptionPane.showMessageDialog(jobsFoundPanel, "Jobs saved successfully in " + pickedJobs.getFileName());
+                }
+
+
             }
         });
 
         btnSave.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               // Job job = null;
-/*
 
-                if(job.){
+                try {
+                    PickedJobs pickedJobs = new PickedJobs();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
 
-                }*/
-                //getJob(tableJobs.getSelectedRow());
-                //pickedJobs.add();
+                try {
 
-                /*
-                System.out.println(tableJobs.getSelectedRow()); //implementare l'accesso al'offerta
-                System.out.println(tableJobs.getModel().getValueAt(tableJobs.getSelectedRow(), tableJobs.getSelectedColumn()).toString());
-                System.out.println(tableJobs.getModel().getValueAt(tableJobs.getSelectedRow(), tableJobs.getSelectedColumn() + 1).toString());
-                System.out.println(tableJobs.getModel().getValueAt(tableJobs.getSelectedRow(), tableJobs.getSelectedColumn() + 2).toString());
-                */
+                    if(job.getJobs().isEmpty()){
+                        JOptionPane.showMessageDialog(jobsFoundPanel, "Any job to save.");
+                    }
+                    else{
+                        if(tableJobs.getSelectedRow() == -1){
+                            JOptionPane.showMessageDialog(jobsFoundPanel, "You have not selected any job.");
+                        }
+                        else {
+                            pickedJobs.add(job.getJob(tableJobs.getSelectedRow(), job.getJobs()));
+                            JOptionPane.showMessageDialog(jobsFoundPanel, "Job saved successfully in " + pickedJobs.getFileName());
+                        }
+                    }
+
+                }catch(Exception exception){
+                    JOptionPane.showMessageDialog(jobsFoundPanel,"     Bro, jobs ain't found");
+                }
+
             }
         });
 
         btnExit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //setDefaultCloseOperation(EXIT_ON_CLOSE);
+                dispose();
             }
         });
 

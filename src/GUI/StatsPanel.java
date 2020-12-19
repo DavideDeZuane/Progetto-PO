@@ -53,7 +53,6 @@ public class StatsPanel extends JFrame {
         setSize(600, 300);
         setVisible(true);
 
-
         check.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

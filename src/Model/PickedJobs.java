@@ -4,19 +4,29 @@ import Controller.ApiController;
 import Controller.FileController;
 
 import java.io.IOException;
+import java.util.HashSet;
 
 /**
  * @author Chiara
  */
 public class PickedJobs extends JobBoard {
 
+    private String fileName = "PickedJobs.txt";
     private FileController fileController;
 
     public PickedJobs() throws IOException {
-        fileController = new FileController("PickedJobs.txt");
+        fileController = new FileController(fileName);
         if (this.jobs == null) {
             this.jobs.addAll(fileController.readJobsFromFile());
         }
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
     //bdihcbeihbcihebrihcbeibci
@@ -41,6 +51,17 @@ public class PickedJobs extends JobBoard {
             }
     }
 
+    public void addAll(HashSet<Job> jobs){
+        for(Job j : jobs){
+            try {
+                this.add(j);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
     public void Update() throws Exception {
         //scorre jobs e per ogni lavoro se non è più presente lo cancella
         for (Job j : jobs) {
@@ -48,6 +69,19 @@ public class PickedJobs extends JobBoard {
                 this.deleteJob(j.getId());
                 fileController.saveJobsOnFile(jobs);
             }
+        }
+    }
+
+    public Boolean verifyJobsPresent(){
+
+        try {
+            if(fileController.readJobsFromFile() == null)
+                return false;
+            else{
+                return true;
+            }
+        } catch (IOException e) {
+            return false;
         }
     }
 
