@@ -1,7 +1,7 @@
 package GUI;
 
 import Model.Job;
-import Model.JobBoard;
+import Model.StatsJobBoard;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -16,7 +16,8 @@ public class StatsPanel extends JFrame {
     private JTextField txtPeriod;
     private JButton check;
     private HashSet<Job> offers;
-    private JobBoard jobBoard = new JobBoard();
+
+    private StatsJobBoard statsJobBoard = new StatsJobBoard();
 
     private String keyWord;
 
@@ -25,10 +26,10 @@ public class StatsPanel extends JFrame {
         this.setKeyWord(keyWord);
 
 
-        jobBoard.setJobs(this.getOffers());
+        statsJobBoard.setJobs(this.getOffers());
 
-        lblJobTot.setText(String.valueOf(jobBoard.getNumOfJobs()));
-        lblFullTimePercent.setText(String.valueOf(jobBoard.calculatePercentage()) + "%");
+        lblJobTot.setText(String.valueOf(statsJobBoard.getNumOfJobs()));
+        lblFullTimePercent.setText(String.valueOf(statsJobBoard.calculatePercentage()) + "%");
 
         add(statsPanel);
         setTitle("Stats");
@@ -43,12 +44,12 @@ public class StatsPanel extends JFrame {
                 try {
                     if (!getKeyWord().equals(""))
                         JOptionPane.showMessageDialog(statsPanel, "There were created " +
-                                jobBoard.dateOfCreation(Integer.parseInt(txtPeriod.getText())) + " offers in the last " +
+                                statsJobBoard.dateOfCreation(Integer.parseInt(txtPeriod.getText())) + " offers in the last " +
                                 txtPeriod.getText() + " days with key word: " + getKeyWord());
 
                     else
                         JOptionPane.showMessageDialog(statsPanel, "There were created " +
-                                jobBoard.dateOfCreation(Integer.parseInt(txtPeriod.getText())) + " offers in the last " +
+                                statsJobBoard.dateOfCreation(Integer.parseInt(txtPeriod.getText())) + " offers in the last " +
                                 txtPeriod.getText() + " days.");
 
                 }catch (Exception exception){

@@ -1,6 +1,9 @@
 package Model;
 
 import java.net.URL;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Vector;
 
 public class Job {
     private String id;
@@ -133,6 +136,8 @@ public class Job {
         return company_logo;
     }
 
+
+
     /**
      *
      * @param id
@@ -235,4 +240,6 @@ public class Job {
                 ", Description='" + description + '\'' +
                 '}';
     }
+
+
 }

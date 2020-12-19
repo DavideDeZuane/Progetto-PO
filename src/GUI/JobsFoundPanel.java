@@ -3,8 +3,8 @@ package GUI;
 import Controller.ApiController;
 import Controller.GuiApiController;
 import Model.Job;
+import Model.JobBoard;
 import Model.PickedJobs;
-
 import javax.swing.*;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
@@ -13,12 +13,10 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.*;
 import java.util.*;
-
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
-
 import java.awt.Desktop;
 import java.net.URL;
 import java.util.stream.Collector;
@@ -35,47 +33,22 @@ public class JobsFoundPanel extends JFrame{
     private JPanel buttonPanel;
     private JButton btnHowToApply;
 
+    private JobBoard job = new JobBoard();
+
     private final static int COLUMNS = 3;
 
-    //private String keyWord = null; //utilizzata nelle statistiche
-
-    //private URL url;
-
     private Object[] columnHeaders = {"Type","Company","Location"};
-    private Object[][] rowData = null;
 
     private Desktop desktop = Desktop.getDesktop();
-
-
-    private HashSet<Job> offerte = new HashSet<>();
-    private ApiController controller = new GuiApiController();
-
-
     private PickedJobs pickedJobs = new PickedJobs();
 
 
-    public JobsFoundPanel(HashSet<Job> offerte, String keyWord) throws IOException {
+    public JobsFoundPanel(JobBoard job, String keyWord) throws IOException {
 
-        this.offerte.addAll(offerte);
-        //this.url = url;
-/*
-        try {
-            controller.setUrl(url);
-            offerte.addAll(controller.parsing());
+        this.job = job;
 
-           // if(controller.parsing().isEmpty()){
-             //   JOptionPane.showMessageDialog(jobsFoundPanel,"     Bro, jobs ain't found");
-            //}
-
-        }catch(Exception e){
-        }*/
-
-
-        //tabella aggiunta da codice e non dal form per motivi di grafica
-        //companyUrl = new URL[offerte.size()];
-        rowData = new String[offerte.size()][COLUMNS];
-
-        this.tableJobs = new JTable(setTable(offerte.iterator()), columnHeaders);
+        //creazione da codice e impostazioni tabella
+        this.tableJobs = new JTable(this.job.setTableJobs(this.job.getJobs().iterator(), this.job.getNumOfJobs(), COLUMNS), columnHeaders);
         this.tableJobs.setPreferredScrollableViewportSize(new Dimension(500,50));
         this.tableJobs.setFillsViewportHeight(true);
 
@@ -96,7 +69,7 @@ public class JobsFoundPanel extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                new StatsPanel(offerte, keyWord);
+                new StatsPanel(job.getJobs(), keyWord);
             }
         });
 
@@ -113,11 +86,11 @@ public class JobsFoundPanel extends JFrame{
 
                 try {
 
-                    if(getUrl(tableJobs.getSelectedRow()).toString().equals("http://http")){
+                    if(job.getCompany_url(tableJobs.getSelectedRow(), job.getJobs()).toString().equals("http://http")){
                         JOptionPane.showMessageDialog(jobsFoundPanel, "The link is not available");
                     }
                     else{
-                        desktop.browse(getUrl(tableJobs.getSelectedRow()).toURI());
+                        desktop.browse(job.getCompany_url(tableJobs.getSelectedRow(), job.getJobs()).toURI());
                     }
 
                 }catch (IOException ioException) {
@@ -147,7 +120,7 @@ public class JobsFoundPanel extends JFrame{
                 if(job.){
 
                 }*/
-                getJob(tableJobs.getSelectedRow());
+                //getJob(tableJobs.getSelectedRow());
                 //pickedJobs.add();
 
                 /*
@@ -162,7 +135,7 @@ public class JobsFoundPanel extends JFrame{
         btnExit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                //setDefaultCloseOperation(EXIT_ON_CLOSE);
             }
         });
 
@@ -172,32 +145,6 @@ public class JobsFoundPanel extends JFrame{
 
             }
         });
-    }
-
-    public Object[][] setTable(Iterator iterator){
-        Job tmp = null;
-        int count = 0;
-
-        for(int i = 0; i < offerte.size(); i++) {
-            tmp = (Job) iterator.next();
-            rowData[i][count++] = tmp.getType();
-            rowData[i][count++] = tmp.getCompany();
-            rowData[i][count++] = tmp.getLocation();
-            count = 0;
-        }
-        return rowData;
-    }
-
-    public URL getUrl(int index) {
-        Vector<Job> jobs = new Vector<>();
-        jobs.addAll(offerte);
-        return jobs.elementAt(index).getCompany_url();
-    }
-
-    public Job getJob(int index) {
-        Vector<Job> jobs = new Vector<>();
-        jobs.addAll(offerte);
-        return jobs.elementAt(index);
     }
 }
 

@@ -3,6 +3,8 @@ package GUI;
 import Controller.ApiController;
 import Controller.GuiApiController;
 import Controller.Parameters;
+import Model.Job;
+import Model.JobBoard;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -12,8 +14,8 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.EnumSet;
+import java.util.HashSet;
 import java.util.Vector;
-
 import static Controller.Parameters.parametri;
 
 public class BootStrapPanel extends JFrame{
@@ -25,11 +27,11 @@ public class BootStrapPanel extends JFrame{
     private JButton btnShowJobsSaved;
     private JCheckBox fullTime;
 
-    URL url = null;
+    private JobBoard job = new JobBoard();
 
     private ApiController apiController = null;
 
-
+    private HashSet<Job> offers = new HashSet<>();
     public BootStrapPanel() {
 
         add(rootPanel);
@@ -39,22 +41,34 @@ public class BootStrapPanel extends JFrame{
         setVisible(true);
 
 
+
         btnSearch.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
                 apiController = new GuiApiController();
 
+                //todo configurazione file
+                /*
                 try {
-                    url = null;
-                    url = ApiController.query(apiController.setFilters(txtLocation,txtDescription,fullTime.isSelected()));
-                    new JobsFoundPanel(url, txtDescription.getText());
-
-                } catch (MalformedURLException exception) {
-
-                    JOptionPane.showMessageDialog(rootPanel,"Invalid filters");
+                    System.out.println(ApiController.readConfigurationFile());
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
+                }*/
+
+                try {
+                    apiController.setUrl(ApiController.query(apiController.setFilters(txtLocation, txtDescription, fullTime.isSelected())));
+                    offers.addAll(apiController.parsing());
+                    job.setJobs(offers);
+
+                    if (apiController.parsing().isEmpty()) {
+                        JOptionPane.showMessageDialog(rootPanel, "     Bro, jobs ain't found");
+                    } else
+                        new JobsFoundPanel(job, txtDescription.getText());
+
+
+                } catch (IOException exception) {
+                    JOptionPane.showMessageDialog(rootPanel, "Invalid filters");
                 }
             }
         });
