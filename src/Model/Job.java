@@ -1,5 +1,7 @@
 package Model;
 
+import org.jsoup.Jsoup;
+
 import java.net.URL;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -125,7 +127,7 @@ public class Job {
      * @return
      */
     public String getHow_to_apply() {
-        return how_to_apply;
+        return Jsoup.parse(how_to_apply).text();
     }
 
     /**

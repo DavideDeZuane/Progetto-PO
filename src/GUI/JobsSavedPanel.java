@@ -1,6 +1,8 @@
 package GUI;
 
 import Model.Job;
+import Model.JobBoard;
+import Model.StatsJobBoard;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -15,6 +17,9 @@ public class JobsSavedPanel extends JFrame{
     private JButton deleteButton;
     private JButton btnDeleteAll;
     private JButton btnExit;
+    private JobBoard job = new JobBoard();
+    private HashSet<Job> jobs;
+    private String keyWord;
 
     public JobsSavedPanel(String keyWord){
 
@@ -30,7 +35,7 @@ public class JobsSavedPanel extends JFrame{
                 HashSet<Job> offerte = null;
 
                 try{
-                    new StatsPanel(offerte, keyWord);
+                    new StatsPanel(jobs, keyWord);
                 }catch (Exception exception){
                     JOptionPane.showMessageDialog(jobsSavedPanel,"     Bro, jobs ain't saved");
                 }

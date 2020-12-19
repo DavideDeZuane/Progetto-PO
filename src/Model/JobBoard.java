@@ -46,6 +46,15 @@ public class JobBoard {
 
     public void setJobs(HashSet<Job> temp){ this.jobs=temp; }
 
+    public String getKeyWord(){
+        return this.keyWord;
+    }
+
+    public void setKeyWord(String keyWord){
+        this.keyWord = keyWord;
+    }
+
+
     @Override
     public String toString() {
         return "JobBoard{" +
@@ -72,6 +81,13 @@ public class JobBoard {
         return jobs.elementAt(index).getCompany_url();
     }
 
+    public String getHow_to_apply(int index, HashSet<Job> offerte) {
+        Vector<Job> jobs = new Vector<>();
+        jobs.addAll(offerte);
+        return jobs.elementAt(index).getHow_to_apply();
+    }
+
+
     /**
      *
      * @param iterator
@@ -94,4 +110,7 @@ public class JobBoard {
         }
         return rowData;
     }
+
+
+
 }

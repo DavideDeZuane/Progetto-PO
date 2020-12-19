@@ -60,11 +60,12 @@ public class BootStrapPanel extends JFrame{
                     apiController.setUrl(ApiController.query(apiController.setFilters(txtLocation, txtDescription, fullTime.isSelected())));
                     offers.addAll(apiController.parsing());
                     job.setJobs(offers);
+                    job.setKeyWord(txtDescription.getText());
 
                     if (apiController.parsing().isEmpty()) {
                         JOptionPane.showMessageDialog(rootPanel, "     Bro, jobs ain't found");
                     } else
-                        new JobsFoundPanel(job, txtDescription.getText());
+                        new JobsFoundPanel(job);
 
 
                 } catch (IOException exception) {

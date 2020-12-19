@@ -1,6 +1,7 @@
 package GUI;
 
 import Model.Job;
+import Model.JobBoard;
 import Model.StatsJobBoard;
 
 import javax.swing.*;
@@ -15,21 +16,20 @@ public class StatsPanel extends JFrame {
     private JLabel lblJobTot;
     private JTextField txtPeriod;
     private JButton check;
-    private HashSet<Job> offers;
+    private JLabel lblKeyWordRepeat;
+    private StatsJobBoard statsJobBoard;
 
-    private StatsJobBoard statsJobBoard = new StatsJobBoard();
+    public StatsPanel(HashSet<Job> jobs, String keyWord){
 
-    private String keyWord;
+        statsJobBoard = new StatsJobBoard();
 
-    public StatsPanel(HashSet<Job> offers, String keyWord){
-        this.setOffers(offers);
-        this.setKeyWord(keyWord);
-
-
-        statsJobBoard.setJobs(this.getOffers());
+        statsJobBoard.setJobs(jobs);
+        statsJobBoard.setKeyWord(keyWord);
 
         lblJobTot.setText(String.valueOf(statsJobBoard.getNumOfJobs()));
         lblFullTimePercent.setText(String.valueOf(statsJobBoard.calculatePercentage()) + "%");
+        lblKeyWordRepeat.setText("The key word " + statsJobBoard.getKeyWord() + " was repeated " +
+                statsJobBoard.keyWords(statsJobBoard.getKeyWord()) + " times in the job descriptions.");
 
         add(statsPanel);
         setTitle("Stats");
@@ -42,10 +42,10 @@ public class StatsPanel extends JFrame {
             public void actionPerformed(ActionEvent e) {
 
                 try {
-                    if (!getKeyWord().equals(""))
+                    if (!statsJobBoard.getKeyWord().equals(""))
                         JOptionPane.showMessageDialog(statsPanel, "There were created " +
                                 statsJobBoard.dateOfCreation(Integer.parseInt(txtPeriod.getText())) + " offers in the last " +
-                                txtPeriod.getText() + " days with key word: " + getKeyWord());
+                                txtPeriod.getText() + " days with key word: " + statsJobBoard.getKeyWord());
 
                     else
                         JOptionPane.showMessageDialog(statsPanel, "There were created " +
@@ -59,19 +59,4 @@ public class StatsPanel extends JFrame {
         });
     }
 
-    public HashSet<Job> getOffers() {
-        return offers;
-    }
-
-    public void setOffers(HashSet<Job> offers) {
-        this.offers = offers;
-    }
-
-    public String getKeyWord() {
-        return keyWord;
-    }
-
-    public void setKeyWord(String keyWord) {
-        this.keyWord = keyWord;
-    }
 }

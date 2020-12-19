@@ -5,6 +5,8 @@ import Controller.GuiApiController;
 import Model.Job;
 import Model.JobBoard;
 import Model.PickedJobs;
+import Model.StatsJobBoard;
+
 import javax.swing.*;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
@@ -43,7 +45,7 @@ public class JobsFoundPanel extends JFrame{
     private PickedJobs pickedJobs = new PickedJobs();
 
 
-    public JobsFoundPanel(JobBoard job, String keyWord) throws IOException {
+    public JobsFoundPanel(JobBoard job) throws IOException {
 
         this.job = job;
 
@@ -69,14 +71,14 @@ public class JobsFoundPanel extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                new StatsPanel(job.getJobs(), keyWord);
+                new StatsPanel(job.getJobs(), job.getKeyWord());
             }
         });
 
         btnShowSavedJobs.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new JobsSavedPanel(keyWord);
+                new JobsSavedPanel(job.getKeyWord());
             }
         });
 
@@ -142,6 +144,25 @@ public class JobsFoundPanel extends JFrame{
         btnHowToApply.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                try {
+
+                    if(job.getHow_to_apply(tableJobs.getSelectedRow(), job.getJobs()).toString().equals("")){
+                        JOptionPane.showMessageDialog(jobsFoundPanel, "The how to apply is not available");
+                    }
+                    else{
+                        //desktop.browse(job.getCompany_url(tableJobs.getSelectedRow(), job.getJobs()).toURI());
+
+                        //job.getHow_to_apply(tableJobs.getSelectedRow(), job.getJobs())
+
+                        JOptionPane.showMessageDialog(jobsFoundPanel, job.getHow_to_apply(tableJobs.getSelectedRow(), job.getJobs()));
+
+
+                    }
+
+                }catch(Exception exception){
+                    JOptionPane.showMessageDialog(jobsFoundPanel,"     Bro, jobs ain't found");
+                }
 
             }
         });
