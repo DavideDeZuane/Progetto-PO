@@ -56,6 +56,7 @@ I prinicipali framework utilizzati per la realizzazione dell'applicazione sono i
 + [Swing](https://docs.oracle.com/javase/7/docs/api/javax/swing/package-summary.html) 
 + [Jackson JSON](https://github.com/FasterXML/jackson/wiki/Jackson-Release-2.12)
 + [Jsoup](https://jsoup.org)
++ [JFreeChart](https://sourceforge.net/projects/jfreechart/files/1.%20JFreeChart/1.0.19/)
 
 
 
