@@ -1,16 +1,10 @@
 package Model;
 
 import java.net.URL;
-import java.text.ParseException;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Vector;
-import java.util.concurrent.TimeUnit;
 
-/**
- * @author Chiara
- */
 public class JobBoard {
 
     protected HashSet<Job> jobs;
@@ -110,7 +104,4 @@ public class JobBoard {
         }
         return rowData;
     }
-
-
-
 }

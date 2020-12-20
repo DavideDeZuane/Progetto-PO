@@ -1,27 +1,14 @@
 package GUI;
 
-import Controller.ApiController;
-import Controller.GuiApiController;
-import Model.Job;
 import Model.JobBoard;
 import Model.PickedJobs;
-import Model.StatsJobBoard;
 
 import javax.swing.*;
-import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.net.*;
-import java.util.*;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URISyntaxException;
-import java.net.URL;
-import java.awt.Desktop;
-import java.net.URL;
-import java.util.stream.Collector;
 
 public class JobsFoundPanel extends JFrame{
     private JPanel jobsFoundPanel;

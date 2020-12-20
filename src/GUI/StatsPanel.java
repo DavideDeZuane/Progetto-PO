@@ -23,9 +23,8 @@ public class StatsPanel extends JFrame {
     private JLabel lblKeyWordRepeat;
     private JButton showChartButton;
     private final StatsJobBoard statsJobBoard;
-    JFreeChart chart;
+    private JFreeChart chart;
     private DefaultPieDataset dataset;
-
 
     public StatsPanel(HashSet<Job> jobs, String keyWord){
 
@@ -36,14 +35,14 @@ public class StatsPanel extends JFrame {
         dataset = new DefaultPieDataset();
         this.dataset.setValue("Full Time", statsJobBoard.calculatePercentage());
         this.dataset.setValue("Part time", 100.0-statsJobBoard.calculatePercentage());
-        chart = ChartFactory.createPieChart("Pie Chart", dataset, true, true, true);
+        chart = ChartFactory.createPieChart("Pie Chart (%)", dataset, true, false, false);
 
         lblJobTot.setText(String.valueOf(statsJobBoard.getNumOfJobs()));
         lblFullTimePercent.setText(String.valueOf(statsJobBoard.calculatePercentage()) + "%");
         lblKeyWordRepeat.setText("The key word " + statsJobBoard.getKeyWord() + " was repeated " +
                 statsJobBoard.keyWords(statsJobBoard.getKeyWord()) + " times in the job descriptions.");
 
-        ChartFrame frame = new ChartFrame("Chart", chart);
+        ChartFrame frame = new ChartFrame("Chart (%)", chart);
         frame.pack();
         PiePlot plot = (PiePlot) chart.getPlot();
         plot.setIgnoreNullValues(true);

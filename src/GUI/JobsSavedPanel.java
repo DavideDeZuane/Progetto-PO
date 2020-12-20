@@ -2,7 +2,6 @@ package GUI;
 
 import Model.Job;
 import Model.JobBoard;
-import Model.StatsJobBoard;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

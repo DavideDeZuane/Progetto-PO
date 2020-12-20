@@ -47,7 +47,7 @@ public abstract class ApiController{
         HashSet<Job> obj = new HashSet<>();
         try {
             obj = mapper.readValue(this.url, new TypeReference<HashSet<Job>>() {});
-                //JOptionPane.showMessageDialog(jobsFoundPanel,"     Bro, jobs ain't found");
+            //JOptionPane.showMessageDialog(jobsFoundPanel,"     Bro, jobs ain't found");
         }catch(Exception e){
             System.out.println("Sto elaborando.....");
             obj.add(mapper.readValue(this.url, Job.class));
@@ -144,11 +144,11 @@ public abstract class ApiController{
 
     //metodi per leggere e modificare il file di configurazione
     public static String readConfigurationFile() throws IOException {
-      FileInputStream ip = new FileInputStream(configFile);
-      prop.load(ip);
-      baseUrl = prop.getProperty("url");
-      requestIdUrl = prop.getProperty("searchidurl");
-      Date data = new Date();
+        FileInputStream ip = new FileInputStream(configFile);
+        prop.load(ip);
+        baseUrl = prop.getProperty("url");
+        requestIdUrl = prop.getProperty("searchidurl");
+        Date data = new Date();
         return prop.getProperty("message")+"\nHa effettuato l'accesso: " +prop.getProperty("user", "localhost")+
                 "\nTramite un dispositivo: " +prop.getProperty("OS")+
                 "\nIl giorno: " + data;
