@@ -55,6 +55,7 @@ public abstract class ApiController{
 
     public boolean parsing() throws IOException{
         try {
+            jobBoard.getJobs().clear();
             jobBoard.getJobs().addAll(mapper.readValue(this.url, new TypeReference<HashSet<Job>>() {})); //mappo json array
             return true;
 

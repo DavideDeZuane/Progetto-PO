@@ -6,7 +6,6 @@ package MainProgram;
 //import GUI.BootStrapPanel;
 
 import GUI.BootStrapPanel;
-import Model.StatsJobBoard;
 
 public class Main {
 /*
@@ -32,8 +31,6 @@ public class Main {
         controller.fill(offerte, url);
         System.out.println(offerte);*/
         BootStrapPanel bootStrapPanel = new BootStrapPanel();
-        StatsJobBoard statsJobBoard = new StatsJobBoard();
-        System.out.println(statsJobBoard.dateOfCreationBis());
 /*
         URL url = null;
         String[] param = new String[10];

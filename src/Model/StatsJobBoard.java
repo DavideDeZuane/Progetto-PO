@@ -54,20 +54,20 @@ public class StatsJobBoard extends JobBoard{
         return recent;
     }
 
-    public int[]  dateOfCreationBis()
+    public double[] dateOfCreationBis()
     {
         if (checkJobSize())
             return null;
         else
             {
-        int [] vector = new int[30];
+        double [] vector = new double[30];
         for(Job j : jobs)
         {
             int period = 30;
             Date date = new Date(j.getCreated_at());
             long diffInMillies = Math.abs(new Date(System.currentTimeMillis()).getTime() - date.getTime());
             int diff = (int) TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-            if(diff<29)
+            if(diff<30)
                 vector[diff]++;
         }
         return vector;
