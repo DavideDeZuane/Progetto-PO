@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.awt.Desktop;
 
 public class JobsFoundPanel extends JFrame{
     private JPanel jobsFoundPanel;
@@ -58,14 +59,30 @@ public class JobsFoundPanel extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                new StatsPanel(job.getJobs(), job.getKeyWord());
+                new StatsJobsFoundPanel(job.getJobs(), job.getKeyWord());
             }
         });
 
         btnShowSavedJobs.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new JobsSavedPanel(job.getKeyWord());
+
+                try {
+                    pickedJobs = new PickedJobs();
+                } catch (IOException exception) {
+                    exception.printStackTrace();
+                }
+
+                try {
+                    if(pickedJobs.setJobsFromFile()){
+                        new JobsSavedPanel(pickedJobs);
+                    }else{
+                        JOptionPane.showMessageDialog(jobsFoundPanel,"bro, there ain't saved jobs");
+                    }
+                } catch (IOException exception) {
+                    JOptionPane.showMessageDialog(jobsFoundPanel,"Error Jobs not found.");
+                }
+
             }
         });
 

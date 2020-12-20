@@ -4,6 +4,7 @@ import Controller.ApiController;
 import Controller.GuiApiController;
 import Model.Job;
 import Model.JobBoard;
+import Model.PickedJobs;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -23,6 +24,8 @@ public class BootStrapPanel extends JFrame{
     private JobBoard job = new JobBoard();
 
     private ApiController apiController = null;
+
+
 
     private HashSet<Job> offers = new HashSet<>();
     public BootStrapPanel() {
@@ -51,14 +54,16 @@ public class BootStrapPanel extends JFrame{
 
                 try {
                     apiController.setUrl(ApiController.query(apiController.setFilters(txtLocation, txtDescription, fullTime.isSelected())));
-                    offers.addAll(apiController.parsing());
+                    //offers.addAll(apiController.parsing());
+                    apiController.setJobBoard(job);
                     job.setJobs(offers);
                     job.setKeyWord(txtDescription.getText());
 
-                    if (apiController.parsing().isEmpty()) {
-                        JOptionPane.showMessageDialog(rootPanel, "     Bro, jobs ain't found");
-                    } else
+                    if (apiController.parsing()) {
                         new JobsFoundPanel(job);
+
+                    } else
+                        JOptionPane.showMessageDialog(rootPanel, "     Bro, jobs ain't found");
 
 
                 } catch (IOException exception) {
@@ -70,7 +75,24 @@ public class BootStrapPanel extends JFrame{
         btnShowJobsSaved.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new JobsSavedPanel(txtDescription.getText());
+
+                PickedJobs pickedJobs = null;
+
+                try {
+                    pickedJobs = new PickedJobs();
+                } catch (IOException exception) {
+                    exception.printStackTrace();
+                }
+
+                try {
+                    if(pickedJobs.setJobsFromFile()){
+                        new JobsSavedPanel(pickedJobs);
+                    }else{
+                        JOptionPane.showMessageDialog(rootPanel,"bro, there ain't saved jobs");
+                    }
+                } catch (IOException exception) {
+                    JOptionPane.showMessageDialog(rootPanel,"Error Jobs not found.");
+                }
             }
         });
     }

@@ -13,7 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashSet;
 
-public class StatsPanel extends JFrame {
+public class StatsJobsSavedPanel extends JFrame {
 
     private JPanel statsPanel;
     private JLabel lblFullTimePercent;
@@ -22,33 +22,32 @@ public class StatsPanel extends JFrame {
     private JButton check;
     private JLabel lblKeyWordRepeat;
     private JButton showChartButton;
+    private JPanel statsJobsSavedPanel;
     private final StatsJobBoard statsJobBoard;
-    private JFreeChart chart;
+    JFreeChart chart;
     private DefaultPieDataset dataset;
 
-    public StatsPanel(HashSet<Job> jobs, String keyWord){
+    public StatsJobsSavedPanel(HashSet<Job> jobs){
+        //super(jobs, keyWord);
 
         statsJobBoard = new StatsJobBoard();
         statsJobBoard.setJobs(jobs);
-        statsJobBoard.setKeyWord(keyWord);
 
         dataset = new DefaultPieDataset();
         this.dataset.setValue("Full Time", statsJobBoard.calculatePercentage());
         this.dataset.setValue("Part time", 100.0-statsJobBoard.calculatePercentage());
-        chart = ChartFactory.createPieChart("Pie Chart (%)", dataset, true, false, false);
+        chart = ChartFactory.createPieChart("Pie Chart", dataset, true, true, true);
 
         lblJobTot.setText(String.valueOf(statsJobBoard.getNumOfJobs()));
         lblFullTimePercent.setText(String.valueOf(statsJobBoard.calculatePercentage()) + "%");
-        lblKeyWordRepeat.setText("The key word " + statsJobBoard.getKeyWord() + " was repeated " +
-                statsJobBoard.keyWords(statsJobBoard.getKeyWord()) + " times in the job descriptions.");
 
-        ChartFrame frame = new ChartFrame("Chart (%)", chart);
+        ChartFrame frame = new ChartFrame("Chart", chart);
         frame.pack();
         PiePlot plot = (PiePlot) chart.getPlot();
         plot.setIgnoreNullValues(true);
 
-        add(statsPanel);
-        setTitle("Stats");
+        add(statsJobsSavedPanel);
+        setTitle("Stats jobs saved");
         setSize(600, 300);
         setVisible(true);
 
@@ -57,15 +56,9 @@ public class StatsPanel extends JFrame {
             public void actionPerformed(ActionEvent e) {
 
                 try {
-                    if (!statsJobBoard.getKeyWord().equals(""))
-                        JOptionPane.showMessageDialog(statsPanel, "There were created " +
-                                statsJobBoard.dateOfCreation(Integer.parseInt(txtPeriod.getText())) + " offers in the last " +
-                                txtPeriod.getText() + " days with key word: " + statsJobBoard.getKeyWord());
-
-                    else
-                        JOptionPane.showMessageDialog(statsPanel, "There were created " +
-                                statsJobBoard.dateOfCreation(Integer.parseInt(txtPeriod.getText())) + " offers in the last " +
-                                txtPeriod.getText() + " days.");
+                    JOptionPane.showMessageDialog(statsJobsSavedPanel, "There were created " +
+                            statsJobBoard.dateOfCreation(Integer.parseInt(txtPeriod.getText())) + " offers in the last " +
+                            txtPeriod.getText() + " days.");
 
                 }catch (Exception exception){
                     JOptionPane.showMessageDialog(statsPanel,"  Bro, you can't write this.");
@@ -79,6 +72,6 @@ public class StatsPanel extends JFrame {
                 frame.setVisible(true);
             }
         });
-    }
 
+    }
 }
