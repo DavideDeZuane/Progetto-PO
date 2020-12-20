@@ -30,9 +30,19 @@ public abstract class ApiController{
     private URL url;
     private final ObjectMapper mapper;
 
+    private JobBoard jobBoard = new JobBoard();
+
     public ApiController(){
         mapper = new ObjectMapper();
         mapper.enable(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT);
+    }
+
+    public JobBoard getJobBoard() {
+        return jobBoard;
+    }
+
+    public void setJobBoard(JobBoard jobBoard) {
+        this.jobBoard = jobBoard;
     }
 
     public abstract String[] setFilters(JTextField txtLocation, JTextField txtDescription, boolean banner);
@@ -43,22 +53,27 @@ public abstract class ApiController{
     public void setUrl(URL url){ this.url = url; }
     public File getConfigFile(){ return configFile; }
 
-    public HashSet<Job> parsing() throws IOException{
-        HashSet<Job> obj = new HashSet<>();
+    public boolean parsing() throws IOException{
         try {
-            obj = mapper.readValue(this.url, new TypeReference<HashSet<Job>>() {});
-                //JOptionPane.showMessageDialog(jobsFoundPanel,"     Bro, jobs ain't found");
+            jobBoard.getJobs().addAll(mapper.readValue(this.url, new TypeReference<HashSet<Job>>() {})); //mappo json array
+            return true;
+
         }catch(Exception e){
-            System.out.println("Sto elaborando.....");
-            obj.add(mapper.readValue(this.url, Job.class));
+
+            if(jobBoard.getJobs().add(mapper.readValue(this.url, Job.class))){ //mappo json object
+                return true;
+            }
+            else{
+                return false;
+            }
         }
-        return obj;
+
     }
 
     public void fill(JobBoard offerte, URL url){
         this.url = url;
         try{
-            offerte.setJobs(parsing());
+            parsing();
         }catch(IOException e){
             System.out.println("Qualche problema");
         }

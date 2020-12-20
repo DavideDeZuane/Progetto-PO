@@ -21,6 +21,19 @@ public class PickedJobs extends JobBoard {
         }
     }
 
+    //aggiunto da ben
+    public boolean setJobsFromFile() throws IOException {
+        fileController = new FileController(fileName);
+
+        if(fileController.readJobsFromFile() == null){
+            return false;
+        }
+        else{
+            jobs.addAll(fileController.readJobsFromFile());
+            return true;
+        }
+    }
+
     public String getFileName() {
         return fileName;
     }
