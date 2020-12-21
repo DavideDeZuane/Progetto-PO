@@ -22,7 +22,7 @@ public class FileController {
     //lavori salvati dall'utente
     private String filename;
     private File file;
-    private ApiController controller;
+    private ApiController controller = new ApiController();
 
     /**
      * the constructor creates a new file if it does not exist
@@ -41,16 +41,14 @@ public class FileController {
      * @param jobs hashset of Job
      * @throws IOException generates an exception if the I/O operations fail
      */
-    public void saveJobsOnFile(HashSet<Job> jobs) throws IOException {
+    public void save(HashSet<Job> jobs) throws IOException {
         if(jobs.isEmpty())
             System.out.println("Non ci sono lavori disponibili");
         else {
-            controller = new GuiApiController();
             controller.getMapper().writeValue(file, jobs);
-            ObjectMapper mapper = new ObjectMapper();
-            ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
+            ObjectWriter writer = controller.getMapper().writer(new DefaultPrettyPrinter());
             writer.writeValue(file, jobs);
-            FileController fin = new FileController(filename);
+            //FileController fin = new FileController(filename);
         }
     }
 
@@ -66,8 +64,8 @@ public class FileController {
             return null;
         }
         else {
-            controller = new GuiApiController();
-            return controller.getMapper().readValue(file, new TypeReference<HashSet<Job>>() {});
+            ObjectMapper mapper = new ObjectMapper();
+            return mapper.readValue(file, new TypeReference<HashSet<Job>>() {});//controller.getMapper().readValue(file, new TypeReference<HashSet<Job>>() {});
         }
     }
 

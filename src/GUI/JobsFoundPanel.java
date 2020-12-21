@@ -5,13 +5,17 @@ import Model.PickedJobs;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.awt.Desktop;
 
-public class JobsFoundPanel extends JFrame{
+public class JobsFoundPanel extends JFrame {
     private JPanel jobsFoundPanel;
     private JButton btnShowSavedJobs;
     private JButton btnSave;
@@ -24,17 +28,18 @@ public class JobsFoundPanel extends JFrame{
     private JButton btnHowToApply;
     private ImageIcon imageIcon;
 
-    private JobBoard job = new JobBoard();
+    private JobBoard job;
 
     private final static int COLUMNS = 3;
 
     private Object[] columnHeaders = {"Type","Company","Location"};
 
     private Desktop desktop = Desktop.getDesktop();
+
     private PickedJobs pickedJobs = new PickedJobs();
 
 
-    public JobsFoundPanel(JobBoard job) throws IOException {
+    public JobsFoundPanel(JobBoard job) throws IOException{
 
         this.job = job;
 
@@ -136,10 +141,13 @@ public class JobsFoundPanel extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                //pickedJobs.addAll(job.getJobs());
+
                 try {
-                    PickedJobs pickedJobs = new PickedJobs();
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
+
+                    pickedJobs.setJobsFromFile();
+                } catch (IOException exception) {
+                    exception.printStackTrace();
                 }
 
                 try {
@@ -175,18 +183,28 @@ public class JobsFoundPanel extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
 
+
+
+
                 try {
 
                     if(job.getHow_to_apply(tableJobs.getSelectedRow(), job.getJobs()).toString().equals("")){
                         JOptionPane.showMessageDialog(jobsFoundPanel, "The how to apply is not available");
                     }
                     else{
-                        //desktop.browse(job.getCompany_url(tableJobs.getSelectedRow(), job.getJobs()).toURI());
 
-                        //job.getHow_to_apply(tableJobs.getSelectedRow(), job.getJobs())
+                        Object[] options = { "Copy on clip board", "Exit" };
 
-                        JOptionPane.showMessageDialog(jobsFoundPanel, job.getHow_to_apply(tableJobs.getSelectedRow(), job.getJobs()));
+                        int result = JOptionPane.showOptionDialog(jobsFoundPanel,job.getHow_to_apply(tableJobs.getSelectedRow(), job.getJobs()) ,"Information",
+                                JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION,
+                                null, options, options[0]);
 
+                        if (result == JOptionPane.YES_OPTION){
+                            StringSelection selection = new StringSelection(job.getHow_to_apply(tableJobs.getSelectedRow(), job.getJobs()));
+                            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                            clipboard.setContents(selection, selection);
+                            JOptionPane.showMessageDialog(jobsFoundPanel,"Text successfully copied to the clip board");
+                        }
 
                     }
 

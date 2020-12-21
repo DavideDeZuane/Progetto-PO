@@ -18,14 +18,14 @@ import java.util.*;
 //todo implementare il metodo fill per riempire wareHouse
 //todo estrarre campo how_to_apply
 
-public abstract class ApiController{
+public class ApiController extends Controller{
 
-    private static String requestIdUrl = "https://jobs.github.com/positions/%s.json";
+    protected static String requestIdUrl = "https://jobs.github.com/positions/%s.json";
     private static String baseUrl = "https://jobs.github.com/positions.json?";
     private static final Properties prop = new Properties();
     private static final File configFile = new File("Resources/Configuration/config.properties");
 
-    protected static EnumSet<Parameters> flags = EnumSet.noneOf(Parameters.class);
+
 
     private URL url;
     private final ObjectMapper mapper;
@@ -45,7 +45,7 @@ public abstract class ApiController{
         this.jobBoard = jobBoard;
     }
 
-    public abstract String[] setFilters(JTextField txtLocation, JTextField txtDescription, boolean banner);
+
 
     //getter e setter
     public ObjectMapper getMapper(){ return mapper; }
@@ -53,28 +53,23 @@ public abstract class ApiController{
     public void setUrl(URL url){ this.url = url; }
     public File getConfigFile(){ return configFile; }
 
-    public boolean parsing() throws IOException{
+
+    //metodo parsing aggiornato
+    public void save(HashSet<Job> jobs) throws IOException{
         try {
-            jobBoard.getJobs().clear();
-            jobBoard.getJobs().addAll(mapper.readValue(this.url, new TypeReference<HashSet<Job>>() {})); //mappo json array
-            return true;
+            jobs.clear();
+            jobs.addAll(mapper.readValue(this.url, new TypeReference<HashSet<Job>>() {})); //mappo json array
 
         }catch(Exception e){
-
-            if(jobBoard.getJobs().add(mapper.readValue(this.url, Job.class))){ //mappo json object
-                return true;
-            }
-            else{
-                return false;
-            }
+            jobs.add(mapper.readValue(this.url, Job.class)); //mappo json object
         }
 
     }
 
-    public void fill(JobBoard offerte, URL url){
+    public void fill(JobBoard offer, URL url){
         this.url = url;
         try{
-            parsing();
+            save(offer.getJobs());
         }catch(IOException e){
             System.out.println("Qualche problema");
         }
@@ -143,19 +138,6 @@ public abstract class ApiController{
             }
         }
         return createUrl(temp);
-    }
-
-    public static String idQuery(String id){ return String.format(requestIdUrl, id); }
-
-    public static boolean verifyOffer(String id) throws Exception{
-        HttpURLConnection conn = (HttpURLConnection) new URL(idQuery(id)).openConnection();
-        if(conn.getResponseCode() == 200) { //dopo lo status code 299 la richiesta o è reindirizzata o non può esser soddisfatta
-            System.out.println("Le offerte selezionate precedentemente sono ancora presenti"); // presenta finestra pop-up sulla GUI
-            return true;
-        }
-        System.out.println(conn.getResponseCode());
-        System.out.println("Metodo per modificare la richiesta dicendo che è stata modificata");
-        return false;
     }
 
     //metodi per leggere e modificare il file di configurazione

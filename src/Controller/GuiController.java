@@ -1,12 +1,15 @@
 package Controller;
 
+import Model.Job;
+
 import javax.swing.*;
 import java.util.EnumSet;
+import java.util.HashSet;
 
-public class GuiApiController extends ApiController{
+public class GuiController extends ApiController implements Filters{
 
 
-    public GuiApiController(){
+    public GuiController(){
         super();
     }
 
@@ -38,5 +41,10 @@ public class GuiApiController extends ApiController{
         }
 
         return filters;
+    }
+
+    @Override
+    public void save(HashSet<Job> jobs) {
+
     }
 }

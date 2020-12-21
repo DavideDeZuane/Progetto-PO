@@ -1,7 +1,7 @@
 package GUI;
 
 import Controller.ApiController;
-import Controller.GuiApiController;
+import Controller.GuiController;
 import Model.Job;
 import Model.JobBoard;
 import Model.PickedJobs;
@@ -24,6 +24,7 @@ public class BootStrapPanel extends JFrame{
     private JobBoard job = new JobBoard();
 
     private ApiController apiController = null;
+    private GuiController guiController = null;
 
     private HashSet<Job> offers = new HashSet<>();
     public BootStrapPanel() {
@@ -43,7 +44,10 @@ public class BootStrapPanel extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                apiController = new GuiApiController();
+                apiController = new ApiController();
+                guiController = new GuiController();
+
+
 
                 //todo configurazione file
                 /*
@@ -54,13 +58,13 @@ public class BootStrapPanel extends JFrame{
                 }*/
 
                 try {
-                    apiController.setUrl(ApiController.query(apiController.setFilters(txtLocation, txtDescription, fullTime.isSelected())));
+                    apiController.setUrl(ApiController.query(guiController.setFilters(txtLocation, txtDescription, fullTime.isSelected())));
                     //offers.addAll(apiController.parsing());
-                    apiController.setJobBoard(job);
                     job.setJobs(offers);
                     job.setKeyWord(txtDescription.getText());
+                    apiController.save(job.getJobs());
 
-                    if (apiController.parsing()) {
+                    if (!job.getJobs().isEmpty()) {
                         new JobsFoundPanel(job);
 
                     } else

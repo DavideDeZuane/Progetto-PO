@@ -5,18 +5,23 @@ package MainProgram;
 
 //import GUI.BootStrapPanel;
 
+import Controller.CheckOffer;
 import GUI.BootStrapPanel;
 
 public class Main {
-/*
+
     static{
         System.out.println("Ciao sono prima del programma");
         try {
-            ApiController.verifyOffer("968d2ec9-80d6-4902-90fb-79478aeb1271");
+            CheckOffer checkOffer = new CheckOffer();
+            Thread thread = new Thread(checkOffer, "Thread Check offer"); //si alterna al main
+            thread.setPriority(Thread.NORM_PRIORITY); //nella jvm c'è un settore che decide l'ordine in cui chiamare i thread
+            //senza specifiche la priorità è normal
+            thread.start(); //nuovo stack dedicato al thread e lancia run()
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }*/
+    }
 
     public static void main(String[] args) throws Exception{
         /*

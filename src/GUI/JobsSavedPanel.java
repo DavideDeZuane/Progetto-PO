@@ -1,5 +1,6 @@
 package GUI;
 
+import Controller.CheckOffer;
 import Model.Job;
 import Model.JobBoard;
 import Model.PickedJobs;
@@ -7,6 +8,8 @@ import Model.PickedJobs;
 import javax.swing.*;
 import javax.swing.table.TableModel;
 import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -38,6 +41,12 @@ public class JobsSavedPanel extends JFrame{
 
         this.pickedJobs = pickedJobs;
 
+        //CheckOffer checkOffer = new CheckOffer();
+
+
+
+        //System.out.println();
+
         this.tableJobs = new JTable(this.pickedJobs.setTableJobs(this.pickedJobs.getJobs().iterator(), this.pickedJobs.getNumOfJobs(), COLUMNS), columnHeaders);
         this.tableJobs.setPreferredScrollableViewportSize(new Dimension(500,50));
         this.tableJobs.setFillsViewportHeight(true);
@@ -45,6 +54,15 @@ public class JobsSavedPanel extends JFrame{
         add(scrollPane);
         setSize(600, 600);
         setVisible(true);
+//int index = 0;
+/*
+        for(int i = 0; i < pickedJobs.getNumOfJobs(); i++){
+            //checkOffer.verify(pickedJobs.getJob(index, this.pickedJobs.getJobs()));
+
+            if(!checkOffer.verify(pickedJobs.getJob(i, this.pickedJobs.getJobs()))){
+                //tableJobs.set
+            }
+        }*/
 
 
         add(jobsSavedPanel);
@@ -95,17 +113,17 @@ public class JobsSavedPanel extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 try {
 
-                    if(pickedJobs.getHow_to_apply(tableJobs.getSelectedRow(), pickedJobs.getJobs()).toString().equals("")){
-                        JOptionPane.showMessageDialog(jobsSavedPanel, "The how to apply is not available");
-                    }
-                    else{
-                        //desktop.browse(job.getCompany_url(tableJobs.getSelectedRow(), job.getJobs()).toURI());
+                    Object[] options = { "Copy on clip board", "Exit" };
 
-                        //job.getHow_to_apply(tableJobs.getSelectedRow(), job.getJobs())
+                    int result = JOptionPane.showOptionDialog(jobsSavedPanel,pickedJobs.getHow_to_apply(tableJobs.getSelectedRow(), pickedJobs.getJobs()) ,"Information",
+                            JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION,
+                            null, options, options[0]);
 
-                        JOptionPane.showMessageDialog(jobsSavedPanel, pickedJobs.getHow_to_apply(tableJobs.getSelectedRow(), pickedJobs.getJobs()));
-
-
+                    if (result == JOptionPane.YES_OPTION){
+                        StringSelection selection = new StringSelection(pickedJobs.getHow_to_apply(tableJobs.getSelectedRow(), pickedJobs.getJobs()));
+                        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                        clipboard.setContents(selection, selection);
+                        JOptionPane.showMessageDialog(jobsSavedPanel,"Text successfully copied to the clip board");
                     }
 
                 }catch(Exception exception){

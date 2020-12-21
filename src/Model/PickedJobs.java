@@ -1,6 +1,7 @@
 package Model;
 
 import Controller.ApiController;
+import Controller.CheckOffer;
 import Controller.FileController;
 
 import java.io.FileNotFoundException;
@@ -13,10 +14,10 @@ import java.util.HashSet;
 public class PickedJobs extends JobBoard {
 
     private String fileName = "PickedJobs.txt";
-    private FileController fileController;
+    private FileController fileController = new FileController(fileName);
 
     public PickedJobs() throws IOException {
-        fileController = new FileController(fileName);
+        //fileController = new FileController(fileName);
         if (this.jobs == null) {
             this.jobs.addAll(fileController.readJobsFromFile());
         }
@@ -24,7 +25,7 @@ public class PickedJobs extends JobBoard {
 
     //aggiunto da ben
     public boolean setJobsFromFile() throws IOException {
-        fileController = new FileController(fileName);
+        //fileController = new FileController(fileName);
 
         if(fileController.readJobsFromFile() == null){
             return false;
@@ -46,12 +47,31 @@ public class PickedJobs extends JobBoard {
     //bdihcbeihbcihebrihcbeibci
     //aggiunge un lavoro all'hash e salva
     public void add(Job job) throws IOException {
+
         for (Job j : jobs)
-            fileController.saveJobsOnFile(this.jobs);
+            fileController.save(this.jobs);
         if (!jobs.contains(job)) {
             jobs.add(job);
-            fileController.saveJobsOnFile(this.jobs);
+            fileController.save(this.jobs);
         }
+
+        /*
+        HashSet<Job> jobs = new HashSet<>();
+        jobs.addAll(fileController.readJobsFromFile());
+        this.jobs = jobs;
+        //jobs.clear();
+
+        for (Job j : jobs) {
+            //fileController.save(this.jobs);
+            if (!this.jobs.contains(job)) {
+                this.jobs.add(job);
+                fileController.save(this.jobs);
+            }/*
+            else{
+
+            }
+        }*/
+
     }
 
     //elimina un lavoro
@@ -60,7 +80,7 @@ public class PickedJobs extends JobBoard {
         for (Job j : jobs)
             if (j.getId().equals(id)) {
                 jobs.remove(j);
-                fileController.saveJobsOnFile(jobs);
+                fileController.save(jobs);
                 return;
             }
     }
@@ -76,15 +96,16 @@ public class PickedJobs extends JobBoard {
 
     }
 
+    /*
     public void Update() throws Exception {
         //scorre jobs e per ogni lavoro se non è più presente lo cancella
         for (Job j : jobs) {
-            if (!ApiController.verifyOffer(j.getId())) {
+            if (!CheckOffer.verify(j)) {
                 this.deleteJob(j.getId());
-                fileController.saveJobsOnFile(jobs);
+                fileController.save(jobs);
             }
         }
-    }
+    }*/
 
     public Boolean verifyJobsPresent(){
 
