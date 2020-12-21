@@ -65,12 +65,13 @@ public class StatsJobsFoundPanel extends JFrame {
         TickUnitSource ticks = NumberAxis.createIntegerTickUnits();
         plot1.getDomainAxis().setRange(0,30);
         plot1.getDomainAxis().setStandardTickUnits(ticks);
+        plot1.getRangeAxis().setRange(0, 10); //da migliorare
 
 
-       // TickUnitSource unitSource = new TickUnits();
+        // TickUnitSource unitSource = new TickUnits();
 
-       // plot1.getDomainAxis().setStandardTickUnits(unitSource);
-       // plot1.getRangeAxis().setStandardTickUnits(unitSource);
+        // plot1.getDomainAxis().setStandardTickUnits(unitSource);
+        // plot1.getRangeAxis().setStandardTickUnits(unitSource);
         //ValueAxis numberAxis = plot1.getRangeAxis();
 
 
@@ -81,7 +82,7 @@ public class StatsJobsFoundPanel extends JFrame {
 
         //ValueAxis rangeAxis = plot1.getRangeAxis(30);
         //plot1.configureRangeAxes();
-       // plot1.setRangeAxis(30,plot1.getRangeAxis(1));
+        // plot1.setRangeAxis(30,plot1.getRangeAxis(1));
         //plot1.setDomainAxis(30,plot1.getRangeAxis(0));
 
 
@@ -98,7 +99,7 @@ public class StatsJobsFoundPanel extends JFrame {
         lblFullTimePercent.setText(String.valueOf(statsJobBoard.calculatePercentage()) + "%");
         lblKeyWordRepeat.setText("The key word " + statsJobBoard.getKeyWord() + " was repeated " +
                 statsJobBoard.keyWords(statsJobBoard.getKeyWord()) + " times in the job descriptions.");
-        
+
         add(statsJobsFoundPanel);
         setTitle("Stats jobs found");
         setSize(600, 300);
@@ -129,8 +130,8 @@ public class StatsJobsFoundPanel extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFrame fr = new JFrame("Chart");
-                fr.getContentPane().add(new ChartPanel(chart), BorderLayout.EAST);
-                fr.getContentPane().add(new ChartPanel(barchart), BorderLayout.WEST);
+                fr.getContentPane().add(new ChartPanel(chart), BorderLayout.WEST);
+                fr.getContentPane().add(new ChartPanel(barchart), BorderLayout.EAST);
                 fr.pack();
                 fr.setVisible(true);
                 //frame.setVisible(true);

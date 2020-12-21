@@ -22,6 +22,7 @@ public class JobsFoundPanel extends JFrame{
     private JTable tableJobs;
     private JPanel buttonPanel;
     private JButton btnHowToApply;
+    private ImageIcon imageIcon;
 
     private JobBoard job = new JobBoard();
 
@@ -45,8 +46,8 @@ public class JobsFoundPanel extends JFrame{
         JScrollPane scrollPane = new JScrollPane(this.tableJobs);
         add(scrollPane);
         setSize(600, 600);
-        setVisible(true);
 
+        setVisible(true);
 
         //impostazioni del panel
         add(jobsFoundPanel);

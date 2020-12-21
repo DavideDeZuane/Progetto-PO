@@ -25,17 +25,18 @@ public class BootStrapPanel extends JFrame{
 
     private ApiController apiController = null;
 
-
-
     private HashSet<Job> offers = new HashSet<>();
     public BootStrapPanel() {
-
         add(rootPanel);
         setTitle("IT Found Jobs");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 200);
+        //getContentPane().setBackground(new Color(0x000000));
         setVisible(true);
 
+        //ImageIcon image = new ImageIcon("src/GUI/femto.png");
+        //setIconImage(image.getImage());
+        //getContentPane().setBackground(new Color(0xFFFFFF));
 
 
         btnSearch.addActionListener(new ActionListener() {
@@ -96,6 +97,7 @@ public class BootStrapPanel extends JFrame{
             }
         });
     }
+
 
     public String getTxtDescription(){
         return txtDescription.getText();
