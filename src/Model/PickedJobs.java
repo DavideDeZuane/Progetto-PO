@@ -3,6 +3,7 @@ package Model;
 import Controller.ApiController;
 import Controller.FileController;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashSet;
 
@@ -95,6 +96,14 @@ public class PickedJobs extends JobBoard {
             }
         } catch (IOException e) {
             return false;
+        }
+    }
+
+    public void deleteAll(){
+        try {
+            fileController.deleteAll();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
     }
 

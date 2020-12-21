@@ -5,6 +5,7 @@ import Model.JobBoard;
 import Model.PickedJobs;
 
 import javax.swing.*;
+import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -117,6 +118,16 @@ public class JobsSavedPanel extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                Object[] options = { "Yes", "No" };
+
+                int result = JOptionPane.showOptionDialog(null, "           Are you sure?", "Warning",
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                        null, options, options[0]);
+
+                if (result == JOptionPane.YES_OPTION) {
+                    pickedJobs.deleteAll();
+                    dispose();
+                }
             }
         });
 
@@ -124,13 +135,33 @@ public class JobsSavedPanel extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                Object[] options = { "Yes", "No" };
+
+                int result = JOptionPane.showOptionDialog(null, "           Are you sure?", "Warning",
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                        null, options, options[0]);
+
+                if (result == JOptionPane.YES_OPTION){
+                    try {
+                        pickedJobs.deleteJob(pickedJobs.getJob(tableJobs.getSelectedRow(), pickedJobs.getJobs()).getId());
+
+                        dispose();
+                        //TableModel model = new PlayerTableModel(pickedJobs.setTableJobs(pickedJobs.getJobs().iterator(),pickedJobs.getNumOfJobs(), COLUMNS), columnHeaders);
+                        //table.setModel(model);
+                        new JobsSavedPanel(pickedJobs);
+                        //tableJobs.setModel((TableModel) tableJobs);                      //tableJobs.
+
+                    } catch (IOException exception) {
+                        exception.printStackTrace();
+                    }
+                }
             }
         });
 
         btnExit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                dispose();
             }
         });
     }

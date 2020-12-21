@@ -76,7 +76,7 @@ public class FileController {
      * @throws FileNotFoundException generates an exception if the file is not found
      */
     public void deleteAll () throws FileNotFoundException {
-        PrintWriter writer = new PrintWriter("jobs.txt");
+        PrintWriter writer = new PrintWriter("PickedJobs.txt");
         writer.print("");
         writer.close();
     }
