@@ -66,9 +66,9 @@ public class FileController {
             return null;
         }
         else {
-                controller = new GuiApiController();
-                return controller.getMapper().readValue(file, new TypeReference<HashSet<Job>>() {});
-            }
+            controller = new GuiApiController();
+            return controller.getMapper().readValue(file, new TypeReference<HashSet<Job>>() {});
+        }
     }
 
     /**

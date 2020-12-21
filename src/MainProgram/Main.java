@@ -31,7 +31,6 @@ public class Main {
         controller.fill(offerte, url);
         System.out.println(offerte);*/
         BootStrapPanel bootStrapPanel = new BootStrapPanel();
-
 /*
         URL url = null;
         String[] param = new String[10];

@@ -35,9 +35,11 @@ public class StatsJobBoard extends JobBoard{
         {
             for (Job j : jobs)
             {
-
-                //DateFormat df = new SimpleDateFormat("EEE MMM dd hh:mm:ss ZZZ yyyy");
-                // Date date = df.parse(j.getCreated_at());
+                //DateTimeFormatter f = DateTimeFormatter.forPattern("EEE MMM dd hh:mm:ss ZZZ yyyy");
+                //LocalDateTime dateTime = f.parseLocalDateTime("2012-01-10 23:13:26");
+                //DateFormat df = new SimpleDateFormat;//
+                //DateFormat.LONG
+                //Date date = df.parse(j.getCreated_at());
                 Date date = new Date(j.getCreated_at());
                 long diffInMillies = Math.abs(new Date(System.currentTimeMillis()).getTime() - date.getTime());
                 long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
@@ -52,19 +54,37 @@ public class StatsJobBoard extends JobBoard{
         return recent;
     }
 
+    public double[] dateOfCreationBis()
+    {
+        if (checkJobSize())
+            return null;
+        else
+            {
+        double [] vector = new double[30];
+        for(Job j : jobs)
+        {
+            int period = 30;
+            Date date = new Date(j.getCreated_at());
+            long diffInMillies = Math.abs(new Date(System.currentTimeMillis()).getTime() - date.getTime());
+            int diff = (int) TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+            if(diff<30)
+                vector[diff]++;
+        }
+        return vector;
+            }
+    }
+
     /*//questa funzione genera statistiche in base a quale parole chiavi l'utente immette
     // restituendo il numero di occorrenze di quella parola chiave nella description del lavoro
     public int keyWords (String word)
     {
         int count = 0;
-
         if(jobs.size()==0)
             return -1;
         else
         {
             for (Job j : jobs)
             {
-
                 String s =j.getDescription();
                 //s = System.Text.RegularExpressions.Regex.Replace(s, "<[^>]*>","");
                 s = s.replaceAll("\\<.*?\\>", "");
@@ -76,11 +96,9 @@ public class StatsJobBoard extends JobBoard{
                     if (word.equals(value))
                         count++;
                 }
-
             }
         }
         return count;
-
     }*/
 
     //questa funzione genera statistiche in base a quale parole chiavi l'utente immette

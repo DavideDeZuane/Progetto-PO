@@ -2,11 +2,8 @@ package GUI;
 
 import Model.Job;
 import Model.StatsJobBoard;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartFrame;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PiePlot;
-import org.jfree.data.general.DefaultPieDataset;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -24,27 +21,19 @@ public class StatsJobsSavedPanel extends JFrame {
     private JButton showChartButton;
     private JPanel statsJobsSavedPanel;
     private final StatsJobBoard statsJobBoard;
-    JFreeChart chart;
-    private DefaultPieDataset dataset;
+    private DefaultCategoryDataset dataset2;
+    private JFreeChart jFreeChart;
+    //ShowCharts showCharts = new ShowCharts();
+
 
     public StatsJobsSavedPanel(HashSet<Job> jobs){
-        //super(jobs, keyWord);
-
         statsJobBoard = new StatsJobBoard();
         statsJobBoard.setJobs(jobs);
 
-        dataset = new DefaultPieDataset();
-        this.dataset.setValue("Full Time", statsJobBoard.calculatePercentage());
-        this.dataset.setValue("Part time", 100.0-statsJobBoard.calculatePercentage());
-        chart = ChartFactory.createPieChart("Pie Chart", dataset, true, true, true);
+        //ChartFrame chartFrame = new ChartFrame("Date of Creation", jFreeChart, true);
 
         lblJobTot.setText(String.valueOf(statsJobBoard.getNumOfJobs()));
         lblFullTimePercent.setText(String.valueOf(statsJobBoard.calculatePercentage()) + "%");
-
-        ChartFrame frame = new ChartFrame("Chart", chart);
-        frame.pack();
-        PiePlot plot = (PiePlot) chart.getPlot();
-        plot.setIgnoreNullValues(true);
 
         add(statsJobsSavedPanel);
         setTitle("Stats jobs saved");
@@ -69,8 +58,10 @@ public class StatsJobsSavedPanel extends JFrame {
         showChartButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.setVisible(true);
+                //showCharts.setVisible(true);
+                //chartFrame.setVisible(true);
             }
+
         });
 
     }
