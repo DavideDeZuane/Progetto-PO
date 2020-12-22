@@ -89,6 +89,8 @@ public class JobBoard {
      * @param columns
      * @return
      */
+
+    /*
     public Object[][] setTableJobs(Iterator iterator, int raws, int columns){
         Job tmp = null;
         int count = 0;
@@ -103,5 +105,5 @@ public class JobBoard {
             count = 0;
         }
         return rowData;
-    }
+    }*/
 }
