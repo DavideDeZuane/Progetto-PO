@@ -3,6 +3,7 @@
 L'obbiettivo del progetto è quello di creare un applicazione che permetta all'utente di monitorare 
 offerte di lavoro e su tali offerte generare delle statistiche.
 
+
 ## L'Applicazione
 L'API [GitHub Jobs](https://jobs.github.com/api) consente di cercare lavori in formato JSON, dove ad ogni **`chiave`** è associato un **`valore`**.
 L'offerta di lavoro generica restituita dall'API ha la seguente forma:
@@ -78,8 +79,6 @@ I prinicipali framework utilizzati per la realizzazione dell'applicazione sono i
 + [Jackson JSON](https://github.com/FasterXML/jackson/wiki/Jackson-Release-2.12)
 + [Jsoup](https://jsoup.org)
 + [JFreeChart](https://sourceforge.net/projects/jfreechart/files/1.%20JFreeChart/1.0.19/)
-
-
 
 
 ## Developers
