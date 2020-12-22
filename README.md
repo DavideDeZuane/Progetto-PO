@@ -27,7 +27,7 @@ Attraverso dei filtri abbiamo la possibilità di scegliere solo la categoria che
 >+ **Latitudine** e **Longitudine**: utilizzabili in sostituzinone alla località a patto che vengano utilizzati entrambi.
 >+ **Full Time**: per limitari i risultati a solo offerte di lavoro full time.
 
-Tali filtri vanno inseiri con una certa sintassi all'interno della richiesta; un esempio è il seguente:
+Tali filtri vanno inseriti con una certa sintassi all'interno della richiesta; un esempio è il seguente:
 > https://jobs.github.com/positions.json?description=python&full_time=true&location=sf
 
 Per un utente medio risulta difficoltoso riuscire a compilare una richiesta simile e leggerne il risultato. 
@@ -50,6 +50,9 @@ della nostra Applicazione.
 > ![](Images/SequenceDiagramUpdate.png)
 Sarà presente anche un file di configurazione contenente gli URL per effettuare le chiamte all'API.
 In questo modo nell'eventualità che venga cambiato l'URL dell'API basterà cambiarlo nel file configurazione senza intervenire direttamente sul programma.
+
+Questi diagrammi sono abbastanza lontani dalla realizzazione finale del progetto; questo perchè durante la fase di sviluppo siamo andati incontro
+a limitazioni e ad aggiunta di funzionalità che hanno modificato le relazioni definite inizalmente.
 
 ## FrameWork
 I prinicipali framework utilizzati per la realizzazione dell'applicazione sono i seguenti:
