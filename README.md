@@ -6,19 +6,19 @@ offerte di lavoro e su tali offerte generare delle statistiche.
 ## L'Applicazione
 L'API [GitHub Jobs](https://jobs.github.com/api) consente di cercare lavori in formato JSON, dove ad ogni **`chiave`** è associato un **`valore`**.
 L'offerta di lavoro generica restituita dall'API ha la seguente forma:
-```JSON
+```json
 {
-    "id": "b1691d49-ee1d-4793-9c1d-7a10a9b8b84a",
-    "type": "Full Time",
-    "url": "https://jobs.github.com/positions/b1691d49-ee1d-4793-9c1d-7a10a9b8b84a",
-    "created_at": "Mon Dec 07 19:23:19 UTC 2020",
-    "company": "EME Hive",
-    "company_url": "http://emehive.co",
-    "location": "New York City",
-    "title": "Infrastructure Engineer for Social Livestreaming App",
-    "description": "<p>...</p>\n",
-    "how_to_apply": "<p>...</p>\n",
-    "company_logo": "https://....png"
+    "id" : "b1691d49-ee1d-4793-9c1d-7a10a9b8b84a",
+    "type" : "Full Time",
+    "url" : "https://jobs.github.com/positions/b1691d49-ee1d-4793-9c1d-7a10a9b8b84a",
+    "created_at" : "Mon Dec 07 19:23:19 UTC 2020",
+    "company" : "EME Hive",
+    "company_url" : "http://emehive.co",
+    "location" : "New York City",
+    "title" : "Infrastructure Engineer for Social Livestreaming App",
+    "description" : "<p>...</p>\n",
+    "how_to_apply" : "<p>...</p>\n",
+    "company_logo" : "https://....png"
 }
 ```
 Attraverso dei filtri abbiamo la possibilità di scegliere solo la categoria che ci interessa. I possibili filtri sono i seguenti:
