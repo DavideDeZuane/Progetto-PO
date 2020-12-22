@@ -83,15 +83,31 @@ I prinicipali framework utilizzati per la realizzazione dell'applicazione sono i
 + [Jsoup](https://jsoup.org)
 + [JFreeChart](https://sourceforge.net/projects/jfreechart/files/1.%20JFreeChart/1.0.19/)
 
+---
 
 ## Funzionamento
 Appena avviatà l'applicazione l'utente troverà la seguente finestra:
 
+---
+
+## Approfondimenti
+
+**Mulithreading**
+Nel nostro progetto abbiamo implementato il multithreaing per verificare se tra un avvio dell'applicazione e l'altro le offerte che l'utente stava
+osservando sono scadute.
+Per evitare che questa verifica fosse troppo dispendiosa a livello di tempo abbiamo deciso di eseguirla su un thread differente per massimizzare
+l'utilizzo della CPU e quindi diminuire i tempi di attesa.
+
+Link utili per approfondire il multithreading:
+
++ <https://www.javatpoint.com/multithreading-in-java>
++ <https://docs.oracle.com/javase/tutorial/essential/concurrency/procthread.html>
+    
 
 ## Developers
 
 | **Autori**  | **Email**| **GitHub**  | **Contributo**  | LinkedIn |
 |---|---|---|---|---|
-|  Chiara Gobbi | <s1093786@studenti.univpm.it> |  [chiaragii](https://github.com/chiaragii) | %   | https://www.linkedin.com/in/chiara-gobbi-1900931bb  |
+|  Chiara Gobbi | <s1093786@studenti.univpm.it> |  [chiaragii](https://github.com/chiaragii) | %   | <https://www.linkedin.com/in/chiara-gobbi-1900931bb>  |
 |  Daniele Benfatto |<s1092454@studenti.univpm.it>   | [benFactotum99](https://github.com/benFactotum99)  |   % |  <https://www.linkedin.com/in/daniele-benfatto-247830201> |
 |  Davide De Zuane | <davide@girori.net>  |  [DavideDeZuane](https://github.com/DavideDeZuane) | %  |  <https://www.linkedin.com/in/davide-de-zuane-021372201> |
