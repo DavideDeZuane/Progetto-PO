@@ -35,24 +35,42 @@ Per ovviere a questo problema abbiamo pensato di integrare nel nostro programma:
 + **Frontend**: un interfaccia che permetta all'utente di inserire facilmente i filtri da applicare alla ricerca;
 + **Backend**: un insieme di classi e strutture dati che permettono all'utente di visualizzare, in un formato a cui è abituato, il risultato della ricerca.
 
----
 
 ## UML
 In prima istanza abbiamo realizzato dei Diagrammi UML per modellare il funzionamento 
 della nostra Applicazione.
-+ **Use-Case Diagram**
+
+ + **Use-Case Diagram**
+
 > ![](Images/UseCase.png)
 
+Brevemente:
++ l'utente si interfaccia e interagiste con il frontend (un insieme di panelli della GUI) 
++ il risultato delle iterazione viene passato al backend che effettua richieste
+     + interroga l'API fornita
+     + ne elabora le risposte 
+     + presenta il risultato dell'elelaborazione all'utente, offrendo alcune funzionalità come statistiche e salvare lavori.
+
+---
+
 + **Class Diagram**
+
 > ![](Images/DiagrammaClassi.png)
 
-+ **Sequence Diagram**
+---
+
++ **Sequence Diagram** 
 > ![](Images/SequenceDiagramUpdate.png)
+
 Sarà presente anche un file di configurazione contenente gli URL per effettuare le chiamte all'API.
 In questo modo nell'eventualità che venga cambiato l'URL dell'API basterà cambiarlo nel file configurazione senza intervenire direttamente sul programma.
 
+---
+
 Questi diagrammi sono abbastanza lontani dalla realizzazione finale del progetto; questo perchè durante la fase di sviluppo siamo andati incontro
-a limitazioni e ad aggiunta di funzionalità che hanno modificato le relazioni definite inizalmente.
+a limitazioni e ad aggiunte di funzionalità che hanno modificato le relazioni definite inizalmente.
+
+
 
 ## FrameWork
 I prinicipali framework utilizzati per la realizzazione dell'applicazione sono i seguenti:
