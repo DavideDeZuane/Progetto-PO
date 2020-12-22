@@ -1,6 +1,7 @@
 package GUI;
 
 import Controller.ApiController;
+import Controller.FileController;
 import Controller.GuiController;
 import Model.Job;
 import Model.JobBoard;
@@ -25,6 +26,8 @@ public class BootStrapPanel extends JFrame{
 
     private ApiController apiController = null;
     private GuiController guiController = null;
+
+
 
     private HashSet<Job> offers = new HashSet<>();
     public BootStrapPanel() {
@@ -82,22 +85,20 @@ public class BootStrapPanel extends JFrame{
             public void actionPerformed(ActionEvent e) {
 
                 PickedJobs pickedJobs = null;
-
+                FileController fileController = null;
                 try {
                     pickedJobs = new PickedJobs();
-                } catch (IOException exception) {
+                    fileController = new FileController("PickedJobs.txt");
+                    fileController.readJobsFromFile(pickedJobs.getJobs());
+                }catch (IOException exception) {
                     exception.printStackTrace();
                 }
 
-                try {
-                    if(pickedJobs.setJobsFromFile()){
+                if(!pickedJobs.getJobs().isEmpty()){
                         new JobsSavedPanel(pickedJobs);
                     }else{
                         JOptionPane.showMessageDialog(rootPanel,"bro, there ain't saved jobs");
                     }
-                } catch (IOException exception) {
-                    JOptionPane.showMessageDialog(rootPanel,"Error Jobs not found.");
-                }
             }
         });
     }

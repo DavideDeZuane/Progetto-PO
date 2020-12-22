@@ -24,7 +24,7 @@ public class CheckOffer extends Controller implements Runnable{
         this.saved = jobs;
         try {
             FileController file = new FileController("PickedJobs.txt");
-            this.saved = file.readJobsFromFile();
+             file.readJobsFromFile(this.saved);
         }catch (IOException e)
         {
             System.out.println("File not found");
@@ -35,7 +35,7 @@ public class CheckOffer extends Controller implements Runnable{
     public void save(){
         try {
             FileController file = new FileController("PickedJobs.txt");
-            this.saved = file.readJobsFromFile();
+            file.readJobsFromFile(this.saved);
         }catch (IOException e)
         {
             System.out.println("File not found");

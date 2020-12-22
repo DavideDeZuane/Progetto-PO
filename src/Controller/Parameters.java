@@ -8,8 +8,6 @@ import java.util.EnumSet;
 public enum Parameters {
     TYPE,
     LOCATION,
-    LATITUDINE,
-    LONGITUDINE,
     DESCRIPTION;
 
     public static EnumSet<Parameters> parametri = EnumSet.noneOf(Parameters.class);

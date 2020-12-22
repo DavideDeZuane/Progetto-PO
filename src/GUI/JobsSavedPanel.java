@@ -121,6 +121,7 @@ public class JobsSavedPanel extends JFrame{
 
                 if (result == JOptionPane.YES_OPTION) {
                     pickedJobs.deleteAll();
+                    pickedJobs.getJobs().clear();
                     guiMenagement.dispose();
                 }
             }
@@ -139,6 +140,7 @@ public class JobsSavedPanel extends JFrame{
                 if (result == JOptionPane.YES_OPTION){
                     try {
                         pickedJobs.deleteJob(pickedJobs.getJob(guiMenagement.getTableJobs().getSelectedRow(), pickedJobs.getJobs()).getId());
+
 
                         guiMenagement.dispose();
                         //TableModel model = new PlayerTableModel(pickedJobs.setTableJobs(pickedJobs.getJobs().iterator(),pickedJobs.getNumOfJobs(), COLUMNS), columnHeaders);

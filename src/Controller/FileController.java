@@ -57,15 +57,16 @@ public class FileController {
      * @return a HashSet of Job
      * @throws IOException generates an exception if the I/O operations fail
      */
-    public HashSet<Job> readJobsFromFile() throws IOException {
+    public void readJobsFromFile(HashSet<Job> jobs) throws IOException {
         if(file.length()==0)
         {
             System.out.println("Non ci sono lavori disponibili");
-            return null;
+            //return null;
         }
         else {
             ObjectMapper mapper = new ObjectMapper();
-            return mapper.readValue(file, new TypeReference<HashSet<Job>>() {});//controller.getMapper().readValue(file, new TypeReference<HashSet<Job>>() {});
+            jobs.addAll(mapper.readValue(file, new TypeReference<HashSet<Job>>() {}));
+            //return mapper.readValue(file, new TypeReference<HashSet<Job>>() {});//controller.getMapper().readValue(file, new TypeReference<HashSet<Job>>() {});
         }
     }
 

@@ -126,15 +126,6 @@ public class ApiController extends Controller{
                     temp += "&";
                 temp += "location=%s";
                 temp = String.format(temp, s[cont]);
-            }else{
-                if(flags.contains(Parameters.LATITUDINE) && flags.contains(Parameters.LONGITUDINE)) {
-                    temp += "lat=%s";
-                    temp = String.format(temp, s[cont++]);
-                    temp += "&long=%s";
-                    temp = String.format(temp, s[cont]);
-                }else{
-                    System.out.println("Devi inserire entrambe, latitudine e longitudine");
-                }
             }
         }
         return createUrl(temp);

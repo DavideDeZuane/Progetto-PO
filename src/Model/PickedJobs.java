@@ -19,13 +19,14 @@ public class PickedJobs extends JobBoard {
     public PickedJobs() throws IOException {
         //fileController = new FileController(fileName);
         if (this.jobs == null) {
-            this.jobs.addAll(fileController.readJobsFromFile());
+            fileController.readJobsFromFile(this.jobs);
         }
     }
 
     //aggiunto da ben
+    /*
     public boolean setJobsFromFile() throws IOException {
-        //fileController = new FileController(fileName);
+        fileController = new FileController(fileName);
 
         if(fileController.readJobsFromFile() == null){
             return false;
@@ -34,7 +35,7 @@ public class PickedJobs extends JobBoard {
             jobs.addAll(fileController.readJobsFromFile());
             return true;
         }
-    }
+    }*/
 
     public String getFileName() {
         return fileName;
@@ -50,27 +51,10 @@ public class PickedJobs extends JobBoard {
 
         for (Job j : jobs)
             fileController.save(this.jobs);
-        if (!jobs.contains(job)) {
-            jobs.add(job);
-            fileController.save(this.jobs);
-        }
-
-        /*
-        HashSet<Job> jobs = new HashSet<>();
-        jobs.addAll(fileController.readJobsFromFile());
-        this.jobs = jobs;
-        //jobs.clear();
-
-        for (Job j : jobs) {
-            //fileController.save(this.jobs);
-            if (!this.jobs.contains(job)) {
-                this.jobs.add(job);
+            if (!jobs.contains(job)) {
+                jobs.add(job);
                 fileController.save(this.jobs);
-            }/*
-            else{
-
             }
-        }*/
 
     }
 
@@ -106,7 +90,7 @@ public class PickedJobs extends JobBoard {
             }
         }
     }*/
-
+/*
     public Boolean verifyJobsPresent(){
 
         try {
@@ -119,7 +103,7 @@ public class PickedJobs extends JobBoard {
             return false;
         }
     }
-
+*/
     public void deleteAll(){
         try {
             fileController.deleteAll();

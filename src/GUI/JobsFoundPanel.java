@@ -1,5 +1,6 @@
 package GUI;
 
+import Controller.FileController;
 import Model.JobBoard;
 import Model.PickedJobs;
 
@@ -31,6 +32,8 @@ public class JobsFoundPanel extends JFrame {
     private JobBoard job;
 
 
+    private int buffer = -2;
+
     //private final static int COLUMNS = 3;
     //private Object[] columnHeaders = {"Type","Company","Location"};
 
@@ -38,6 +41,17 @@ public class JobsFoundPanel extends JFrame {
     private Desktop desktop = Desktop.getDesktop();
 
     private PickedJobs pickedJobs = new PickedJobs();
+
+    private FileController fileController = new FileController("PickedJobs.txt");
+
+    /*
+    static {
+        try {
+            pickedJobs = new PickedJobs();
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+    }*/
 
     GuiMenagement guiMenagement;
 
@@ -47,6 +61,8 @@ public class JobsFoundPanel extends JFrame {
 
         guiMenagement = new GuiMenagement(jobsFoundPanel, "Jobs Found Panel");
         guiMenagement.createTable(tableJobs, this.job);
+
+        fileController.readJobsFromFile(pickedJobs.getJobs());
 
 
         btnStats.addActionListener(new ActionListener() {
@@ -61,20 +77,10 @@ public class JobsFoundPanel extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                try {
-                    pickedJobs = new PickedJobs();
-                } catch (IOException exception) {
-                    exception.printStackTrace();
-                }
-
-                try {
-                    if(pickedJobs.setJobsFromFile()){
-                        new JobsSavedPanel(pickedJobs);
-                    }else{
-                        JOptionPane.showMessageDialog(jobsFoundPanel,"bro, there ain't saved jobs");
-                    }
-                } catch (IOException exception) {
-                    JOptionPane.showMessageDialog(jobsFoundPanel,"Error Jobs not found.");
+                if(!pickedJobs.getJobs().isEmpty()){
+                    new JobsSavedPanel(pickedJobs);
+                }else{
+                    JOptionPane.showMessageDialog(jobsFoundPanel,"bro, there ain't saved jobs");
                 }
 
             }
@@ -107,12 +113,12 @@ public class JobsFoundPanel extends JFrame {
         btnSaveAll.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+/*
                 try {
                     PickedJobs pickedJobs = new PickedJobs();
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
-                }
+                }*/
 
                 if(job.getJobs().isEmpty()){
                     JOptionPane.showMessageDialog(jobsFoundPanel, "Any job to save.");
@@ -130,13 +136,13 @@ public class JobsFoundPanel extends JFrame {
             public void actionPerformed(ActionEvent e) {
 
                 //pickedJobs.addAll(job.getJobs());
-
+/*
                 try {
 
                     pickedJobs.setJobsFromFile();
                 } catch (IOException exception) {
                     exception.printStackTrace();
-                }
+                }*/
 
                 try {
 
@@ -147,21 +153,30 @@ public class JobsFoundPanel extends JFrame {
                         if(guiMenagement.getTableJobs().getSelectedRow() == -1){
                             JOptionPane.showMessageDialog(jobsFoundPanel, "You have not selected any job.");
                         }
-                        else{
-                            if(pickedJobs.getJobs().contains(job.getJob(guiMenagement.getTableJobs().getSelectedRow(), job.getJobs()))){
+                        else{//|| buffer == guiMenagement.getTableJobs().getSelectedRow()
+                            if(pickedJobs.getJobs().contains(job.getJob(guiMenagement.getTableJobs().getSelectedRow(), job.getJobs())) ){
+                                JOptionPane.showMessageDialog(jobsFoundPanel, "Job is already present in the data base");
+
+                            }
+                            else{
+                                pickedJobs.add(job.getJob(guiMenagement.getTableJobs().getSelectedRow(), job.getJobs()));
+                                //buffer = guiMenagement.getTableJobs().getSelectedRow();
+                                JOptionPane.showMessageDialog(jobsFoundPanel, "Job saved successfully in " + pickedJobs.getFileName());
+                            }
+                            /*
+                            if(!pickedJobs.add(job.getJob(guiMenagement.getTableJobs().getSelectedRow(), job.getJobs()))){
                                 JOptionPane.showMessageDialog(jobsFoundPanel, "Job is already present in the data base");
                             }
                             else{
-
-                                pickedJobs.add(job.getJob(guiMenagement.getTableJobs().getSelectedRow(), job.getJobs()));
                                 JOptionPane.showMessageDialog(jobsFoundPanel, "Job saved successfully in " + pickedJobs.getFileName());
 
-                            }
+                            }*/
                         }
                     }
 
                 }catch(Exception exception){
                     JOptionPane.showMessageDialog(jobsFoundPanel,"     Bro, jobs ain't found");
+                    exception.printStackTrace();
                 }
 
             }
