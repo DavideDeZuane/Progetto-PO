@@ -46,7 +46,7 @@ della nostra Applicazione.
 
  + **Use-Case Diagram**
 
-> ![](Images/UseCase.png)
+> ![](Images/UML/UseCase.png)
 
 Brevemente:
 + l'utente si interfaccia e interagiste con il frontend (un insieme di panelli della GUI) 
@@ -59,12 +59,12 @@ Brevemente:
 
 + **Class Diagram**
 
-> ![](Images/DiagrammaClassi.png)
+> ![](Images/UML/DiagrammaClassi.png)
 
 ---
 
 + **Sequence Diagram** 
-> ![](Images/SequenceDiagramUpdate.png)
+> ![](Images/UML/SequenceDiagramUpdate.png)
 
 Sarà presente anche un file di configurazione contenente gli URL per effettuare le chiamte all'API.
 In questo modo nell'eventualità che venga cambiato l'URL dell'API basterà cambiarlo nel file configurazione senza intervenire direttamente sul programma.
