@@ -84,6 +84,10 @@ I prinicipali framework utilizzati per la realizzazione dell'applicazione sono i
 + [JFreeChart](https://sourceforge.net/projects/jfreechart/files/1.%20JFreeChart/1.0.19/)
 
 
+## Funzionamento
+Appena avviatà l'applicazione l'utente troverà la seguente finestra:
+
+
 ## Developers
 
 | **Autori**  | **Email**| **GitHub**  | **Contributo**  | LinkedIn |
