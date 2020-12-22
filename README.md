@@ -1,8 +1,11 @@
+<p align="center">
+<img src="Images/Logo.png" width="150" height="150">
+</p>
+
 # Progetto JOBS GITHUB
 
 L'obbiettivo del progetto è quello di creare un applicazione che permetta all'utente di monitorare 
 offerte di lavoro e su tali offerte generare delle statistiche.
-
 
 ## L'Applicazione
 L'API [GitHub Jobs](https://jobs.github.com/api) consente di cercare lavori in formato JSON, dove ad ogni **`chiave`** è associato un **`valore`**.
