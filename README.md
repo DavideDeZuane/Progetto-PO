@@ -1,5 +1,5 @@
 <p align="center">
-<img src="Images/Logo.png" width="150" height="150">
+<img src="Images/Logo.png" width="175" height="175">
 </p>
 
 # Progetto JOBS GITHUB
@@ -46,7 +46,7 @@ della nostra Applicazione.
 
  + **Use-Case Diagram**
 
-> ![](Images/UseCase.png)
+> ![Panel](Images/UML/UseCase.png)
 
 Brevemente:
 + l'utente si interfaccia e interagiste con il frontend (un insieme di panelli della GUI) 
@@ -59,12 +59,12 @@ Brevemente:
 
 + **Class Diagram**
 
-> ![](Images/DiagrammaClassi.png)
+> ![](Images/UML/DiagrammaClassi.png)
 
 ---
 
 + **Sequence Diagram** 
-> ![](Images/SequenceDiagramUpdate.png)
+> ![](Images/UML/SequenceDiagramUpdate.png)
 
 Sarà presente anche un file di configurazione contenente gli URL per effettuare le chiamte all'API.
 In questo modo nell'eventualità che venga cambiato l'URL dell'API basterà cambiarlo nel file configurazione senza intervenire direttamente sul programma.
@@ -84,10 +84,32 @@ I prinicipali framework utilizzati per la realizzazione dell'applicazione sono i
 + [JFreeChart](https://sourceforge.net/projects/jfreechart/files/1.%20JFreeChart/1.0.19/)
 
 
+## Funzionamento
+Appena avviatà l'applicazione l'utente troverà la seguente finestra:
+
+<img src="Images/Funzionamento/BootStrapPanel.png">
+
+
+![](Images/Funzionamento/Filters.png)
+
+## Approfondimenti
+
+**Mulithreading**
+Nel nostro progetto abbiamo implementato il multithreaing per verificare se tra un avvio dell'applicazione e l'altro le offerte che l'utente stava
+osservando sono scadute.
+Per evitare che questa verifica fosse troppo dispendiosa a livello di tempo abbiamo deciso di eseguirla su un thread differente per massimizzare
+l'utilizzo della CPU e quindi diminuire i tempi di attesa.
+
+Link utili per approfondire il multithreading:
+
++ <https://www.javatpoint.com/multithreading-in-java>
++ <https://docs.oracle.com/javase/tutorial/essential/concurrency/procthread.html>
+    
+
 ## Developers
 
 | **Autori**  | **Email**| **GitHub**  | **Contributo**  | LinkedIn |
 |---|---|---|---|---|
-|  Chiara Gobbi | <s1093786@studenti.univpm.it> |  [chiaragii](https://github.com/chiaragii) | %   | https://www.linkedin.com/in/chiara-gobbi-1900931bb  |
+|  Chiara Gobbi | <s1093786@studenti.univpm.it> |  [chiaragii](https://github.com/chiaragii) | %   | <https://www.linkedin.com/in/chiara-gobbi-1900931bb>  |
 |  Daniele Benfatto |<s1092454@studenti.univpm.it>   | [benFactotum99](https://github.com/benFactotum99)  |   % |  <https://www.linkedin.com/in/daniele-benfatto-247830201> |
 |  Davide De Zuane | <davide@girori.net>  |  [DavideDeZuane](https://github.com/DavideDeZuane) | %  |  <https://www.linkedin.com/in/davide-de-zuane-021372201> |
