@@ -93,7 +93,7 @@ Appena avviatà l'applicazione l'utente troverà la seguente finestra:
 
 
 
-| Indice      | Description |  Key |  Value |
+| Indice      | Descrizione |  Key |  Value |
 | :-----------: | ----------- | :-----------: | :-----------: |
 | **1.**      | La Checkbox permette di selezionare se si vuole ridurre la ricerca a soli lavori Full Time; non inserendo alcune spunta verrano presentati all'utente lavori con una qualsiasi tipologia di duarata della prestazione lavorativa. | Full Time | True |
 | **2.**   |   Il Campo di testo Description di testo permette di inserire una parola chiave da ricercare all'interno della descrizione dell'offerta di lavoro. Esempio: inserendo Java otterremo come risultato tutte le offerte di lavoro che all'interno della loro descrizione contengono la parola chiave Java.| Description | keywork |
@@ -101,9 +101,30 @@ Appena avviatà l'applicazione l'utente troverà la seguente finestra:
 | **4.**      |  Il bottone **Show Saved Jobs** permette all'utente di avere un elenco di lavori da tenere d'occhio | / | / |
 | **5.**   |  Il bottone **Search** permette di visualizzare il risultato dell'interrogazione da parte del nostro progrmma all'API,forendoci tutti i lavori che rispettando i filtri inseirti dall'utente| / | / |
 
+--- 
 
+Il seguente è un esempio di una richiesta in cui come parametri sono stati inseiri:
++ Full Time: True
++ Description: Java
++ Location: Berlino
 
+L'URL che l'utente avrebbe dovuto creare sarebbe stato il seguente:
+> https://jobs.github.com/positions.json?full_time=true&description=java&location=Berlino 
 
+Grazie al programma si astrae questa fase e premendo il tasto search otteniamo la seguente finestra:
+    
+![Jobs Found](Images/Funzionamento/LavoriTrovati.png)
+
+Anche qui sono presenti altri tasti che permettono all'utente di utilizzare le seguenti funzionalità.
+| Indice      | Funzionalità | 
+| :-----------: | ----------- |
+| **6.** | Stats permette di visualizzare statistiche relative ai lavori trovati; esempi sono percentuali di richieste full time e non, informazioni sulla data di creazione dell'offera e quante volte compare la parola chiave all'interno delle descrizioni dei lavori trovati. |
+| **7.** | Mostra le istruzioni ,oppure i link utili come per esmpio link ad un form o contatti email (a seconda dell'azienda) che consentono all'utente di effettuare la domanda per candidarsi al ruolo ricercato. |
+| **8.** | Save permette all'utente di salvare le rischieste a cui è interessato, in modo da poterle in un qualsiasi momento senza cercarle nuovamente. |
+| **9.** | Permette di visualizzare i lavori salvati fino a questo momento dall'utente. |
+| **10.** | Crea un collegamento diretto con la pagina web della compagnia, permettendo all'utente di informarsi sull'azione e sul settore in cui agisce. |
+| **11.** |Permette di salvare tutti i lavori trovati |
+| **12.** | Fa ritornare il programma alla finestra precedente, in cui è necessario inserire i filtri |
 
 
 ## Approfondimenti
