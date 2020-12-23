@@ -31,6 +31,8 @@ public class JobsSavedPanel extends JFrame{
     private final int widthPanel = 625;
     private final int heightPanel = 695;
 
+    private Object[] columnHeaders = {"Type","Company","Location","Title", "Status"};
+
     public JobsSavedPanel(PickedJobs pickedJobs){
 
         this.pickedJobs = pickedJobs;

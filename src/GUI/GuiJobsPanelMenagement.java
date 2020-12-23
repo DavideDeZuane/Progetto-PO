@@ -18,16 +18,21 @@ public class GuiJobsPanelMenagement extends GuiMenagement implements GuiJobsPane
 
     private Object[] columnHeaders = {"Type","Company","Location","Title"};
 
-    private CheckOffer checkOffer = new CheckOffer();
-
-    //private JPanel panel;
-    //private String namePanel;
+    private Object[][] upRowData;
 
 
     public GuiJobsPanelMenagement(JPanel panel, String namePanel){
         super(panel, namePanel);
         //this.panel = panel;
         //this.namePanel = namePanel;
+    }
+
+    public Object[][] getUpRowData() {
+        return upRowData;
+    }
+
+    public void setUpRowData(Object[][] upRowData) {
+        this.upRowData = upRowData;
     }
 
     public void createTable(JTable tableJobs, JobBoard job){
