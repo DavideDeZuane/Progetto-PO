@@ -87,10 +87,10 @@ I prinicipali framework utilizzati per la realizzazione dell'applicazione sono i
 ## Funzionamento
 Appena avviatà l'applicazione l'utente troverà la seguente finestra:
 
+<img src="Images/Funzionamento/BootStrapPanel.png" heigth="50">
+
+
 ![](Images/Funzionamento/Filters.png)
-
-
-![](Images/Funzionamento/BootstrapPanel.png)
 
 ## Approfondimenti
 
