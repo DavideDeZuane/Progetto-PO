@@ -59,7 +59,7 @@ Brevemente:
 
 + **Class Diagram**
 
-> ![](Images/UML/DiagrammaClassi.png)
+> ![Finestre Principali](Images/UML/DiagrammaClassi.png)
 
 ---
 
@@ -87,6 +87,14 @@ I prinicipali framework utilizzati per la realizzazione dell'applicazione sono i
 ## Funzionamento
 Appena avviatà l'applicazione l'utente troverà la seguente finestra:
 
+![](Images/Funzionamento/BootStrapPanel.png)
+
+
+```diff
+- 1.
+
+- 2. 
+```
 
 ![](Images/Funzionamento/Filters.png)
 
