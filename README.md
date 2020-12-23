@@ -1,5 +1,5 @@
 <p align="center">
-<img src="Images/Logo.png" width="150" height="150">
+<img src="Images/Logo.png" width="175" height="175">
 </p>
 
 # Progetto JOBS GITHUB
@@ -46,7 +46,7 @@ della nostra Applicazione.
 
  + **Use-Case Diagram**
 
-> ![](Images/UML/UseCase.png)
+> ![Panel](Images/UML/UseCase.png)
 
 Brevemente:
 + l'utente si interfaccia e interagiste con il frontend (un insieme di panelli della GUI) 
@@ -83,12 +83,10 @@ I prinicipali framework utilizzati per la realizzazione dell'applicazione sono i
 + [Jsoup](https://jsoup.org)
 + [JFreeChart](https://sourceforge.net/projects/jfreechart/files/1.%20JFreeChart/1.0.19/)
 
----
 
 ## Funzionamento
 Appena avviatà l'applicazione l'utente troverà la seguente finestra:
 
----
 
 ## Approfondimenti
 
