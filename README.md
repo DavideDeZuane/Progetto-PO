@@ -72,6 +72,11 @@ Implementando l'interfaccia Set non può contenere due elementi uguali ed in par
 Sarà presente anche un file di configurazione contenente gli URL per effettuare le chiamte all'API.
 In questo modo nell'eventualità che venga cambiato l'URL dell'API basterà cambiarlo nel file configurazione senza intervenire direttamente sul programma.
 
+```properties
+    url = https://jobs.github.com/positions.json?
+    idurl = https://jobs.github.com/positions/.json
+    ... ulterirori proprietà come eventuali path di file etc ...
+```
 ---
 
 Questi diagrammi sono abbastanza lontani dalla realizzazione finale del progetto; questo perchè durante la fase di sviluppo siamo andati incontro
@@ -176,6 +181,7 @@ Link utili per approfondire il multithreading:
 ## Possibili migliormaneti
 - [ ] Aggiunta del multithreadung per il controllo delle offerte
 - [ ] Storico delle Statistiche
+- [ ] implementare una form che permetta all'utente di modificare il file config.properties
 
 
 ## Developers
