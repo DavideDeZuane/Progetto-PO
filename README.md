@@ -88,25 +88,21 @@ I prinicipali framework utilizzati per la realizzazione dell'applicazione sono i
 Appena avviatà l'applicazione l'utente troverà la seguente finestra:
 
 ![](Images/Funzionamento/BootStrapPanel.png)
+| Indice      | Description |  Key |  Value |
+| :-----------: | ----------- | ----------- | ----------- |
+| **1.**      |  QUalcosa | Full Time | True |
+| **2.**   |  Qualcosa| Description | keywork |
 
 
-```diff
-- 1.
-
-- 2. 
-```
 
 ![](Images/Funzionamento/Filters.png)
 
-```diff
-- 1. La Checkbox permette di selezionare se si vuole ridurre la ricerca a soli lavori Full Time; 
-- non inserendo alcune spunta verrano presentati all'utente lavori con una qualsiasi tipologia di duarata della prestazione lavorativa.
+| Indice      | Description |  Key |  Value |
+| :-----------: | ----------- | ----------- | ----------- |
+| **1.**      | La Checkbox permette di selezionare se si vuole ridurre la ricerca a soli lavori Full Time; non inserendo alcune spunta verrano presentati all'utente lavori con una qualsiasi tipologia di duarata della prestazione lavorativa. | Full Time | True |
+| **2.**   |   Il Campo di testo Description di testo permette di inserire una parola chiave da ricercare all'interno della descrizione dell'offerta di lavoro. Esempio: inserendo Java otterremo come risultato tutte le offerte di lavoro che all'interno della loro descrizione contengono la parola chiave Java.| Description | keywork |
+| **3.**   | Il Campo di testo Location di testo permette di filtrare le offerte inserendo: o il nome di una città o il suo codice postale o le sue iniziali. | Location| City |
 
-- 2. Il Campo di testo Description di testo permette di inserire una parola chiave da ricercare all'interno della descrizione dell'offerta di lavoro.
-- Esempio: inserendo Java otterremo come risultato tutte le offerte di lavoro che all'interno della loro descrizione contengono la parola chiave Java.
-
-- 3. Il Campo di testo Location di testo permette di filtrare le offerte inserendo: o il nome di una città o il suo codice postale o le sue iniziali.
-```
 
 
 ## Approfondimenti
