@@ -14,7 +14,7 @@ public class PickedJobs extends JobBoard {
     private String fileName = "PickedJobs.txt";
     private FileController fileController = new FileController(fileName);
 
-    public PickedJobs(String s) throws IOException {
+    public PickedJobs() throws IOException {
         //fileController = new FileController(fileName);
         if (this.jobs == null) {
             fileController.readJobsFromFile(this.jobs);

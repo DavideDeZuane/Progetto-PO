@@ -21,26 +21,23 @@ public class JobsSavedPanel extends JFrame{
     private JButton btnDeleteAll;
     private JButton btnHowToApply;
     private JTable tableJobs;
-    //private JobBoard job = new JobBoard();
-    //private HashSet<Job> jobs;
-    private String keyWord;
-
-    private final static int COLUMNS = 3;
-    //private Object[] columnHeaders = {"Type","Company","Location"};
-
 
     private Desktop desktop = Desktop.getDesktop();
 
     private PickedJobs pickedJobs;
 
-    GuiMenagement guiMenagement;
+    private GuiJobsPanelMenagement guiJobsPanelMenagement;
+
+    private final int widthPanel = 625;
+    private final int heightPanel = 695;
 
     public JobsSavedPanel(PickedJobs pickedJobs){
 
         this.pickedJobs = pickedJobs;
 
-        guiMenagement = new GuiMenagement(jobsSavedPanel, "Jobs Saved Panel");
-        guiMenagement.createTable(tableJobs, this.pickedJobs);
+        guiJobsPanelMenagement = new GuiJobsPanelMenagement(jobsSavedPanel, "Jobs Saved Panel");
+        guiJobsPanelMenagement.createTable(this.tableJobs, this.pickedJobs);
+        guiJobsPanelMenagement.setPanel(this.widthPanel, this.heightPanel);
 
 
         btnStats.addActionListener(new ActionListener() {
@@ -62,11 +59,11 @@ public class JobsSavedPanel extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 try {
 
-                    if(pickedJobs.getCompany_url(guiMenagement.getTableJobs().getSelectedRow(), pickedJobs.getJobs()).toString().equals("http://http")){
+                    if(pickedJobs.getCompany_url(guiJobsPanelMenagement.getTableJobs().getSelectedRow(), pickedJobs.getJobs()).toString().equals("http://http")){
                         JOptionPane.showMessageDialog(jobsSavedPanel, "The link is not available");
                     }
                     else{
-                        desktop.browse(pickedJobs.getCompany_url(guiMenagement.getTableJobs().getSelectedRow(), pickedJobs.getJobs()).toURI());
+                        desktop.browse(pickedJobs.getCompany_url(guiJobsPanelMenagement.getTableJobs().getSelectedRow(), pickedJobs.getJobs()).toURI());
                     }
 
                 }catch (IOException ioException) {
@@ -87,12 +84,12 @@ public class JobsSavedPanel extends JFrame{
 
                     Object[] options = { "Copy on clip board", "Exit" };
 
-                    int result = JOptionPane.showOptionDialog(jobsSavedPanel,pickedJobs.getHow_to_apply(guiMenagement.getTableJobs().getSelectedRow(), pickedJobs.getJobs()) ,"Information",
+                    int result = JOptionPane.showOptionDialog(jobsSavedPanel,pickedJobs.getHow_to_apply(guiJobsPanelMenagement.getTableJobs().getSelectedRow(), pickedJobs.getJobs()) ,"Information",
                             JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION,
                             null, options, options[0]);
 
                     if (result == JOptionPane.YES_OPTION){
-                        StringSelection selection = new StringSelection(pickedJobs.getHow_to_apply(guiMenagement.getTableJobs().getSelectedRow(), pickedJobs.getJobs()));
+                        StringSelection selection = new StringSelection(pickedJobs.getHow_to_apply(guiJobsPanelMenagement.getTableJobs().getSelectedRow(), pickedJobs.getJobs()));
                         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
                         clipboard.setContents(selection, selection);
                         JOptionPane.showMessageDialog(jobsSavedPanel,"Text successfully copied to the clip board");
@@ -117,7 +114,7 @@ public class JobsSavedPanel extends JFrame{
                 if (result == JOptionPane.YES_OPTION) {
                     pickedJobs.deleteAll();
                     pickedJobs.getJobs().clear();
-                    guiMenagement.dispose();
+                    guiJobsPanelMenagement.dispose();
                 }
             }
         });
@@ -134,10 +131,10 @@ public class JobsSavedPanel extends JFrame{
 
                 if (result == JOptionPane.YES_OPTION){
                     try {
-                        pickedJobs.deleteJob(pickedJobs.getJob(guiMenagement.getTableJobs().getSelectedRow(), pickedJobs.getJobs()).getId());
+                        pickedJobs.deleteJob(pickedJobs.getJob(guiJobsPanelMenagement.getTableJobs().getSelectedRow(), pickedJobs.getJobs()).getId());
 
 
-                        guiMenagement.dispose();
+                        guiJobsPanelMenagement.dispose();
                         //TableModel model = new PlayerTableModel(pickedJobs.setTableJobs(pickedJobs.getJobs().iterator(),pickedJobs.getNumOfJobs(), COLUMNS), columnHeaders);
                         //table.setModel(model);
                         new JobsSavedPanel(pickedJobs);
@@ -153,7 +150,7 @@ public class JobsSavedPanel extends JFrame{
         btnExit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                guiMenagement.dispose();
+                guiJobsPanelMenagement.dispose();
             }
         });
     }

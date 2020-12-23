@@ -24,14 +24,6 @@
               <text value="Exit"/>
             </properties>
           </component>
-          <component id="96def" class="javax.swing.JButton" binding="btnStats">
-            <constraints>
-              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Stats"/>
-            </properties>
-          </component>
           <component id="dc94f" class="javax.swing.JButton" binding="btnInternetPage">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
@@ -50,7 +42,7 @@
           </component>
           <component id="bf4f0" class="javax.swing.JButton" binding="deleteButton" default-binding="true">
             <constraints>
-              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="Delete "/>
@@ -58,15 +50,23 @@
           </component>
           <component id="e93a1" class="javax.swing.JButton" binding="btnHowToApply">
             <constraints>
-              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="Show how to apply"/>
             </properties>
           </component>
+          <component id="96def" class="javax.swing.JButton" binding="btnStats">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Stats"/>
+            </properties>
+          </component>
         </children>
       </grid>
-      <vspacer id="2c2dd">
+      <vspacer id="e76cf">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
         </constraints>

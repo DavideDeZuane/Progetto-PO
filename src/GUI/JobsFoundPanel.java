@@ -10,8 +10,11 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.awt.Desktop;
 
 public class JobsFoundPanel extends JFrame {
     private JPanel jobsFoundPanel;
@@ -26,38 +29,27 @@ public class JobsFoundPanel extends JFrame {
     private JButton btnHowToApply;
     private ImageIcon imageIcon;
 
-    private JobBoard job;
-
-
+    private PickedJobs job;
     private int buffer = -2;
-
-    //private final static int COLUMNS = 3;
-    //private Object[] columnHeaders = {"Type","Company","Location"};
-
 
     private Desktop desktop = Desktop.getDesktop();
 
-    private PickedJobs pickedJobs = new PickedJobs("PickedJobs.txt");
+    private PickedJobs pickedJobs = new PickedJobs();
 
     private FileController fileController = new FileController("PickedJobs.txt");
 
-    /*
-    static {
-        try {
-            pickedJobs = new PickedJobs();
-        } catch (IOException exception) {
-            exception.printStackTrace();
-        }
-    }*/
+    private GuiJobsPanelMenagement guiJobsPanelMenagement;
 
-    GuiMenagement guiMenagement;
+    private final int widthPanel = 625;
+    private final int heightPanel = 725;
 
-    public JobsFoundPanel(JobBoard job) throws IOException{
+    public JobsFoundPanel(PickedJobs job) throws IOException{
 
         this.job = job;
 
-        guiMenagement = new GuiMenagement(jobsFoundPanel, "Jobs Found Panel");
-        guiMenagement.createTable(tableJobs, this.job);
+        guiJobsPanelMenagement = new GuiJobsPanelMenagement(jobsFoundPanel, "Jobs Found Panel");
+        guiJobsPanelMenagement.createTable(this.tableJobs, this.job);
+        guiJobsPanelMenagement.setPanel(this.widthPanel, this.heightPanel);
 
         fileController.readJobsFromFile(pickedJobs.getJobs());
 
@@ -89,11 +81,11 @@ public class JobsFoundPanel extends JFrame {
 
                 try {
 
-                    if(job.getCompany_url(guiMenagement.getTableJobs().getSelectedRow(), job.getJobs()).toString().equals("http://http")){
+                    if(job.getCompany_url(guiJobsPanelMenagement.getTableJobs().getSelectedRow(), job.getJobs()).toString().equals("http://http")){
                         JOptionPane.showMessageDialog(jobsFoundPanel, "The link is not available");
                     }
                     else{
-                        desktop.browse(job.getCompany_url(guiMenagement.getTableJobs().getSelectedRow(), job.getJobs()).toURI());
+                        desktop.browse(job.getCompany_url(guiJobsPanelMenagement.getTableJobs().getSelectedRow(), job.getJobs()).toURI());
                     }
 
                 }catch (IOException ioException) {
@@ -117,11 +109,24 @@ public class JobsFoundPanel extends JFrame {
                     ioException.printStackTrace();
                 }*/
 
+                System.out.println(job.getJobs());
+                System.out.println("-----------------------------------------------------------------");
+
                 if(job.getJobs().isEmpty()){
                     JOptionPane.showMessageDialog(jobsFoundPanel, "Any job to save.");
                 }else {
+
                     pickedJobs.addAll(job.getJobs());
-                    JOptionPane.showMessageDialog(jobsFoundPanel, "Jobs saved successfully in " + pickedJobs.getFileName());
+
+                    if(buffer == pickedJobs.getNumOfJobs()){
+                        JOptionPane.showMessageDialog(jobsFoundPanel, "Jobs are already present");
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(jobsFoundPanel, "Jobs saved successfully in " + pickedJobs.getFileName());
+                        buffer = pickedJobs.getNumOfJobs();
+                    }
+
+
                 }
 
 
@@ -132,47 +137,7 @@ public class JobsFoundPanel extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                //pickedJobs.addAll(job.getJobs());
-/*
-                try {
-                    pickedJobs.setJobsFromFile();
-                } catch (IOException exception) {
-                    exception.printStackTrace();
-                }*/
-
-                try {
-
-                    if(job.getJobs().isEmpty()){
-                        JOptionPane.showMessageDialog(jobsFoundPanel, "Any job to save.");
-                    }
-                    else{
-                        if(guiMenagement.getTableJobs().getSelectedRow() == -1){
-                            JOptionPane.showMessageDialog(jobsFoundPanel, "You have not selected any job.");
-                        }
-                        else{//|| buffer == guiMenagement.getTableJobs().getSelectedRow()
-                            if(pickedJobs.getJobs().contains(job.getJob(guiMenagement.getTableJobs().getSelectedRow(), job.getJobs())) ){
-                                JOptionPane.showMessageDialog(jobsFoundPanel, "Job is already present in the data base");
-
-                            }
-                            else{
-                                pickedJobs.add(job.getJob(guiMenagement.getTableJobs().getSelectedRow(), job.getJobs()));
-                                //buffer = guiMenagement.getTableJobs().getSelectedRow();
-                                JOptionPane.showMessageDialog(jobsFoundPanel, "Job saved successfully in " + pickedJobs.getFileName());
-                            }
-                            /*
-                            if(!pickedJobs.add(job.getJob(guiMenagement.getTableJobs().getSelectedRow(), job.getJobs()))){
-                                JOptionPane.showMessageDialog(jobsFoundPanel, "Job is already present in the data base");
-                            }
-                            else{
-                                JOptionPane.showMessageDialog(jobsFoundPanel, "Job saved successfully in " + pickedJobs.getFileName());
-                            }*/
-                        }
-                    }
-
-                }catch(Exception exception){
-                    JOptionPane.showMessageDialog(jobsFoundPanel,"     Bro, jobs ain't found");
-                    exception.printStackTrace();
-                }
+                guiJobsPanelMenagement.saveJob(job, pickedJobs);
 
             }
         });
@@ -180,7 +145,7 @@ public class JobsFoundPanel extends JFrame {
         btnExit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                guiMenagement.dispose();
+                guiJobsPanelMenagement.dispose();
             }
         });
 
@@ -188,37 +153,9 @@ public class JobsFoundPanel extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-
-
-
-                try {
-
-                    if(job.getHow_to_apply(guiMenagement.getTableJobs().getSelectedRow(), job.getJobs()).toString().equals("")){
-                        JOptionPane.showMessageDialog(jobsFoundPanel, "The how to apply is not available");
-                    }
-                    else{
-
-                        Object[] options = { "Copy on clip board", "Exit" };
-
-                        int result = JOptionPane.showOptionDialog(jobsFoundPanel,job.getHow_to_apply(guiMenagement.getTableJobs().getSelectedRow(), job.getJobs()) ,"Information",
-                                JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION,
-                                null, options, options[0]);
-
-                        if (result == JOptionPane.YES_OPTION){
-                            StringSelection selection = new StringSelection(job.getHow_to_apply(guiMenagement.getTableJobs().getSelectedRow(), job.getJobs()));
-                            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-                            clipboard.setContents(selection, selection);
-                            JOptionPane.showMessageDialog(jobsFoundPanel,"Text successfully copied to the clip board");
-                        }
-
-                    }
-
-                }catch(Exception exception){
-                    JOptionPane.showMessageDialog(jobsFoundPanel,"     Bro, jobs ain't found");
-                }
+                guiJobsPanelMenagement.showHowToApply(job);
 
             }
         });
     }
 }
-

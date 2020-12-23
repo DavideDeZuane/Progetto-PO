@@ -4,6 +4,7 @@ import Model.Job;
 import Model.StatsJobBoard;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartFrame;
+import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.TickUnitSource;
@@ -14,9 +15,11 @@ import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.HashSet;
 
-public class DrawCharts {
+public class DrawCharts{
 
     private JFreeChart chart;
     private DefaultPieDataset dataset;
@@ -82,6 +85,14 @@ public class DrawCharts {
     plot1.getDomainAxis().setRange(0,30);
     plot1.getDomainAxis().setStandardTickUnits(ticks);
     //plot1.getRangeAxis().setRange(0, 12); //da migliorare
+}
+
+public void setPanel(){
+    JFrame fr = new JFrame("Chart");
+    fr.getContentPane().add(new ChartPanel(this.getPieChart()), BorderLayout.WEST);
+    fr.getContentPane().add(new ChartPanel(this.getBarChart()), BorderLayout.EAST);
+    fr.pack();
+    fr.setVisible(true);
 }
 
 public void drawPieChart()

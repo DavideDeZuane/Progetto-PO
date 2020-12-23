@@ -2,8 +2,18 @@ package GUI;
 
 import Model.Job;
 import Model.StatsJobBoard;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.TickUnitSource;
+import org.jfree.chart.plot.PiePlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.data.general.DefaultPieDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,60 +31,39 @@ public class StatsJobsFoundPanel extends JFrame {
     private JLabel lblKeyWordRepeat;
     private JButton showChartButton;
     private final StatsJobBoard statsJobBoard;
-    private DrawCharts drawCharts;
-    private JFreeChart barChart;
-    private JFreeChart pieChart;
+
+    private String myKeyWord;
+
+    private GuiStatsPanelMenagement guiStatsPanelMenagement;
+
+    private final int widthPanel = 600;
+    private final int heightPanel = 165;
 
     public StatsJobsFoundPanel(HashSet<Job> jobs, String keyWord){
 
+        this.myKeyWord = keyWord;
+
         statsJobBoard = new StatsJobBoard();
-        statsJobBoard.setJobs(jobs);
-        statsJobBoard.setKeyWord(keyWord);
+        guiStatsPanelMenagement = new GuiStatsPanelMenagement(statsJobsFoundPanel, "Stats jobs found", jobs, keyWord, statsJobBoard);
+        guiStatsPanelMenagement.setCharts();
+        guiStatsPanelMenagement.setTextLabelStats(lblJobTot, lblFullTimePercent, lblKeyWordRepeat);
+        guiStatsPanelMenagement.setPanel(this.widthPanel, this.heightPanel);
 
-        drawCharts = new DrawCharts (jobs, barChart, pieChart, statsJobBoard);
-        drawCharts.drawPieChart();
-        drawCharts.drawBarChart();
-
-        lblJobTot.setText(String.valueOf(statsJobBoard.getNumOfJobs()));
-        lblFullTimePercent.setText(String.valueOf(statsJobBoard.calculatePercentage()) + "%");
-        lblKeyWordRepeat.setText("The key word " + statsJobBoard.getKeyWord() + " was repeated " +
-                statsJobBoard.keyWords(statsJobBoard.getKeyWord()) + " times in the job descriptions.");
-
-        add(statsJobsFoundPanel);
-        setTitle("Stats jobs found");
-        setSize(600, 300);
-        setVisible(true);
 
         check.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                try {
-                    if (!statsJobBoard.getKeyWord().equals(""))
-                        JOptionPane.showMessageDialog(statsJobsFoundPanel, "There were created " +
-                                statsJobBoard.dateOfCreation(Integer.parseInt(txtPeriod.getText())) + " offers in the last " +
-                                txtPeriod.getText() + " days with key word: " + statsJobBoard.getKeyWord());
-
-                    else
-                        JOptionPane.showMessageDialog(statsJobsFoundPanel, "There were created " +
-                                statsJobBoard.dateOfCreation(Integer.parseInt(txtPeriod.getText())) + " offers in the last " +
-                                txtPeriod.getText() + " days.");
-
-                }catch (Exception exception){
-                    JOptionPane.showMessageDialog(statsJobsFoundPanel,"  Bro, you can't write this.");
-                }
+                guiStatsPanelMenagement.check(txtPeriod, myKeyWord);
             }
         });
 
         showChartButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFrame fr = new JFrame("Chart");
-                fr.getContentPane().add(new ChartPanel(drawCharts.getPieChart()), BorderLayout.WEST);
-                fr.getContentPane().add(new ChartPanel(drawCharts.getBarChart()), BorderLayout.EAST);
-                fr.pack();
-                fr.setVisible(true);
+                guiStatsPanelMenagement.showChart();
             }
         });
     }
+
 }

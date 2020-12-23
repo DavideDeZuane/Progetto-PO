@@ -22,7 +22,7 @@ public class BootStrapPanel extends JFrame{
     private JButton btnShowJobsSaved;
     private JCheckBox fullTime;
 
-    private JobBoard job = new JobBoard();
+    private PickedJobs job;
 
     private ApiController apiController = null;
     private GuiController guiController = null;
@@ -38,6 +38,12 @@ public class BootStrapPanel extends JFrame{
         //getContentPane().setBackground(new Color(0x000000));
         setVisible(true);
 
+
+        try {
+            job = new PickedJobs();
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
         //ImageIcon image = new ImageIcon("src/GUI/femto.png");
         //setIconImage(image.getImage());
         //getContentPane().setBackground(new Color(0xFFFFFF));
@@ -87,7 +93,7 @@ public class BootStrapPanel extends JFrame{
                 PickedJobs pickedJobs = null;
                 FileController fileController = null;
                 try {
-                    pickedJobs = new PickedJobs("PickedJobs.txt");
+                    pickedJobs = new PickedJobs();
                     fileController = new FileController("PickedJobs.txt");
                     fileController.readJobsFromFile(pickedJobs.getJobs());
                 }catch (IOException exception) {
