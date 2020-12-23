@@ -87,10 +87,19 @@ I prinicipali framework utilizzati per la realizzazione dell'applicazione sono i
 ## Funzionamento
 Appena avviatà l'applicazione l'utente troverà la seguente finestra:
 
-<img src="Images/Funzionamento/BootStrapPanel.png">
-
 
 ![](Images/Funzionamento/Filters.png)
+
+```diff
+- 1. La Checkbox permette di selezionare se si vuole ridurre la ricerca a soli lavori Full Time; 
+- non inserendo alcune spunta verrano presentati all'utente lavori con una qualsiasi tipologia di duarata della prestazione lavorativa.
+
+- 2. Il Campo di testo Description di testo permette di inserire una parola chiave da ricercare all'interno della descrizione dell'offerta di lavoro.
+- Esempio: inserendo Java otterremo come risultato tutte le offerte di lavoro che all'interno della loro descrizione contengono la parola chiave Java.
+
+- 3. Il Campo di testo Location di testo permette di filtrare le offerte inserendo: o il nome di una città o il suo codice postale o le sue iniziali.
+```
+
 
 ## Approfondimenti
 
@@ -104,6 +113,7 @@ Link utili per approfondire il multithreading:
 
 + <https://www.javatpoint.com/multithreading-in-java>
 + <https://docs.oracle.com/javase/tutorial/essential/concurrency/procthread.html>
+
     
 
 ## Developers
