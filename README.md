@@ -61,6 +61,9 @@ Brevemente:
 
 > ![Finestre Principali](Images/UML/DiagrammaClassi.png)
 
+Nota: abbiamo scelto di utilizzare come struttura dati un HashSet poichè a nostro parere è il migliore in queste situazioni.
+Implementando l'interfaccia Set non può contenere due elementi uguali ed in particolare rende le operazioni di estrazione, inserimento e rimozione molto veloci.
+
 ---
 
 + **Sequence Diagram** 
@@ -115,6 +118,9 @@ Grazie al programma si astrae questa fase e premendo il tasto search otteniamo l
     
 ![Jobs Found](Images/Funzionamento/LavoriTrovati.png)
 
+
+Il pannello dei lavori salvati stampa le offerte di lavoro come una matrice. Abbiamo considerato solamente le informazioni più rilevanti.
+
 Anche qui sono presenti altri tasti che permettono all'utente di utilizzare le seguenti funzionalità.
 | Indice      | Funzionalità | 
 | :-----------: | ----------- |
@@ -130,17 +136,42 @@ Anche qui sono presenti altri tasti che permettono all'utente di utilizzare le s
 ## Approfondimenti
 
 **Mulithreading**
-Nel nostro progetto abbiamo implementato il multithreaing per verificare se tra un avvio dell'applicazione e l'altro le offerte che l'utente stava
-osservando sono scadute.
+Nel nostro progetto abbiamo cercato il multithreaing per verificare se tra un avvio dell'applicazione e l'altro le offerte che l'utente stava
+osservando hanno subito modifiche o sono scadute.
 Per evitare che questa verifica fosse troppo dispendiosa a livello di tempo abbiamo deciso di eseguirla su un thread differente per massimizzare
 l'utilizzo della CPU e quindi diminuire i tempi di attesa.
+
+Abbiamo realizzato una Classe adetta a questo compito che implenta l'interfaccia Runnable.
+Lanciando questo sottoprocesso in un thread parallelo avremmo:
++ tramite read: letto le offerta salvate dall'utente e presenti in un file in formato JSON;
++ tramite read: cercare di stabilire una connessione mandando una richiesta che ha come parametro l'id univoco;
+   anallizzando il **codice di stato** della risposta avremmo stabilito se l'offerta fosse ancora presente o se fosse stata rimossa
++ tramite updateTable: aggiornato i lavori del File cambiando quelle offerte che non erano più presenti con un font Rosso
+
+```java
+    @Override
+    public void run(){
+        try{
+            read():
+            verify();
+            updateTable();
+        }catch(NoJobsException e){
+            System.out.println("Nel file non sono presenti lavori");
+        }
+```
+Tuttavia per questioni di tempo e di difficoltà mell'implementazione non siamo riusciti ad inserire questa funzionalità.
+Sarà una funzionalità che con più calma potrà essere inserita
 
 Link utili per approfondire il multithreading:
 
 + <https://www.javatpoint.com/multithreading-in-java>
 + <https://docs.oracle.com/javase/tutorial/essential/concurrency/procthread.html>
 
-    
+## Possibili migliormaneti
+- [ ] Aggiunta del multithreadung per il controllo delle offerte
+- [ ] Storico delle Statistiche
+
+
 
 ## Developers
 
@@ -149,3 +180,6 @@ Link utili per approfondire il multithreading:
 |  Chiara Gobbi | <s1093786@studenti.univpm.it> |  [chiaragii](https://github.com/chiaragii) | 1/3   | <https://www.linkedin.com/in/chiara-gobbi-1900931bb>  |
 |  Daniele Benfatto |<s1092454@studenti.univpm.it>   | [benFactotum99](https://github.com/benFactotum99)  |   1/3 |  <https://www.linkedin.com/in/daniele-benfatto-247830201> |
 |  Davide De Zuane | <davide@girori.net>  |  [DavideDeZuane](https://github.com/DavideDeZuane) | 1/3  |  <https://www.linkedin.com/in/davide-de-zuane-021372201> |
+
+
+
