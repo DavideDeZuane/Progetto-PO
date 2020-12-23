@@ -6,26 +6,17 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import javax.swing.*;
-import java.io.*;
-import java.net.HttpURLConnection;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.*;
+import java.util.HashSet;
 
 //todo migliorare il metodo query
 //todo implementare il metodo fill per riempire wareHouse
 //todo estrarre campo how_to_apply
 
 public class ApiController extends Controller{
-
-    protected static String requestIdUrl = "https://jobs.github.com/positions/%s.json";
-    private static String baseUrl = "https://jobs.github.com/positions.json?";
-    private static final Properties prop = new Properties();
-    private static final File configFile = new File("Resources/Configuration/config.properties");
-
-
 
     private URL url;
     private final ObjectMapper mapper;
@@ -51,7 +42,6 @@ public class ApiController extends Controller{
     public ObjectMapper getMapper(){ return mapper; }
     public URL getUrl(){ return url; }
     public void setUrl(URL url){ this.url = url; }
-    public File getConfigFile(){ return configFile; }
 
 
     //metodo parsing aggiornato
@@ -129,28 +119,5 @@ public class ApiController extends Controller{
             }
         }
         return createUrl(temp);
-    }
-
-    //metodi per leggere e modificare il file di configurazione
-    public static String readConfigurationFile() throws IOException {
-      FileInputStream ip = new FileInputStream(configFile);
-      prop.load(ip);
-      baseUrl = prop.getProperty("url");
-      requestIdUrl = prop.getProperty("searchidurl");
-      Date data = new Date();
-        return prop.getProperty("message")+"\nHa effettuato l'accesso: " +prop.getProperty("user", "localhost")+
-                "\nTramite un dispositivo: " +prop.getProperty("OS")+
-                "\nIl giorno: " + data;
-    }
-
-    public void setConfigurationFile(String tmp) throws IOException{
-        FileWriter writer = new FileWriter(getConfigFile());
-        prop.setProperty("searchidurl", "https://jobs.github.com/positions/%s.json");
-        prop.setProperty("url", "https://jobs.github.com/positions.json?");
-        prop.setProperty("message", "Welcome to Femto");
-        prop.setProperty("name", tmp);
-        Date data = new Date();
-        prop.store(writer, "Ultima modifica: " +data);
-
     }
 }

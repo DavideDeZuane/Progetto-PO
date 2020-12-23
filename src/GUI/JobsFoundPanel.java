@@ -10,11 +10,8 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.awt.Desktop;
 
 public class JobsFoundPanel extends JFrame {
     private JPanel jobsFoundPanel;
@@ -40,7 +37,7 @@ public class JobsFoundPanel extends JFrame {
 
     private Desktop desktop = Desktop.getDesktop();
 
-    private PickedJobs pickedJobs = new PickedJobs();
+    private PickedJobs pickedJobs = new PickedJobs("PickedJobs.txt");
 
     private FileController fileController = new FileController("PickedJobs.txt");
 
@@ -138,7 +135,6 @@ public class JobsFoundPanel extends JFrame {
                 //pickedJobs.addAll(job.getJobs());
 /*
                 try {
-
                     pickedJobs.setJobsFromFile();
                 } catch (IOException exception) {
                     exception.printStackTrace();
@@ -169,7 +165,6 @@ public class JobsFoundPanel extends JFrame {
                             }
                             else{
                                 JOptionPane.showMessageDialog(jobsFoundPanel, "Job saved successfully in " + pickedJobs.getFileName());
-
                             }*/
                         }
                     }
@@ -226,5 +221,4 @@ public class JobsFoundPanel extends JFrame {
         });
     }
 }
-
 

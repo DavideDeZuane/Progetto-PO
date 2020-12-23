@@ -6,12 +6,19 @@ package MainProgram;
 //import GUI.BootStrapPanel;
 
 import Controller.CheckOffer;
+import Controller.Controller;
 import GUI.BootStrapPanel;
+
+import java.io.IOException;
 
 public class Main {
 
     static{
-        System.out.println("Ciao sono prima del programma");
+        try {
+            Controller.readProp();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         try {
             CheckOffer checkOffer = new CheckOffer();
             Thread thread = new Thread(checkOffer, "Thread Check offer"); //si alterna al main

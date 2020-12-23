@@ -1,30 +1,24 @@
 package Controller;
 
+import Exception.NoJobsException;
 import Model.Job;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashSet;
 
 public class CheckOffer extends Controller implements Runnable{
-    private HashSet<Job> saved;
+    private HashSet<Job> saved = new HashSet<>();
 
     public CheckOffer(){}
-/*
-    @Override
-    public String[] setFilters(JTextField txtLocation, JTextField txtDescription, boolean banner) {
-        String [] id = new String[10];
-        return id;
-    }
-*/
 
     public void save(HashSet<Job> jobs) throws IOException{
+        //saved = new HashSet<>();
         this.saved = jobs;
         try {
             FileController file = new FileController("PickedJobs.txt");
-             file.readJobsFromFile(this.saved);
+            file.readJobsFromFile(this.saved);
         }catch (IOException e)
         {
             System.out.println("File not found");
@@ -57,18 +51,16 @@ public class CheckOffer extends Controller implements Runnable{
         return false;
     }
 
-    public void verify() {
-
-        try {
+    public void verify() throws NoJobsException {
+    if(this.saved != null)
+    {
             for (Job j : this.saved) {
                 if (!HttpConn(j.getId())) { //se non è stata stabilita la connessione
                     System.out.println("Offerta modificata");
                 } else
                     System.out.println("Offerta invariata");
             }
-        } catch (Exception e){
-            e.printStackTrace();
-        }
+        } throw new NoJobsException("Non sono ancora stati salvati lavori");
     }
 
     public static boolean verify(Job job) {
@@ -79,11 +71,14 @@ public class CheckOffer extends Controller implements Runnable{
             return true;
     }
 
-
     @Override
     public void run() {
         System.out.println(Thread.currentThread().getName());
         save();
-        verify();
+        try {
+            verify();
+        } catch (NoJobsException e) {
+            return;
+        }
     }
 }

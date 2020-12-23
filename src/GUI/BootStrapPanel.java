@@ -87,7 +87,7 @@ public class BootStrapPanel extends JFrame{
                 PickedJobs pickedJobs = null;
                 FileController fileController = null;
                 try {
-                    pickedJobs = new PickedJobs();
+                    pickedJobs = new PickedJobs("PickedJobs.txt");
                     fileController = new FileController("PickedJobs.txt");
                     fileController.readJobsFromFile(pickedJobs.getJobs());
                 }catch (IOException exception) {
@@ -95,10 +95,10 @@ public class BootStrapPanel extends JFrame{
                 }
 
                 if(!pickedJobs.getJobs().isEmpty()){
-                        new JobsSavedPanel(pickedJobs);
-                    }else{
-                        JOptionPane.showMessageDialog(rootPanel,"bro, there ain't saved jobs");
-                    }
+                    new JobsSavedPanel(pickedJobs);
+                }else{
+                    JOptionPane.showMessageDialog(rootPanel,"bro, there ain't saved jobs");
+                }
             }
         });
     }

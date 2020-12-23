@@ -1,7 +1,5 @@
 package Model;
 
-import Controller.ApiController;
-import Controller.CheckOffer;
 import Controller.FileController;
 
 import java.io.FileNotFoundException;
@@ -16,7 +14,7 @@ public class PickedJobs extends JobBoard {
     private String fileName = "PickedJobs.txt";
     private FileController fileController = new FileController(fileName);
 
-    public PickedJobs() throws IOException {
+    public PickedJobs(String s) throws IOException {
         //fileController = new FileController(fileName);
         if (this.jobs == null) {
             fileController.readJobsFromFile(this.jobs);
@@ -70,6 +68,8 @@ public class PickedJobs extends JobBoard {
     }
 
     public void addAll(HashSet<Job> jobs){
+        /*if(jobs==null)
+            System.out.println("");*/
         for(Job j : jobs){
             try {
                 this.add(j);
@@ -106,7 +106,7 @@ public class PickedJobs extends JobBoard {
 */
     public void deleteAll(){
         try {
-            fileController.deleteAll();
+            fileController.empty();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
