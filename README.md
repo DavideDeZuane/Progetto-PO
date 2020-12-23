@@ -132,8 +132,14 @@ Anche qui sono presenti altri tasti che permettono all'utente di utilizzare le s
 | **11.** |Permette di salvare tutti i lavori trovati |
 | **12.** | Fa ritornare il programma alla finestra precedente, in cui è necessario inserire i filtri |
 
+All'interno di Show Stats sarà presente un altro tasto che presenta all'utente un istogramma e un diagramma a tortra sulle caratteristiche dei lavori trovati
+![](Images/Funzionamento/Grafici.png)
+
+
 
 ## Approfondimenti
+
+
 
 **Mulithreading**
 Nel nostro progetto abbiamo cercato il multithreaing per verificare se tra un avvio dell'applicazione e l'altro le offerte che l'utente stava
