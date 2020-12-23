@@ -2,15 +2,17 @@ package GUI;
 
 import Model.Job;
 import Model.StatsJobBoard;
+import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashSet;
 
-public class StatsJobsSavedPanel extends JFrame {
+public class StatsJobsSavedPanel extends JFrame{
 
     private JPanel statsPanel;
     private JLabel lblFullTimePercent;
@@ -20,13 +22,15 @@ public class StatsJobsSavedPanel extends JFrame {
     private JLabel lblKeyWordRepeat;
     private JButton showChartButton;
     private JPanel statsJobsSavedPanel;
-    private final StatsJobBoard statsJobBoard;
+    private StatsJobBoard statsJobBoard = new StatsJobBoard();
     private DefaultCategoryDataset dataset2;
     private JFreeChart jFreeChart;
-    //ShowCharts showCharts = new ShowCharts();
+    private DrawCharts drawCharts;
+    private JFreeChart barChart;
+    private JFreeChart pieChart;
 
+    public StatsJobsSavedPanel(HashSet<Job> jobs) {
 
-    public StatsJobsSavedPanel(HashSet<Job> jobs){
         statsJobBoard = new StatsJobBoard();
         statsJobBoard.setJobs(jobs);
 
@@ -34,6 +38,10 @@ public class StatsJobsSavedPanel extends JFrame {
 
         lblJobTot.setText(String.valueOf(statsJobBoard.getNumOfJobs()));
         lblFullTimePercent.setText(String.valueOf(statsJobBoard.calculatePercentage()) + "%");
+
+        drawCharts = new DrawCharts (jobs, barChart, pieChart, statsJobBoard);
+        drawCharts.drawPieChart();
+        drawCharts.drawBarChart();
 
         add(statsJobsSavedPanel);
         setTitle("Stats jobs saved");
@@ -58,10 +66,12 @@ public class StatsJobsSavedPanel extends JFrame {
         showChartButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //showCharts.setVisible(true);
-                //chartFrame.setVisible(true);
+                JFrame fr = new JFrame("Charts");
+                fr.getContentPane().add(new ChartPanel(drawCharts.getPieChart()), BorderLayout.WEST);
+                fr.getContentPane().add(new ChartPanel(drawCharts.getBarChart()), BorderLayout.EAST);
+                fr.pack();
+                fr.setVisible(true);
             }
-
         });
 
     }
