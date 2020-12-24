@@ -4,7 +4,6 @@ import Controller.ApiController;
 import Controller.FileController;
 import Controller.GuiController;
 import Model.Job;
-import Model.JobBoard;
 import Model.PickedJobs;
 
 import javax.swing.*;
@@ -16,11 +15,12 @@ import java.util.HashSet;
 public class BootStrapPanel extends JFrame{
 
     private JPanel rootPanel;
-    private JTextField txtLocation;
+    private JTextField txtLocation1;
     private JTextField txtDescription;
     private JButton btnSearch;
     private JButton btnShowJobsSaved;
     private JCheckBox fullTime;
+    private JTextField txtLocation2;
 
     private PickedJobs job;
 
@@ -29,7 +29,11 @@ public class BootStrapPanel extends JFrame{
 
 
 
-    private HashSet<Job> offers = new HashSet<>();
+    private HashSet<Job> offers;
+
+    //private HashSet<Job> openOffers = new HashSet<>();
+
+
     public BootStrapPanel() {
         add(rootPanel);
         setTitle("IT Found Jobs");
@@ -56,8 +60,9 @@ public class BootStrapPanel extends JFrame{
                 apiController = new ApiController();
                 guiController = new GuiController();
 
+                //offers = new HashSet<>();
 
-
+                job.getJobs().clear();
                 //todo configurazione file
                 /*
                 try {
@@ -66,18 +71,40 @@ public class BootStrapPanel extends JFrame{
                     ioException.printStackTrace();
                 }*/
 
+                boolean flag = false;
+
                 try {
-                    apiController.setUrl(ApiController.query(guiController.setFilters(txtLocation, txtDescription, fullTime.isSelected())));
-                    //offers.addAll(apiController.parsing());
-                    job.setJobs(offers);
+
                     job.setKeyWord(txtDescription.getText());
-                    apiController.save(job.getJobs());
 
-                    if (!job.getJobs().isEmpty()) {
-                        new JobsFoundPanel(job);
+                    if(!txtLocation1.getText().equals(txtLocation2.getText())) {
+                        if (!txtLocation1.getText().equals("")) {
+                            apiController.setUrl(ApiController.query(guiController.setFilters(txtLocation1, txtDescription, fullTime.isSelected())));
+                            apiController.save(job.getJobs());
+                            flag = true;
+                        }
 
-                    } else
-                        JOptionPane.showMessageDialog(rootPanel, "     Bro, jobs ain't found");
+                        if (!txtLocation2.getText().equals("")) {
+                            apiController.setUrl(ApiController.query(guiController.setFilters(txtLocation2, txtDescription, fullTime.isSelected())));
+                            apiController.save(job.getJobs());
+                            flag = true;
+                        }
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(rootPanel, "You can't insert the same location in the fields");
+                    }
+
+                    if(flag == true){
+                        if (!job.getJobs().isEmpty()) {
+                            new JobsFoundPanel(job);
+
+                        } else
+                            JOptionPane.showMessageDialog(rootPanel, "     Bro, jobs ain't found");
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(rootPanel, " You must insert the location");
+                    }
+
 
 
                 } catch (IOException exception) {

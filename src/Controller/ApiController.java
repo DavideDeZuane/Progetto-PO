@@ -47,7 +47,7 @@ public class ApiController extends Controller{
     //metodo parsing aggiornato
     public void save(HashSet<Job> jobs) throws IOException{
         try {
-            jobs.clear();
+            //jobs.clear();
             jobs.addAll(mapper.readValue(this.url, new TypeReference<HashSet<Job>>() {})); //mappo json array
 
         }catch(Exception e){

@@ -43,12 +43,15 @@ public class JobsFoundPanel extends JFrame {
     private final int widthPanel = 625;
     private final int heightPanel = 725;
 
+    private final int widthTable = 625;
+    private final int heightTable = 600;
+
     public JobsFoundPanel(PickedJobs job) throws IOException{
 
         this.job = job;
 
         guiJobsPanelMenagement = new GuiJobsPanelMenagement(jobsFoundPanel, "Jobs Found Panel");
-        guiJobsPanelMenagement.createTable(this.tableJobs, this.job);
+        guiJobsPanelMenagement.createTable(this.tableJobs, this.job, this.widthTable, this.heightTable);
         guiJobsPanelMenagement.setPanel(this.widthPanel, this.heightPanel);
 
         fileController.readJobsFromFile(pickedJobs.getJobs());
@@ -102,16 +105,10 @@ public class JobsFoundPanel extends JFrame {
         btnSaveAll.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-/*
-                try {
-                    PickedJobs pickedJobs = new PickedJobs();
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
-                }*/
 
-                System.out.println(job.getJobs());
-                System.out.println("-----------------------------------------------------------------");
 
+                guiJobsPanelMenagement.saveAllJobs(job, pickedJobs);
+                /*
                 if(job.getJobs().isEmpty()){
                     JOptionPane.showMessageDialog(jobsFoundPanel, "Any job to save.");
                 }else {
@@ -127,7 +124,7 @@ public class JobsFoundPanel extends JFrame {
                     }
 
 
-                }
+                }*/
 
 
             }

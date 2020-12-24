@@ -15,6 +15,7 @@ public class PickedJobs extends JobBoard {
     private FileController fileController = new FileController(fileName);
 
     public PickedJobs() throws IOException {
+        super();
         //fileController = new FileController(fileName);
         if (this.jobs == null) {
             fileController.readJobsFromFile(this.jobs);

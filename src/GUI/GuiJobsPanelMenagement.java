@@ -16,13 +16,9 @@ public class GuiJobsPanelMenagement extends GuiMenagement implements GuiJobsPane
     private JTable tableJobs;
     private final static int COLUMNS = 4;
 
+    private int buffer = -2;
+
     private Object[] columnHeaders = {"Type","Company","Location","Title"};
-
-    private CheckOffer checkOffer = new CheckOffer();
-
-    //private JPanel panel;
-    //private String namePanel;
-
 
     public GuiJobsPanelMenagement(JPanel panel, String namePanel){
         super(panel, namePanel);
@@ -30,7 +26,7 @@ public class GuiJobsPanelMenagement extends GuiMenagement implements GuiJobsPane
         //this.namePanel = namePanel;
     }
 
-    public void createTable(JTable tableJobs, JobBoard job){
+    public void createTable(JTable tableJobs, JobBoard job, int width, int height){
         this.tableJobs = tableJobs;
         this.tableJobs = new JTable(this.setTable(job.getJobs().iterator(), job.getNumOfJobs(), COLUMNS), columnHeaders);
         this.tableJobs.setPreferredScrollableViewportSize(new Dimension(500,50));
@@ -39,7 +35,7 @@ public class GuiJobsPanelMenagement extends GuiMenagement implements GuiJobsPane
 
         JScrollPane scrollPane = new JScrollPane(this.tableJobs);
         add(scrollPane);
-        setSize(625, 600);
+        setSize(width, height);
         setVisible(true);
     }
 
@@ -54,7 +50,7 @@ public class GuiJobsPanelMenagement extends GuiMenagement implements GuiJobsPane
     public void setPanel(int width, int height){
         add(super.getPanel());
         setTitle(super.getNamePanel());
-        setSize(width, height); //625 725
+        setSize(width, height);
         setResizable(false);
         setVisible(true);
 
@@ -76,20 +72,6 @@ public class GuiJobsPanelMenagement extends GuiMenagement implements GuiJobsPane
         }
         return rowData;
     }
-
-
-/*
-    public void guiVerifyOffer(int row, Job job){
-        checkOffer.verify(job);
-
-        if(!checkOffer.verify(job)){
-
-            //tableJobs.setForeground(Color.RED);
-            //tableJobs.setForeground(Color.RED);
-
-
-        }
-    }*/
 
     public void showHowToApply(PickedJobs job){
         try {
@@ -145,6 +127,28 @@ public class GuiJobsPanelMenagement extends GuiMenagement implements GuiJobsPane
         }catch(Exception exception){
             JOptionPane.showMessageDialog(super.getPanel(),"     Bro, jobs ain't found");
             exception.printStackTrace();
+        }
+    }
+
+    public void saveAllJobs(PickedJobs job, PickedJobs pickedJobs){
+
+        //this.buffer = buffer;
+
+        if(job.getJobs().isEmpty()){
+            JOptionPane.showMessageDialog(super.getPanel(), "Any job to save.");
+        }else {
+
+            pickedJobs.addAll(job.getJobs());
+
+            if(this.buffer == pickedJobs.getNumOfJobs()){
+                JOptionPane.showMessageDialog(super.getPanel(), "Jobs are already present");
+            }
+            else{
+                JOptionPane.showMessageDialog(super.getPanel(), "Jobs saved successfully in " + pickedJobs.getFileName());
+                this.buffer = pickedJobs.getNumOfJobs();
+            }
+
+
         }
     }
 

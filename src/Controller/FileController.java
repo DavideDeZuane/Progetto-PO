@@ -60,7 +60,7 @@ public class FileController {
     public void readJobsFromFile(HashSet<Job> jobs) throws IOException {
         if(file.length()==0)
         {
-            System.out.println("Non ci sono lavori disponibili");
+            System.out.println("Non ci sono lavori disponibili sul file");
             //return null;
         }
         else {

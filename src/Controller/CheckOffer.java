@@ -60,6 +60,8 @@ public class CheckOffer extends Controller implements Runnable{
                 } else
                     System.out.println("Offerta invariata");
             }
+            return;
+
         } throw new NoJobsException("Non sono ancora stati salvati lavori");
     }
 

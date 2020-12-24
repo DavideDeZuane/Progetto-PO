@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.util.Iterator;
 
 public interface GuiJobsPanel {
-    public abstract void createTable(JTable tableJobs, JobBoard job);
+    public abstract void createTable(JTable tableJobs, JobBoard job, int width, int height);
     public abstract JTable getTableJobs();
     public abstract void setTableJobs(JTable tableJobs);
     public abstract Object[][] setTable(Iterator iterator, int raws, int columns);

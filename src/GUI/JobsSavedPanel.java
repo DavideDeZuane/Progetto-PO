@@ -31,12 +31,15 @@ public class JobsSavedPanel extends JFrame{
     private final int widthPanel = 625;
     private final int heightPanel = 695;
 
+    private final int widthTable = 625;
+    private final int heightTable = 600;
+
     public JobsSavedPanel(PickedJobs pickedJobs){
 
         this.pickedJobs = pickedJobs;
 
         guiJobsPanelMenagement = new GuiJobsPanelMenagement(jobsSavedPanel, "Jobs Saved Panel");
-        guiJobsPanelMenagement.createTable(this.tableJobs, this.pickedJobs);
+        guiJobsPanelMenagement.createTable(this.tableJobs, this.pickedJobs, this.widthTable, this.heightTable);
         guiJobsPanelMenagement.setPanel(this.widthPanel, this.heightPanel);
 
 
