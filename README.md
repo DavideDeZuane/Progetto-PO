@@ -31,6 +31,9 @@ Attraverso dei filtri abbiamo la possibilità di scegliere solo la categoria che
 >+ **Latitudine** e **Longitudine**: utilizzabili in sostituzinone alla località a patto che vengano utilizzati entrambi.
 >+ **Full Time**: per limitari i risultati a solo offerte di lavoro full time.
 
+Abbiamo deciso di non utilizare i filtri latitudine e longitudine per la nostra applicazione poichè risulta più intuitivo cercare una città con il suo nome o iniziali
+rispetto alle sue coordine geografiche.
+
 Tali filtri vanno inseriti con una certa sintassi all'interno della richiesta; un esempio è il seguente:
 > https://jobs.github.com/positions.json?description=python&full_time=true&location=sf
 
@@ -46,7 +49,7 @@ della nostra Applicazione.
 
  + **Use-Case Diagram**
 
-> ![Panel](Images/UML/UseCase.png)
+> ![](Images/UML/UseCase.png)
 
 Brevemente:
 + l'utente si interfaccia e interagiste con il frontend (un insieme di panelli della GUI) 
@@ -61,8 +64,17 @@ Brevemente:
 
 > ![Finestre Principali](Images/UML/DiagrammaClassi.png)
 
+| Package  | Contenuto  |   
+|:-:|:-:|
+|GUI   |  Package che conterrà tutte le classi e form necessari per implementare la GUI con cui l'utente interagirà  |  
+|  Controller | Package che conterrà tutte le classi che si occuperanno di manipolare dati temporanei ed eventaulmente renderli persistenti  |  
+| Model | Package che contine tutte le strutture dati dinamiche neccessarie ad un acquisizione temporanea dei dati  |
+
 Nota: abbiamo scelto di utilizzare come struttura dati un HashSet poichè a nostro parere è il migliore in queste situazioni.
 Implementando l'interfaccia Set non può contenere due elementi uguali ed in particolare rende le operazioni di estrazione, inserimento e rimozione molto veloci.
+Nel nostro caso funge da memoria temporanea quindi la nostra scelta è caduta suu questa struttura dati.
+
+
 
 ---
 
@@ -75,6 +87,7 @@ In questo modo nell'eventualità che venga cambiato l'URL dell'API basterà camb
 ```properties
     url = https://jobs.github.com/positions.json?
     idurl = https://jobs.github.com/positions/.json
+    
     ... ulterirori proprietà come eventuali path di file etc ...
 ```
 ---
@@ -94,9 +107,8 @@ I prinicipali framework e spftware utilizzati per la realizzazione dell'applicaz
 + **Jsoup**          -> utilizzato per rimuovere i tag HTML dai campi dell'oggetto JSON.  [(Download)](https://jsoup.org)
 + **JFreeChart**     -> utilizzato per implementare i grafici.  [(Download)](https://sourceforge.net/projects/jfreechart/files/1.%20JFreeChart/1.0.19/)
 + **IntellIJ IDEA**  -> IDE dove si è svolto lo sviluppo del programma
-+ **Maven**c         -> strumento che permette di gestire i progetti e le dipendenze
++ **Maven**          -> strumento che permette di gestire i progetti e le dipendenze
 + **JUnit**          -> utilizzato per eseguire test sul codice
-
 
 
 ## Funzionamento
@@ -124,7 +136,7 @@ Il seguente è un esempio di una richiesta in cui come parametri sono stati inse
 L'URL che l'utente avrebbe dovuto creare sarebbe stato il seguente:
 > https://jobs.github.com/positions.json?full_time=true&description=java&location=Berlino 
 
-Grazie al programma si astrae questa fase e premendo il tasto search otteniamo la seguente finestra:
+Grazie al programma astraiamo questa fase e premendo il tasto search otteniamo la seguente finestra:
     
 ![Jobs Found](Images/Funzionamento/LavoriTrovati.png)
 
@@ -145,13 +157,40 @@ Anche qui sono presenti altri tasti che permettono all'utente di utilizzare le s
 All'interno di Show Stats sarà presente un altro tasto che presenta all'utente un istogramma e un diagramma a tortra sulle caratteristiche dei lavori trovati
 ![](Images/Funzionamento/Grafici.png)
 
+![](Images/Funzionamento/HowToApply.png)
+Questa finestra permette all'utente di visualizzare le informazioni necessarie per presentare la domanda.
+Il tasto Copy permette di copiare il contenuto del pannello, in questo modo se sono presenti eventuali link potranno essere utilizzati.
 
 
 ## Approfondimenti
 
++ **HashCode**
+```java
+    @Override
+    public boolean equals(Object o){
+    if(this == o) return true;
+    if(o == null || getClass() != o.getClass()) return false;
+    Job job = (Job) o;
+    return id.equals(Job.id) && type.equals(job.type) && url.equals(job.url) && created_at.equals(job.created_at)
+            && comapny_url.equals(job.created_at) && comany.equals(job.company) && title.equals(job.title) 
+            && description.equals(job.description) && how_to_apply.equals(job.how_to_apply)
+            && company_logo.equals(job.company_logo);
+    }
+    
+    @Override
+    public int hashCode(){
+        return Objects.hash(id, type, url, created_at, company, company_url, location, title, description, how_to_apply, compamy_logo);
+    }
+```
+Durante lo sviluppo ci siamo accorti che provando ad aggiungere un offerta di lavoro già presenta, essa veniva aggiunta lo stesso.
+Per ovvierare a ciò abbiamo eseguito un Overriding dei metodi **equals** e **hashCode**, poichè eseguendo tale ovverifding stiamo determinando con quali campi
+calcolare l'hash. 
+Poichè con il meotodo di defautl era sufficiente che si trattase di istanze differrenti per farlli considerare oggetti diversi.
+Poichè a noi non interessa se siano due istanze differenti o no, ma che non abbiano lo stesso contenuto.
 
 
-**Mulithreading**
++ **Mulithreading**
+
 Nel nostro progetto abbiamo cercato il multithreaing per verificare se tra un avvio dell'applicazione e l'altro le offerte che l'utente stava
 osservando hanno subito modifiche o sono scadute.
 Per evitare che questa verifica fosse troppo dispendiosa a livello di tempo abbiamo deciso di eseguirla su un thread differente per massimizzare
@@ -184,9 +223,10 @@ Link utili per approfondire il multithreading:
 + <https://docs.oracle.com/javase/tutorial/essential/concurrency/procthread.html>
 
 ## Possibili migliormaneti
-- [ ] Aggiunta del multithreadung per il controllo delle offerte
+- [ ] MiIglioramento del multithreadung per il controllo delle offerte
 - [ ] Storico delle Statistiche
 - [ ] implementare una form che permetta all'utente di modificare il file config.properties
+- [ ] Aggiumgere una barra di caricamento per ingannare l'attesa durante il caricamento della ricerca delle offerte
 
 
 ## Developers
