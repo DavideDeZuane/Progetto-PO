@@ -219,8 +219,25 @@ Lanciando questo sottoprocesso in un thread parallelo avremmo:
 SerializeTable() è un metodo che permette di prendere i lavori dal file e creare una tabella aggiungengdo una colonna in cui verrà specificato lo stato dell'offerta.
 Un esmpio è il seguente:
 
+![](Images/Funzionamento/StatusJobs.png)
 
-Tuttavia per questioni di tempo e di difficoltà mell'implementazione non siamo riusciti ad inserire questa funzionalità.
+Abbiamo odovuto creare una funzione in grado di deserializzare il contenuto del file.
+```java
+    public Object[][] readTable() throws IOException, ClassNotFoundException {
+        ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(new FileInputStream("Update.txt")));
+        Object[][] table = new Object[this.saved.size()][COLUMS];
+        for (int i = 0; i < this.saved.size(); i++) {
+            for (int j = 0; j < COLUMS; j++) {
+                table[i][j] = in.readObject();
+            }
+        }
+        return table;
+    }
+```
+
+Questo metodo ritorna una tabella che verrà stampata da uno dei menager implementati dalla GUI.
+
+Tuttavia per questioni di tempo e di difficoltà nell'implementazione non siamo riusciti ad implementare questa funzionalità che risulta ancora lenta e macchinosa.
 Sarà una funzionalità che con più calma potrà essere inserita
 
 Link utili per approfondire il multithreading:
