@@ -42,6 +42,7 @@ public class Main {
         URL url =  ApiController.query(filtri, parametri);
         controller.fill(offerte, url);
         System.out.println(offerte);*/
+        Controller.readProp();
         BootStrapPanel bootStrapPanel = new BootStrapPanel();
 /*
         URL url = null;

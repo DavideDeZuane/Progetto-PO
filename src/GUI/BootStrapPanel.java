@@ -1,16 +1,12 @@
 package GUI;
 
-import Controller.ApiController;
 import Controller.FileController;
-import Controller.GuiController;
-import Model.Job;
 import Model.PickedJobs;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.HashSet;
 
 public class BootStrapPanel extends JFrame{
 
@@ -27,13 +23,13 @@ public class BootStrapPanel extends JFrame{
     private final int widthPanel = 600;
     private final int heightPanel = 200;
 
-    private GuiJobsPanelMenagement guiJobsPanelMenagement;
+    private GuiJobsPanelManagement guiJobsPanelManagement;
 
 
     public BootStrapPanel() {
 
-        guiJobsPanelMenagement = new GuiJobsPanelMenagement(rootPanel, "IT Found Jobs");
-        guiJobsPanelMenagement.setPanel(this.widthPanel, this.heightPanel);
+        guiJobsPanelManagement = new GuiJobsPanelManagement(rootPanel, "IT Found Jobs");
+        guiJobsPanelManagement.setPanel(this.widthPanel, this.heightPanel);
 
         /*
         add(rootPanel);
@@ -68,7 +64,7 @@ public class BootStrapPanel extends JFrame{
                     exception.printStackTrace();
                 }
 
-                guiJobsPanelMenagement.search(job, pickedJobs, txtLocation1, txtLocation2, txtDescription, fullTime);
+                guiJobsPanelManagement.search(job, pickedJobs, txtLocation1, txtLocation2, txtDescription, fullTime);
             }
         });
 

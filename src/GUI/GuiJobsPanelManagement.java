@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Iterator;
 
-public class GuiJobsPanelMenagement extends GuiMenagement implements GuiJobsPanel{
+public class GuiJobsPanelManagement extends GuiManagement implements GuiJobsPanel{
 
     private JTable tableJobs;
     private final static int COLUMNS = 4;
@@ -27,7 +27,7 @@ public class GuiJobsPanelMenagement extends GuiMenagement implements GuiJobsPane
 
     private Desktop desktop = Desktop.getDesktop();
 
-    public GuiJobsPanelMenagement(JPanel panel, String namePanel){
+    public GuiJobsPanelManagement(JPanel panel, String namePanel){
         super(panel, namePanel);
 
         //apiController = new ApiController();

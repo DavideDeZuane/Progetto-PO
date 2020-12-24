@@ -3,13 +3,8 @@ package GUI;
 import Model.PickedJobs;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.net.URISyntaxException;
 
 public class JobsSavedPanel extends JFrame{
 
@@ -24,7 +19,7 @@ public class JobsSavedPanel extends JFrame{
 
     private PickedJobs pickedJobs;
 
-    private GuiJobsPanelMenagement guiJobsPanelMenagement;
+    private GuiJobsPanelManagement guiJobsPanelMenagement;
 
     private final int widthPanel = 625;
     private final int heightPanel = 695;
@@ -36,7 +31,7 @@ public class JobsSavedPanel extends JFrame{
 
         this.pickedJobs = pickedJobs;
 
-        guiJobsPanelMenagement = new GuiJobsPanelMenagement(jobsSavedPanel, "Jobs Saved Panel");
+        guiJobsPanelMenagement = new GuiJobsPanelManagement(jobsSavedPanel, "Jobs Saved Panel");
         guiJobsPanelMenagement.createTable(this.tableJobs, this.pickedJobs, this.widthTable, this.heightTable);
         guiJobsPanelMenagement.setPanel(this.widthPanel, this.heightPanel);
 

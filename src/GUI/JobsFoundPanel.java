@@ -1,20 +1,12 @@
 package GUI;
 
 import Controller.FileController;
-import Model.JobBoard;
 import Model.PickedJobs;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.awt.Desktop;
 
 public class JobsFoundPanel extends JFrame {
     private JPanel jobsFoundPanel;
@@ -35,7 +27,7 @@ public class JobsFoundPanel extends JFrame {
 
     private FileController fileController = new FileController("PickedJobs.txt");
 
-    private GuiJobsPanelMenagement guiJobsPanelMenagement;
+    private GuiJobsPanelManagement guiJobsPanelMenagement;
 
     private final int widthPanel = 625;
     private final int heightPanel = 725;
@@ -48,7 +40,7 @@ public class JobsFoundPanel extends JFrame {
         this.job = job;
         this.pickedJobs = pickedJobs;
 
-        guiJobsPanelMenagement = new GuiJobsPanelMenagement(jobsFoundPanel, "Jobs Found Panel");
+        guiJobsPanelMenagement = new GuiJobsPanelManagement(jobsFoundPanel, "Jobs Found Panel");
         guiJobsPanelMenagement.createTable(this.tableJobs, this.job, this.widthTable, this.heightTable);
         guiJobsPanelMenagement.setPanel(this.widthPanel, this.heightPanel);
 
