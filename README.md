@@ -162,7 +162,7 @@ Questa finestra permette all'utente di visualizzare le informazioni necessarie p
 Il tasto Copy permette di copiare il contenuto del pannello, in questo modo se sono presenti eventuali link potranno essere utilizzati.
 
 
-## Approfondimenti
+# Approfondimenti
 
 ## **HashCode**
 ```java
@@ -185,6 +185,7 @@ Il tasto Copy permette di copiare il contenuto del pannello, in questo modo se s
 Durante lo sviluppo ci siamo accorti che provando ad aggiungere un offerta di lavoro già presenta, essa veniva aggiunta lo stesso.
 Per ovvierare a ciò abbiamo eseguito un Overriding dei metodi **equals** e **hashCode**, poichè eseguendo tale ovverifding stiamo determinando con quali campi
 calcolare l'hash. 
+
 Poichè con il meotodo di defautl era sufficiente che si trattase di istanze differrenti per farlli considerare oggetti diversi.
 Poichè a noi non interessa se siano due istanze differenti o no, ma che non abbiano lo stesso contenuto.
 
@@ -209,11 +210,15 @@ Lanciando questo sottoprocesso in un thread parallelo avremmo:
         try{
             read():
             verify();
-            updateTable();
+            serializeTable(table);
         }catch(NoJobsException e){
             System.out.println("Nel file non sono presenti lavori");
         }
 ```
+
+SerializeTable() è un metodo che permette di prendere i lavori dal file e creare una tabella aggiungengdo una colonna in cui verrà specificato lo stato dell'offerta.
+Un esmpio è il seguente:
+
 
 Tuttavia per questioni di tempo e di difficoltà mell'implementazione non siamo riusciti ad inserire questa funzionalità.
 Sarà una funzionalità che con più calma potrà essere inserita
