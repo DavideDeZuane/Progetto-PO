@@ -97,10 +97,24 @@ a limitazioni e ad aggiunte di funzionalità che hanno modificato le relazioni d
 
 
 # Istruzioni d'Installazione e Uso
+Una volta scaricato il codice, lanciare l'IntellIJ ed eseguire i seguenti passi:
+1. Aprire il progetto con intellij;
+2. Selezionare Project Structure e impostare le seguenti voci
 
-Qui vanno messe le istruzioni per spiegare all'utente come installare l'applicazione 
+![](Images/SetUp/Projects.png)
 
-## FrameWork e SotWare
+3. Una volta impostate le voci, occorre aggiungere le dipendenze, selezionare la cartella Librerie all'interno della cartella del progetto
+
+![](Images/SetUp/Dipendenze.png)
+
+4. Selezionare File > Invalidates Caches / Restart..
+
+![](Images/SetUp/InvalidateCache.png)
+
+Ora è possibile lanciare l'applicazione e utilizzare il programma
+ 
+
+## FrameWork e SoftWare
 I prinicipali framework e spftware utilizzati per la realizzazione dell'applicazione sono i seguenti:
 + **Swing**          -> utilizzato per realizzare la GUI.  [(Download)](https://docs.oracle.com/javase/7/docs/api/javax/swing/package-summary.html)
 + **Jackson JSON**   -> utilizzato per effettuare il parsing della risposta API.  [(Download)](https://github.com/FasterXML/jackson/wiki/Jackson-Release-2.12)
