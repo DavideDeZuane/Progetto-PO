@@ -61,6 +61,12 @@ Brevemente:
 
 > ![Finestre Principali](Images/UML/DiagrammaClassi.png)
 
+| Package  | Contenuto  |   
+|:-:|:-:|
+|GUI   |  Package che conterrà tutte le classi e form necessari per implementare la GUI con cui l'utente interagirà  |  
+|  Controller | Package che conterrà tutte le classi che si occuperanno di manipolare dati temporanei ed eventaulmente renderli persistenti  |  
+| Model | Package che contine tutte le strutture dati dinamiche neccessarie ad un acquisizione temporanea dei dati  |
+
 Nota: abbiamo scelto di utilizzare come struttura dati un HashSet poichè a nostro parere è il migliore in queste situazioni.
 Implementando l'interfaccia Set non può contenere due elementi uguali ed in particolare rende le operazioni di estrazione, inserimento e rimozione molto veloci.
 
