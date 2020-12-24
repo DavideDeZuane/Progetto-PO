@@ -88,15 +88,14 @@ a limitazioni e ad aggiunte di funzionalità che hanno modificato le relazioni d
 Qui vanno messe le istruzioni per spiegare all'utente come installare l'applicazione 
 
 ## FrameWork e SotWare
-I prinicipali framework utilizzati per la realizzazione dell'applicazione sono i seguenti:
-+ **Swing** -> utilizzato per realizzare la GUI.  [(Download)](https://docs.oracle.com/javase/7/docs/api/javax/swing/package-summary.html)
-+ **Jackson JSON** -> utilizzato per effettuare il parsing della risposta API.  [(Download)](https://github.com/FasterXML/jackson/wiki/Jackson-Release-2.12)
-+ **Jsoup** -> utilizzato per rimuovere i tag HTML dai campi dell'oggetto JSON.  [(Download)](https://jsoup.org)
-+ **JFreeChart** -> utilizzato per implementare i grafici.  [(Download)](https://sourceforge.net/projects/jfreechart/files/1.%20JFreeChart/1.0.19/)
-
-I software utilizzati sono:
-+ **IntellIJ IDEA** -> IDE dove si è svolto lo sviluppo del programma
-+ **Maven**-> strumento che permette di gestire i progetti e le dipendenze
+I prinicipali framework e spftware utilizzati per la realizzazione dell'applicazione sono i seguenti:
++ **Swing**          -> utilizzato per realizzare la GUI.  [(Download)](https://docs.oracle.com/javase/7/docs/api/javax/swing/package-summary.html)
++ **Jackson JSON**   -> utilizzato per effettuare il parsing della risposta API.  [(Download)](https://github.com/FasterXML/jackson/wiki/Jackson-Release-2.12)
++ **Jsoup**          -> utilizzato per rimuovere i tag HTML dai campi dell'oggetto JSON.  [(Download)](https://jsoup.org)
++ **JFreeChart**     -> utilizzato per implementare i grafici.  [(Download)](https://sourceforge.net/projects/jfreechart/files/1.%20JFreeChart/1.0.19/)
++ **IntellIJ IDEA**  -> IDE dove si è svolto lo sviluppo del programma
++ **Maven**c         -> strumento che permette di gestire i progetti e le dipendenze
++ **JUnit**          -> utilizzato per eseguire test sul codice
 
 
 
