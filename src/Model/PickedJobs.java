@@ -2,6 +2,7 @@ package Model;
 
 import Controller.FileController;
 
+import javax.swing.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashSet;
@@ -55,6 +56,8 @@ public class PickedJobs extends JobBoard {
                 fileController.save(this.jobs);
             }
 
+
+
     }
 
     //elimina un lavoro
@@ -68,15 +71,37 @@ public class PickedJobs extends JobBoard {
             }
     }
 
-    public void addAll(HashSet<Job> jobs){
-        /*if(jobs==null)
-            System.out.println("");*/
-        for(Job j : jobs){
-            try {
-                this.add(j);
-            } catch (IOException e) {
-                e.printStackTrace();
+    public boolean add(PickedJobs job, int index) throws IOException {
+        boolean flag = true;
+
+        for(Job j : this.getJobs()){
+            if(j.getId().equals(job.getJob(index, job.getJobs()).getId())){
+                flag = false;
             }
+        }
+
+        return flag;
+    }
+
+    public void addAll(PickedJobs job){
+        boolean flag = true;
+
+        for(Job i : job.getJobs()){
+            flag = true;
+            for(Job j : this.getJobs()){
+                if(j.getId().equals(i.getId())) {
+                    flag = false;
+                    break;
+                }
+            }
+            if(flag){
+                try {
+                    add(i);
+                } catch (IOException exception) {
+                    exception.printStackTrace();
+                }
+            }
+
         }
 
     }

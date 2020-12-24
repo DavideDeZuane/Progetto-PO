@@ -8,13 +8,12 @@ import java.util.HashSet;
 
 public class GuiController extends ApiController implements Filters{
 
-
     public GuiController(){
         super();
     }
 
     @Override
-    public String[] setFilters(JTextField txtLocation1, JTextField txtDescription, boolean banner) {
+    public String[] setFilters(JTextField txtLocation, JTextField txtDescription, boolean banner) {
 
         flags = EnumSet.noneOf(Parameters.class);
         String filters[] = new String[100];
@@ -25,19 +24,19 @@ public class GuiController extends ApiController implements Filters{
             flags.add(Parameters.TYPE);
         }
 
-        if(txtDescription.getText().equals("") && !txtLocation1.getText().equals("")){
-            filters[0] = txtLocation1.getText();
+        if(txtDescription.getText().equals("") && !txtLocation.getText().equals("")){
+            filters[0] = txtLocation.getText();
             flags.add(Parameters.LOCATION);
         }
 
-        else if(!txtDescription.getText().equals("") && txtLocation1.getText().equals("")){
+        else if(!txtDescription.getText().equals("") && txtLocation.getText().equals("")){
             filters[0] = txtDescription.getText();
             flags.add(Parameters.DESCRIPTION);
         }
 
-        else if(!txtDescription.getText().equals("") && !txtLocation1.getText().equals("")) {
+        else if(!txtDescription.getText().equals("") && !txtLocation.getText().equals("")) {
             filters[0] = txtDescription.getText();
-            filters[1] = txtLocation1.getText();
+            filters[1] = txtLocation.getText();
             flags.add(Parameters.LOCATION);
             flags.add(Parameters.DESCRIPTION);
         }

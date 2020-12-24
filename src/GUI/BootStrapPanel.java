@@ -24,24 +24,25 @@ public class BootStrapPanel extends JFrame{
 
     private PickedJobs job;
 
-    private ApiController apiController = null;
-    private GuiController guiController = null;
+    private final int widthPanel = 600;
+    private final int heightPanel = 200;
 
-
-
-    private HashSet<Job> offers;
-
-    //private HashSet<Job> openOffers = new HashSet<>();
+    private GuiJobsPanelMenagement guiJobsPanelMenagement;
 
 
     public BootStrapPanel() {
+
+        guiJobsPanelMenagement = new GuiJobsPanelMenagement(rootPanel, "IT Found Jobs");
+        guiJobsPanelMenagement.setPanel(this.widthPanel, this.heightPanel);
+
+        /*
         add(rootPanel);
         setTitle("IT Found Jobs");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 200);
         //getContentPane().setBackground(new Color(0x000000));
         setVisible(true);
-
+*/
 
         try {
             job = new PickedJobs();
@@ -57,59 +58,17 @@ public class BootStrapPanel extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                apiController = new ApiController();
-                guiController = new GuiController();
-
-                //offers = new HashSet<>();
-
-                job.getJobs().clear();
-                //todo configurazione file
-                /*
+                PickedJobs pickedJobs = null;
+                FileController fileController = null;
                 try {
-                    System.out.println(ApiController.readConfigurationFile());
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
-                }*/
-
-                boolean flag = false;
-
-                try {
-
-                    job.setKeyWord(txtDescription.getText());
-
-                    if(!txtLocation1.getText().equals(txtLocation2.getText())) {
-                        if (!txtLocation1.getText().equals("")) {
-                            apiController.setUrl(ApiController.query(guiController.setFilters(txtLocation1, txtDescription, fullTime.isSelected())));
-                            apiController.save(job.getJobs());
-                            flag = true;
-                        }
-
-                        if (!txtLocation2.getText().equals("")) {
-                            apiController.setUrl(ApiController.query(guiController.setFilters(txtLocation2, txtDescription, fullTime.isSelected())));
-                            apiController.save(job.getJobs());
-                            flag = true;
-                        }
-                    }
-                    else{
-                        JOptionPane.showMessageDialog(rootPanel, "You can't insert the same location in the fields");
-                    }
-
-                    if(flag == true){
-                        if (!job.getJobs().isEmpty()) {
-                            new JobsFoundPanel(job);
-
-                        } else
-                            JOptionPane.showMessageDialog(rootPanel, "     Bro, jobs ain't found");
-                    }
-                    else{
-                        JOptionPane.showMessageDialog(rootPanel, " You must insert the location");
-                    }
-
-
-
-                } catch (IOException exception) {
-                    JOptionPane.showMessageDialog(rootPanel, "Invalid filters");
+                    pickedJobs = new PickedJobs();
+                    fileController = new FileController("PickedJobs.txt");
+                    fileController.readJobsFromFile(pickedJobs.getJobs());
+                }catch (IOException exception) {
+                    exception.printStackTrace();
                 }
+
+                guiJobsPanelMenagement.search(job, pickedJobs, txtLocation1, txtLocation2, txtDescription, fullTime);
             }
         });
 
@@ -124,7 +83,8 @@ public class BootStrapPanel extends JFrame{
                     fileController = new FileController("PickedJobs.txt");
                     fileController.readJobsFromFile(pickedJobs.getJobs());
                 }catch (IOException exception) {
-                    exception.printStackTrace();
+                    JOptionPane.showMessageDialog(rootPanel,"bro, there ain't saved jobs");
+                    //exception.printStackTrace();
                 }
 
                 if(!pickedJobs.getJobs().isEmpty()){
@@ -134,10 +94,5 @@ public class BootStrapPanel extends JFrame{
                 }
             }
         });
-    }
-
-
-    public String getTxtDescription(){
-        return txtDescription.getText();
     }
 }

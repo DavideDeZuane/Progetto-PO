@@ -1,6 +1,8 @@
 package GUI;
 
+import Controller.ApiController;
 import Controller.CheckOffer;
+import Controller.GuiController;
 import Model.Job;
 import Model.JobBoard;
 import Model.PickedJobs;
@@ -9,6 +11,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Iterator;
 
 public class GuiJobsPanelMenagement extends GuiMenagement implements GuiJobsPanel{
@@ -16,14 +20,18 @@ public class GuiJobsPanelMenagement extends GuiMenagement implements GuiJobsPane
     private JTable tableJobs;
     private final static int COLUMNS = 4;
 
-    private int buffer = -2;
-
     private Object[] columnHeaders = {"Type","Company","Location","Title"};
+
+    private ApiController apiController = new ApiController();
+    private GuiController guiController = new GuiController();
+
+    private Desktop desktop = Desktop.getDesktop();
 
     public GuiJobsPanelMenagement(JPanel panel, String namePanel){
         super(panel, namePanel);
-        //this.panel = panel;
-        //this.namePanel = namePanel;
+
+        //apiController = new ApiController();
+        //guiController = new GuiController();
     }
 
     public void createTable(JTable tableJobs, JobBoard job, int width, int height){
@@ -73,21 +81,70 @@ public class GuiJobsPanelMenagement extends GuiMenagement implements GuiJobsPane
         return rowData;
     }
 
-    public void showHowToApply(PickedJobs job){
+    public void search(PickedJobs job, PickedJobs pickedJobs, JTextField txtLocation1, JTextField txtLocation2, JTextField txtDescription, JCheckBox fullTime){
+
+        job.getJobs().clear();
+
+        boolean flag = false;
+
         try {
 
-            if(job.getHow_to_apply(getTableJobs().getSelectedRow(), job.getJobs()).toString().equals("")){
+            job.setKeyWord(txtDescription.getText());
+
+
+            if(!txtLocation1.getText().equals(txtLocation2.getText())) {
+                if (!txtLocation1.getText().equals("")) {
+                    apiController.setUrl(ApiController.query(guiController.setFilters(txtLocation1, txtDescription, fullTime.isSelected())));
+                    apiController.save(job.getJobs());
+                    flag = true;
+                }
+
+                if (!txtLocation2.getText().equals("")) {
+                    apiController.setUrl(ApiController.query(guiController.setFilters(txtLocation2, txtDescription, fullTime.isSelected())));
+                    apiController.save(job.getJobs());
+                    flag = true;
+                }
+            }
+            else{
+                flag=false;
+            }
+
+            if(flag == true){
+                if (!job.getJobs().isEmpty()) {
+                    new JobsFoundPanel(job, pickedJobs);
+
+                } else
+                    JOptionPane.showMessageDialog(super.getPanel(), "     Bro, jobs ain't found");
+            }
+            else{
+                if(txtLocation1.getText().equals("")){
+                    JOptionPane.showMessageDialog(super.getPanel(), " You must insert the location");
+                }
+                else{
+                    JOptionPane.showMessageDialog(super.getPanel(), "You can't insert the same location in the fields");
+                }
+            }
+        } catch (IOException exception) {
+            JOptionPane.showMessageDialog(super.getPanel(), "Invalid filters");
+        }
+
+    }
+
+    public void showHowToApply(PickedJobs job, int index){
+        try {
+
+            if(job.getHow_to_apply(index, job.getJobs()).toString().equals("")){
                 JOptionPane.showMessageDialog(super.getPanel(), "The how to apply is not available");
             }
             else{
                 Object[] options = { "Copy on clip board", "Exit" };
 
-                int result = JOptionPane.showOptionDialog(super.getPanel(),job.getHow_to_apply(getTableJobs().getSelectedRow(), job.getJobs()) ,"Information",
+                int result = JOptionPane.showOptionDialog(super.getPanel(),job.getHow_to_apply(index, job.getJobs()) ,"Information",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION,
                         null, options, options[0]);
 
                 if (result == JOptionPane.YES_OPTION){
-                    StringSelection selection = new StringSelection(job.getHow_to_apply(getTableJobs().getSelectedRow(), job.getJobs()));
+                    StringSelection selection = new StringSelection(job.getHow_to_apply(index, job.getJobs()));
                     Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
                     clipboard.setContents(selection, selection);
                     JOptionPane.showMessageDialog(super.getPanel(),"Text successfully copied to the clip board");
@@ -100,8 +157,28 @@ public class GuiJobsPanelMenagement extends GuiMenagement implements GuiJobsPane
         }
     }
 
+    public void showInternetPage(PickedJobs job, int index){
 
-    public void saveJob(PickedJobs job, PickedJobs pickedJobs){
+        try {
+
+            if(job.getCompany_url(index, job.getJobs()).toString().equals("http://http")){
+                JOptionPane.showMessageDialog(super.getPanel(), "The link is not available");
+            }
+            else{
+                desktop.browse(job.getCompany_url(index, job.getJobs()).toURI());
+            }
+
+        }catch (IOException ioException) {
+            ioException.printStackTrace();
+
+        } catch (URISyntaxException uriSyntaxException) {
+            JOptionPane.showMessageDialog(super.getPanel(), "The link is wrong");
+        }catch(Exception exception){
+            JOptionPane.showMessageDialog(super.getPanel(),"     Bro, jobs ain't found");
+        }
+    }
+
+    public void saveJob(PickedJobs job, PickedJobs pickedJobs, int index){
 
         try {
 
@@ -113,14 +190,34 @@ public class GuiJobsPanelMenagement extends GuiMenagement implements GuiJobsPane
                     JOptionPane.showMessageDialog(super.getPanel(), "You have not selected any job.");
                 }
                 else{
-                    if(pickedJobs.getJobs().contains(job.getJob(getTableJobs().getSelectedRow(), job.getJobs())) ){
-                        JOptionPane.showMessageDialog(super.getPanel(), "Job is already present in the data base");
+                    //pickedJobs.add(job.getJob(index, job.getJobs()));
 
-                    }
-                    else{
-                        pickedJobs.add(job.getJob(getTableJobs().getSelectedRow(), job.getJobs()));
+                    //pickedJobs.add(job, index);
+
+                    if(pickedJobs.add(job, index)){
+                        pickedJobs.add(job.getJob(index, job.getJobs()));
                         JOptionPane.showMessageDialog(super.getPanel(), "Job saved successfully in " + pickedJobs.getFileName());
                     }
+                    else{
+                        JOptionPane.showMessageDialog(super.getPanel(), "Job is already present in the data base");
+                    }
+
+                    /*
+                    boolean flag = true;
+
+                    for(Job j : pickedJobs.getJobs()){
+                        if(j.getId().equals(job.getJob(index, job.getJobs()).getId())){
+                            flag = false;
+                        }
+                    }
+
+                    if(flag){
+                        pickedJobs.add(job.getJob(index, job.getJobs()));
+                        JOptionPane.showMessageDialog(super.getPanel(), "Job saved successfully in " + pickedJobs.getFileName());
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(super.getPanel(), "Job is already present in the data base");
+                    }*/
                 }
             }
 
@@ -132,23 +229,69 @@ public class GuiJobsPanelMenagement extends GuiMenagement implements GuiJobsPane
 
     public void saveAllJobs(PickedJobs job, PickedJobs pickedJobs){
 
-        //this.buffer = buffer;
-
         if(job.getJobs().isEmpty()){
             JOptionPane.showMessageDialog(super.getPanel(), "Any job to save.");
         }else {
 
-            pickedJobs.addAll(job.getJobs());
+            pickedJobs.addAll(job);
 
-            if(this.buffer == pickedJobs.getNumOfJobs()){
-                JOptionPane.showMessageDialog(super.getPanel(), "Jobs are already present");
+            /*
+
+            boolean flag = true;
+
+            for(Job i : job.getJobs()){
+                flag = true;
+                for(Job j : pickedJobs.getJobs()){
+                    if(j.getId().equals(i.getId())) {
+                        flag = false;
+                        break;
+                    }
+                }
+                if(flag){
+                    try {
+                        pickedJobs.add(i);
+                    } catch (IOException exception) {
+                        exception.printStackTrace();
+                    }
+                }
+
+            }*/
+
+            JOptionPane.showMessageDialog(super.getPanel(), "Jobs saved successfully in " + pickedJobs.getFileName());
+        }
+    }
+
+    public void deleteJobs(PickedJobs job, int index){
+
+        Object[] options = { "Yes", "No" };
+
+        int result = JOptionPane.showOptionDialog(null, "           Are you sure?", "Warning",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                null, options, options[0]);
+
+        if (result == JOptionPane.YES_OPTION){
+            try {
+                job.deleteJob(job.getJob(index, job.getJobs()).getId());
+                dispose();
+                new JobsSavedPanel(job);
+
+            } catch (IOException exception) {
+                exception.printStackTrace();
             }
-            else{
-                JOptionPane.showMessageDialog(super.getPanel(), "Jobs saved successfully in " + pickedJobs.getFileName());
-                this.buffer = pickedJobs.getNumOfJobs();
-            }
+        }
+    }
 
+    public void deleteAllJobs(PickedJobs job){
+        Object[] options = { "Yes", "No" };
 
+        int result = JOptionPane.showOptionDialog(null, "           Are you sure?", "Warning",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                null, options, options[0]);
+
+        if (result == JOptionPane.YES_OPTION) {
+            job.deleteAll();
+            job.getJobs().clear();
+            dispose();
         }
     }
 

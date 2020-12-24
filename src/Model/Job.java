@@ -244,6 +244,4 @@ public class Job {
                 ", Description='" + description + '\'' +
                 '}';
     }
-
-
 }

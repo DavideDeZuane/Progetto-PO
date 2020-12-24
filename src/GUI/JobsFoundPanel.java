@@ -30,9 +30,6 @@ public class JobsFoundPanel extends JFrame {
     private ImageIcon imageIcon;
 
     private PickedJobs job;
-    private int buffer = -2;
-
-    private Desktop desktop = Desktop.getDesktop();
 
     private PickedJobs pickedJobs = new PickedJobs();
 
@@ -46,15 +43,16 @@ public class JobsFoundPanel extends JFrame {
     private final int widthTable = 625;
     private final int heightTable = 600;
 
-    public JobsFoundPanel(PickedJobs job) throws IOException{
+    public JobsFoundPanel(PickedJobs job, PickedJobs pickedJobs) throws IOException{
 
         this.job = job;
+        this.pickedJobs = pickedJobs;
 
         guiJobsPanelMenagement = new GuiJobsPanelMenagement(jobsFoundPanel, "Jobs Found Panel");
         guiJobsPanelMenagement.createTable(this.tableJobs, this.job, this.widthTable, this.heightTable);
         guiJobsPanelMenagement.setPanel(this.widthPanel, this.heightPanel);
 
-        fileController.readJobsFromFile(pickedJobs.getJobs());
+        //fileController.readJobsFromFile(pickedJobs.getJobs());
 
 
         btnStats.addActionListener(new ActionListener() {
@@ -81,61 +79,21 @@ public class JobsFoundPanel extends JFrame {
         btnInternetPage.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-
-                try {
-
-                    if(job.getCompany_url(guiJobsPanelMenagement.getTableJobs().getSelectedRow(), job.getJobs()).toString().equals("http://http")){
-                        JOptionPane.showMessageDialog(jobsFoundPanel, "The link is not available");
-                    }
-                    else{
-                        desktop.browse(job.getCompany_url(guiJobsPanelMenagement.getTableJobs().getSelectedRow(), job.getJobs()).toURI());
-                    }
-
-                }catch (IOException ioException) {
-                    ioException.printStackTrace();
-
-                } catch (URISyntaxException uriSyntaxException) {
-                    JOptionPane.showMessageDialog(jobsFoundPanel, "The link is wrong");
-                }catch(Exception exception){
-                    JOptionPane.showMessageDialog(jobsFoundPanel,"     Bro, jobs ain't found");
-                }
+                guiJobsPanelMenagement.showInternetPage(job, guiJobsPanelMenagement.getTableJobs().getSelectedRow());
             }
         });
 
         btnSaveAll.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-
                 guiJobsPanelMenagement.saveAllJobs(job, pickedJobs);
-                /*
-                if(job.getJobs().isEmpty()){
-                    JOptionPane.showMessageDialog(jobsFoundPanel, "Any job to save.");
-                }else {
-
-                    pickedJobs.addAll(job.getJobs());
-
-                    if(buffer == pickedJobs.getNumOfJobs()){
-                        JOptionPane.showMessageDialog(jobsFoundPanel, "Jobs are already present");
-                    }
-                    else{
-                        JOptionPane.showMessageDialog(jobsFoundPanel, "Jobs saved successfully in " + pickedJobs.getFileName());
-                        buffer = pickedJobs.getNumOfJobs();
-                    }
-
-
-                }*/
-
-
             }
         });
 
         btnSave.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                guiJobsPanelMenagement.saveJob(job, pickedJobs);
-
+                guiJobsPanelMenagement.saveJob(job, pickedJobs, guiJobsPanelMenagement.getTableJobs().getSelectedRow());
             }
         });
 
@@ -149,9 +107,7 @@ public class JobsFoundPanel extends JFrame {
         btnHowToApply.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                guiJobsPanelMenagement.showHowToApply(job);
-
+                guiJobsPanelMenagement.showHowToApply(job, guiJobsPanelMenagement.getTableJobs().getSelectedRow());
             }
         });
     }
