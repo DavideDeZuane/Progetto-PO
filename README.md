@@ -95,7 +95,7 @@ I prinicipali framework utilizzati per la realizzazione dell'applicazione sono i
 
 
 ## Funzionamento
-Appena avviatà l'applicazione l'utente troverà la seguente finestra:
+Appena avviata l'applicazione, si presenterà all'utente la seguente finestra:
 
 ![](Images/Funzionamento/SchermataPrincipale.png)
 
