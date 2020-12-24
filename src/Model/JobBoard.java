@@ -4,6 +4,9 @@ import java.net.URL;
 import java.util.HashSet;
 import java.util.Vector;
 
+/**
+ * JobBoard class
+ */
 public class JobBoard {
 
     protected HashSet<Job> jobs;
@@ -30,7 +33,7 @@ public class JobBoard {
     }
 
     /**
-     *
+     * this method gets a job in a specified position from a HashSet of Job type
      * @param index index of the hashset
      * @param offers HashSet that contains all the offers
      * @return a certain Job at the specified index of the HashSet offers

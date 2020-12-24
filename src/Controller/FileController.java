@@ -12,14 +12,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashSet;
 
-//todo usare il mapper di ApiController
-//todo classe per leggere da file configuration file
 
 public class FileController {
 
-    //questa classe apre i buffer di input e output per
-    //salavre e leggere i dati sui lavori trovati e sui
-    //lavori salvati dall'utente
     private String filename;
     private File file;
     private ApiController controller = new ApiController();

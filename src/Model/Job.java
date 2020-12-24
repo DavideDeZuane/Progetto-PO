@@ -5,7 +5,9 @@ import org.jsoup.Jsoup;
 
 import java.net.URL;
 
-
+/**
+ * Job class
+ */
 public class Job {
     private String id;
     private String type;

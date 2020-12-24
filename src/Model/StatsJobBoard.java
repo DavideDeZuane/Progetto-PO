@@ -33,7 +33,7 @@ public class StatsJobBoard extends JobBoard{
     }
 
     /**
-     * this method finds out how many jobs were created a specified number of days ago
+     * this method finds out how many jobs were created starting from a specified number of days ago
      * @param period number of days
      * @return the number of jobs that were created a specified number of days ago
      */
@@ -45,20 +45,11 @@ public class StatsJobBoard extends JobBoard{
         {
             for (Job j : jobs)
             {
-                //DateTimeFormatter f = DateTimeFormatter.forPattern("EEE MMM dd hh:mm:ss ZZZ yyyy");
-                //LocalDateTime dateTime = f.parseLocalDateTime("2012-01-10 23:13:26");
-                //DateFormat df = new SimpleDateFormat;//
-                //DateFormat.LONG
-                //Date date = df.parse(j.getCreated_at());
                 Date date = new Date(j.getCreated_at());
                 long diffInMillies = Math.abs(new Date(System.currentTimeMillis()).getTime() - date.getTime());
                 long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
                 if(diff<=period)
                     recent++;
-                /*DateFormat alfrescoDateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
-                Date dataRispostaDate = alfrescoDateFormat.parse(j.getCreated_at());*/
-                /*DateFormatter formatter = new DateFormatter();
-                formatter.stringToValue(j.getCreated_at());*/
             }
         }
         return recent;
@@ -88,10 +79,6 @@ public class StatsJobBoard extends JobBoard{
         return vector;
             }
     }
-
-    //questa funzione genera statistiche in base a quale parole chiavi l'utente immette
-    // restituendo il numero di occorrenze di quella parola chiave nella description del lavoro
-    //(case sensitive case)
 
     /**
      * this method takes as input a string witch represents a word the user wants to search for, the method returns the number of occurrences

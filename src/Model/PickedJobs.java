@@ -6,15 +6,17 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashSet;
 
-
+/**
+ * PickedJobs class
+ */
 public class PickedJobs extends JobBoard {
 
     private String fileName = "PickedJobs.txt";
-    private FileController fileController = new FileController(fileName);
+    private final FileController fileController = new FileController(fileName);
 
     /**
      * constructor of the class
-     * @throws IOException
+     * @throws IOException if the fileController fails to read from the HashSet
      */
     public PickedJobs() throws IOException {
         super();
@@ -57,7 +59,7 @@ public class PickedJobs extends JobBoard {
     }
 
     /**
-     * this method deletes a jobs from the hashset on from the txt file
+     * this method gets a Job from a specified id, deletes it from the HashSet of Job and saves to file the new HashSet of Job
      * @param id id of the job that will be deleted
      * @throws IOException is the I/O operations fail or get interrupted
      */

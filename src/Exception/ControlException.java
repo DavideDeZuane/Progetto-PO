@@ -15,7 +15,7 @@ public class ControlException extends Exception {
 
     /**
      * constructor
-     * @param message /////////////////////////////////
+     * @param message
      */
     public ControlException(URI message) {
         super(String.valueOf(message));

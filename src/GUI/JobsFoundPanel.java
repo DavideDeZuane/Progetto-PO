@@ -10,6 +10,15 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
+/**
+ * this constructor makes a panel and implements some buttons
+ * - the show saved button shows the user the jobs he saved, if there are no jobs saved, the user will be warned by a message
+ * - the internet page button shows the user the internet page of the job the user clicked on
+ * - the save button allows the user to save a job
+ * - the save all button allows the user to save all the jobs that appears to a panel
+ * - the exit button allows the user to exit the panel
+ * - the how to apply button allows the user to take a look at the how to apply field of the job the user selected
+ */
 public class JobsFoundPanel extends JFrame {
     private JPanel jobsFoundPanel;
     private JButton btnShowSavedJobs;
@@ -37,6 +46,7 @@ public class JobsFoundPanel extends JFrame {
     private final int widthPanel = 625;
     private final int heightPanel = 725;
 
+
     private final int widthTable = 625;
     private final int heightTable = 600;
 
@@ -49,7 +59,6 @@ public class JobsFoundPanel extends JFrame {
         guiJobsPanelManagement.setPanel(this.widthPanel, this.heightPanel);
 
         fileController.readJobsFromFile(pickedJobs.getJobs());
-
 
         btnStats.addActionListener(new ActionListener() {
             @Override
@@ -116,11 +125,7 @@ public class JobsFoundPanel extends JFrame {
                         JOptionPane.showMessageDialog(jobsFoundPanel, "Jobs saved successfully in " + pickedJobs.getFileName());
                         buffer = pickedJobs.getNumOfJobs();
                     }
-
-
                 }*/
-
-
             }
         });
 

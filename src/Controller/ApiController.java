@@ -1,5 +1,6 @@
 package Controller;
 
+import Exception.JsonMismatch;
 import Model.Job;
 import Model.JobBoard;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -12,22 +13,15 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.HashSet;
 
-//todo migliorare il metodo query
-//todo implementare il metodo fill per riempire wareHouse
-//todo estrarre campo how_to_apply
-
-
 public class ApiController extends Controller{
-
 
     private URL url;
     private final ObjectMapper mapper;
 
-
     private JobBoard jobBoard = new JobBoard();
 
     /**
-     * constructor
+     * constructor, it initialises a ObjectMapper that will be used in the whole project
      */
     public ApiController(){
         mapper = new ObjectMapper();
@@ -35,32 +29,10 @@ public class ApiController extends Controller{
     }
 
     /**
-     * this method gets a object of JobBoard type
-     * @return a object of JobBoard type
-     */
-    public JobBoard getJobBoard() {
-        return jobBoard;
-    }
-
-    /**
-     * this method sets a object of JobBoard type
-     * @param jobBoard object of the JobBoard class
-     */
-    public void setJobBoard(JobBoard jobBoard) {
-        this.jobBoard = jobBoard;
-    }
-
-    /**
      * this method gets a object of ObjectMapper type
      * @return a object of ObjectMapper type
      */
     public ObjectMapper getMapper(){ return mapper; }
-
-    /**
-     * this method gets a Url
-     * @return a URL type
-     */
-    public URL getUrl(){ return url; }
 
     /**
      * this method sets a URL object
@@ -76,11 +48,9 @@ public class ApiController extends Controller{
      */
     public void save(HashSet<Job> jobs) throws IOException{
         try {
-            //jobs.clear();
-            jobs.addAll(mapper.readValue(this.url, new TypeReference<HashSet<Job>>() {})); //mappo json array
-
-        }catch(Exception e){
-            jobs.add(mapper.readValue(this.url, Job.class)); //mappo json object
+            jobs.addAll(mapper.readValue(this.url, new TypeReference<HashSet<Job>>() {}));
+        }catch(JsonMismatch e){
+            jobs.add(mapper.readValue(this.url, Job.class));
         }
 
     }
@@ -100,7 +70,6 @@ public class ApiController extends Controller{
 
     }
 
-    //metodi per creare le richieste url
     /**
      * this method commutes a string to a URL object after verifying all the syntax is correct
      * @param url String object that will be commute to a URL
@@ -119,7 +88,8 @@ public class ApiController extends Controller{
     }
 
     /**
-     * this method allows to make a customized query
+     * this method allows to make a customized query by adding to the default query key-value pairs with a specific API syntax,
+     * the flag contains the parameters that the user has selected (bit flag)
      * @param s is a String array that contains the parameters we want to add to the query
      * @return a URL that will allow to make a customized query
      */
@@ -129,8 +99,8 @@ public class ApiController extends Controller{
         int cont = 0;
         if(flags != null){
             if (flags.contains(Parameters.TYPE)) {
-                temp += "full_time=%s";
-                temp = String.format(temp, "true");
+                temp += "full_time=%s";                                                //%s is a placeholder for the parameters
+                temp = String.format(temp, "true");                                    //format replaces the placeholder with a value
                 first = false;
             }
 

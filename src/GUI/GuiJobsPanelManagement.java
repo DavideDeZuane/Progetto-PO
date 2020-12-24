@@ -19,18 +19,27 @@ public class GuiJobsPanelManagement extends GuiManagement implements GuiJobsPane
 
     private Object[] columnHeaders = {"Type","Company","Location","Title"};
 
+    /**
+     * constructor
+     * @param panel panel of JPanel type
+     * @param namePanel name of the panel
+     */
     public GuiJobsPanelManagement(JPanel panel, String namePanel){
         super(panel, namePanel);
         //this.panel = panel;
         //this.namePanel = namePanel;
     }
 
+    /**
+     * this method creates a table
+     * @param tableJobs object of JTable class
+     * @param job object of JobBoard class
+     */
     public void createTable(JTable tableJobs, JobBoard job, int width, int height){
         this.tableJobs = tableJobs;
         this.tableJobs = new JTable(this.setTable(job.getJobs().iterator(), job.getNumOfJobs(), COLUMNS), columnHeaders);
         this.tableJobs.setPreferredScrollableViewportSize(new Dimension(500,50));
         this.tableJobs.setFillsViewportHeight(true);
-
 
         JScrollPane scrollPane = new JScrollPane(this.tableJobs);
         add(scrollPane);
@@ -38,14 +47,27 @@ public class GuiJobsPanelManagement extends GuiManagement implements GuiJobsPane
         setVisible(true);
     }
 
+    /**
+     * this method gets a object of JTable type
+     * @return a object of JTable type
+     */
     public JTable getTableJobs() {
         return tableJobs;
     }
 
+    /**
+     * this method sets a object of JTable class
+     * @param tableJobs object of JTable class
+     */
     public void setTableJobs(JTable tableJobs) {
         this.tableJobs = tableJobs;
     }
 
+    /**
+     * this method sets a panel by specifying the width and the height
+     * @param width integer that represents the width of the table
+     * @param height integer that represents the height of the table
+     */
     public void setPanel(int width, int height){
         add(super.getPanel());
         setTitle(super.getNamePanel());
@@ -55,6 +77,13 @@ public class GuiJobsPanelManagement extends GuiManagement implements GuiJobsPane
 
     }
 
+    /**
+     * this method sets a table with the type, the company, the location and the title of a job
+     * @param iterator object of Iterator type
+     * @param raws number of rows
+     * @param columns number of columns
+     * @return
+     */
     public Object[][] setTable(Iterator iterator, int raws, int columns){
         Job tmp = null;
         int count = 0;
@@ -72,6 +101,10 @@ public class GuiJobsPanelManagement extends GuiManagement implements GuiJobsPane
         return rowData;
     }
 
+    /**
+     * this method shows the how_to_apply of a selected Job of the table
+     * @param job object of PickedJob class
+     */
     public void showHowToApply(PickedJobs job){
         try {
 
@@ -99,7 +132,11 @@ public class GuiJobsPanelManagement extends GuiManagement implements GuiJobsPane
         }
     }
 
-
+    /**
+     * this method allows the user to pick e job and saves it to file
+     * @param job object of PickedJob class
+     * @param pickedJobs object of PickedJob class
+     */
     public void saveJob(PickedJobs job, PickedJobs pickedJobs){
 
         try {

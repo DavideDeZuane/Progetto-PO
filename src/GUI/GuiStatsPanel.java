@@ -4,7 +4,7 @@ import javax.swing.*;
 
 public interface GuiStatsPanel {
     /**
-     * @param lblJobTot JLabel that/////////////
+     * @param lblJobTot JLabel that////////////////////////////////////////////7
      * @param lblFullTimePercent
      * @param lblKeyWordRepeat
      */
@@ -34,7 +34,9 @@ public interface GuiStatsPanel {
      */
     public void check(JTextField txtPeriod);
 
+
     public void setCharts();
+
 
     public void showChart();
 }

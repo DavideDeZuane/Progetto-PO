@@ -12,16 +12,8 @@ import java.util.HashSet;
 public class CheckOffer extends Controller implements Runnable{
     private HashSet<Job> saved = new HashSet<>();
 
-    /**
-     * constructor
-     */
     public CheckOffer(){}
 
-    /**
-     * this method reads ///////////////////////
-     * @param jobs
-     * @throws IOException
-     */
     public void save(HashSet<Job> jobs) throws IOException{
         this.saved = jobs;
         try {
@@ -34,7 +26,6 @@ public class CheckOffer extends Controller implements Runnable{
         }
     }
 
-    ///////////////////
     public void save(){
         try {
             FileController file = new FileController("PickedJobs.txt");

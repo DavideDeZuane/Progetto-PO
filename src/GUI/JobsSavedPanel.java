@@ -34,6 +34,16 @@ public class JobsSavedPanel extends JFrame{
     private final int widthTable = 625;
     private final int heightTable = 600;
 
+    /**
+     * constructor that created a table and a panel in witch there are some buttons:
+     * - the stats button allows the user to see the stats of the jobs the user saved
+     * - the internet page button shows the user the internet page of the job the user clicked on
+     * - the how to apply button allows the user to take a look at the how to apply field of the job the user selected
+     * - the delete all button allows the user to delete all the jobs the user saved
+     * - the delete button allows the user to delete the job the user clicked on
+     * - the exit button allows the user to exit the panel
+     * @param pickedJobs object of the class PickedJobs
+     */
     public JobsSavedPanel(PickedJobs pickedJobs){
 
         this.pickedJobs = pickedJobs;

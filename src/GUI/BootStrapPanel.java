@@ -27,13 +27,17 @@ public class BootStrapPanel extends JFrame{
     private ApiController apiController = null;
     private GuiController guiController = null;
 
-
-
     private HashSet<Job> offers;
 
-    //private HashSet<Job> openOffers = new HashSet<>();
-
-
+    /**
+     * this constructor makes a panel and implements some buttons
+     * - the search button finds jobs by using the query method in the ApiController class,
+     *   if there are no jobs found, the user will be warned by a message, otherwise the constructor
+     *   will open a new panel that shows the jobs found, if the filters typed in by the user are invalid,
+     *   the constructor will throw an exception
+     * - the show saved panel button opens a JobSavedPanel that allows the user to see the jobs that were saved
+     *   and warns the user with a message if there are no jobs found
+     */
     public BootStrapPanel() {
         add(rootPanel);
         setTitle("IT Found Jobs");
@@ -137,6 +141,10 @@ public class BootStrapPanel extends JFrame{
     }
 
 
+    /**
+     * this method gets the string typed in from the user in the description text filed
+     * @return the word that the user typed in in the description text field
+     */
     public String getTxtDescription(){
         return txtDescription.getText();
     }
