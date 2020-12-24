@@ -164,7 +164,7 @@ Il tasto Copy permette di copiare il contenuto del pannello, in questo modo se s
 
 ## Approfondimenti
 
-+ **HashCode**
+## **HashCode**
 ```java
     @Override
     public boolean equals(Object o){
@@ -188,18 +188,18 @@ calcolare l'hash.
 Poichè con il meotodo di defautl era sufficiente che si trattase di istanze differrenti per farlli considerare oggetti diversi.
 Poichè a noi non interessa se siano due istanze differenti o no, ma che non abbiano lo stesso contenuto.
 
+ ## **Mulithreading**
 
-+ **Mulithreading**
+Nel nostro progetto abbiamo cercato di introdurre il multithreaing per verificare se tra un avvio dell'applicazione e l'altro le offerte che l'utente stava
+osservando hanno subito modifiche (comprendendo anche il caso in cui siano scadute) o se sono invariate.
 
-Nel nostro progetto abbiamo cercato il multithreaing per verificare se tra un avvio dell'applicazione e l'altro le offerte che l'utente stava
-osservando hanno subito modifiche o sono scadute.
 Per evitare che questa verifica fosse troppo dispendiosa a livello di tempo abbiamo deciso di eseguirla su un thread differente per massimizzare
 l'utilizzo della CPU e quindi diminuire i tempi di attesa.
 
 Abbiamo realizzato una Classe addetta a questo compito che implenta l'interfaccia Runnable.
 Lanciando questo sottoprocesso in un thread parallelo avremmo:
 + tramite read: letto le offerta salvate dall'utente e presenti in un file in formato JSON;
-+ tramite read: cercare di stabilire una connessione mandando una richiesta che ha come parametro l'id univoco;
++ tramite verify: cercare di stabilire una connessione mandando una richiesta che ha come parametro l'id univoco;
    anallizzando il **codice di stato** della risposta avremmo stabilito se l'offerta fosse ancora presente o se fosse stata rimossa
 + tramite updateTable: aggiornato i lavori del File cambiando quelle offerte che non erano più presenti con un font Rosso
 
@@ -214,6 +214,7 @@ Lanciando questo sottoprocesso in un thread parallelo avremmo:
             System.out.println("Nel file non sono presenti lavori");
         }
 ```
+
 Tuttavia per questioni di tempo e di difficoltà mell'implementazione non siamo riusciti ad inserire questa funzionalità.
 Sarà una funzionalità che con più calma potrà essere inserita
 
