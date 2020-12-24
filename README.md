@@ -182,6 +182,11 @@ Il tasto Copy permette di copiare il contenuto del pannello, in questo modo se s
         return Objects.hash(id, type, url, created_at, company, company_url, location, title, description, how_to_apply, compamy_logo);
     }
 ```
+Durante lo sviluppo ci siamo accorti che provando ad aggiungere un offerta di lavoro già presenta, essa veniva aggiunta lo stesso.
+Per ovvierare a ciò abbiamo eseguito un Overriding dei metodi **equals** e **hashCode**, poichè eseguendo tale ovverifding stiamo determinando con quali campi
+calcolare l'hash. 
+Poichè con il meotodo di defautl era sufficiente che si trattase di istanze differrenti per farlli considerare oggetti diversi.
+Poichè a noi non interessa se siano due istanze differenti o no, ma che non abbiano lo stesso contenuto.
 
 
 + **Mulithreading**
@@ -218,7 +223,7 @@ Link utili per approfondire il multithreading:
 + <https://docs.oracle.com/javase/tutorial/essential/concurrency/procthread.html>
 
 ## Possibili migliormaneti
-- [ ] Aggiunta del multithreadung per il controllo delle offerte
+- [ ] MiIglioramento del multithreadung per il controllo delle offerte
 - [ ] Storico delle Statistiche
 - [ ] implementare una form che permetta all'utente di modificare il file config.properties
 - [ ] Aggiumgere una barra di caricamento per ingannare l'attesa durante il caricamento della ricerca delle offerte
