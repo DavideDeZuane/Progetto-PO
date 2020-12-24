@@ -12,7 +12,7 @@ import GUI.BootStrapPanel;
 import java.io.IOException;
 
 public class Main {
-/*
+
     static{
         try {
             Controller.readProp();
@@ -28,7 +28,7 @@ public class Main {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }*/
+    }
 
     public static void main(String[] args) throws Exception{
         /*

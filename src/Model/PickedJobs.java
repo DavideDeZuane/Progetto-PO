@@ -84,6 +84,17 @@ public class PickedJobs extends JobBoard {
     }
 
     public void addAll(PickedJobs job){
+
+        for(Job j : job.getJobs()){
+            jobs.add(j);
+        }
+
+        try {
+            fileController.save(jobs);
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+        /*
         boolean flag = true;
 
         for(Job i : job.getJobs()){
@@ -102,7 +113,7 @@ public class PickedJobs extends JobBoard {
                 }
             }
 
-        }
+        }*/
 
     }
 

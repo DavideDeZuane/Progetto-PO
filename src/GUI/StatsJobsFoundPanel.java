@@ -48,9 +48,9 @@ public class StatsJobsFoundPanel extends JFrame {
         guiStatsPanelMenagement.setPanel(this.widthPanel, this.heightPanel);
 
 
-        check.addActionListener(new ActionListener() {
+        check.addActionListener(new ActionListener(){
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e){
                 guiStatsPanelMenagement.check(txtPeriod, myKeyWord);
             }
         });

@@ -3,14 +3,17 @@ package Controller;
 import Exception.NoJobsException;
 import Model.Job;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashSet;
+import java.util.Iterator;
 
 
 public class CheckOffer extends Controller implements Runnable{
     private HashSet<Job> saved = new HashSet<>();
+
+    private int COLUMS = 5;
 
     public CheckOffer(){}
 
@@ -79,8 +82,58 @@ public class CheckOffer extends Controller implements Runnable{
         save();
         try {
             verify();
-        } catch (NoJobsException e) {
+            Object[][] table = createTable();
+            System.out.println(table.toString());
+            permanenzatable(table);
+
+            System.out.println(table);
+        }catch(NoJobsException | IOException e){
             return;
         }
+
+    }
+
+/*
+    public Object[][] readTable() throws IOException, ClassNotFoundException {
+        ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(new FileInputStream("Update.txt")));
+        Object[][] table = new Object[this.saved.size()][COLUMS];
+        for (int i = 0; i < this.saved.size(); i++) {
+            for (int j = 0; j < COLUMS; j++) {
+                table[i][j] = in.readObject();
+            }
+        }
+        return table;
+    }*/
+
+
+    public Object[][] createTable(){
+        Job tmp = null;
+        int count = 0;
+        Iterator it = this.saved.iterator();
+        Object[][] rowData = new Object[this.saved.size()][COLUMS];
+
+        for(int i = 0; i < this.saved.size(); i++) {
+            tmp = (Job) it.next();
+            rowData[i][count++] = tmp.getType();
+            rowData[i][count++] = tmp.getCompany();
+            rowData[i][count++] = tmp.getLocation();
+            rowData[i][count++] = tmp.getTitle();
+            if(verify(tmp))
+                rowData[i][count++] = "Offerta Invariata";
+            else
+                rowData[i][count] = "Offerta Cambiata";
+            count = 0;
+        }
+        return rowData;
+    }
+
+    public void permanenzatable(Object[][] table) throws IOException {
+        ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("Update.txt")));
+        for(int i = 0; i < this.saved.size(); i++){
+            for(int j = 0; j<COLUMS; j++) {
+                out.writeObject(table[i][j].toString());
+            }
+        }
+        out.close();
     }
 }

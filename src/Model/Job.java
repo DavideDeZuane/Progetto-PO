@@ -4,6 +4,7 @@ package Model;
 import org.jsoup.Jsoup;
 
 import java.net.URL;
+import java.util.Objects;
 
 /**
  * Job class
@@ -245,5 +246,22 @@ public class Job {
                 ", created_At='" + created_at + '\'' +
                 ", Description='" + description + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Job job = (Job) o;
+        return id.equals(job.id) && type.equals(job.type) && url.equals(job.url)
+                && created_at.equals(job.created_at) && company.equals(job.company)
+                && company_url.equals(job.company_url) && location.equals(job.location)
+                && title.equals(job.title) && description.equals(job.description)
+                && how_to_apply.equals(job.how_to_apply) && company_logo.equals(job.company_logo);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, type, url, created_at, company, company_url, location, title, description, how_to_apply, company_logo);
     }
 }

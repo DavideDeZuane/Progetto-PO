@@ -17,6 +17,7 @@ public class BootStrapPanel extends JFrame{
     private JButton btnShowJobsSaved;
     private JCheckBox fullTime;
     private JTextField txtLocation2;
+    private JButton btnShowStatus;
 
     private PickedJobs job;
 
@@ -88,6 +89,32 @@ public class BootStrapPanel extends JFrame{
                 }else{
                     JOptionPane.showMessageDialog(rootPanel,"bro, there ain't saved jobs");
                 }
+            }
+        });
+
+        btnShowStatus.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //guiJobsPanelManagement.createTable();
+
+                PickedJobs pickedJobs = null;
+                FileController fileController = null;
+                try {
+                    pickedJobs = new PickedJobs();
+                    fileController = new FileController("PickedJobs.txt");
+                    fileController.readJobsFromFile(pickedJobs.getJobs());
+                }catch (IOException exception) {
+                    JOptionPane.showMessageDialog(rootPanel,"bro, there ain't saved jobs");
+                    //exception.printStackTrace();
+                }
+
+                if(!pickedJobs.getJobs().isEmpty()){
+                    new StatusJobs(pickedJobs);
+                }else{
+                    JOptionPane.showMessageDialog(rootPanel,"bro, there ain't saved jobs");
+                }
+
+                //new StatusJobs();
             }
         });
     }
