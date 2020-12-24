@@ -1,5 +1,6 @@
 package Controller;
 
+import Exception.JsonMismatch;
 import Model.Job;
 import Model.JobBoard;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -12,10 +13,6 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.HashSet;
 
-//todo migliorare il metodo query
-//todo implementare il metodo fill per riempire wareHouse
-//todo estrarre campo how_to_apply
-
 public class ApiController extends Controller{
 
     private URL url;
@@ -23,39 +20,46 @@ public class ApiController extends Controller{
 
     private JobBoard jobBoard = new JobBoard();
 
+    /**
+     * constructor, it initialises a ObjectMapper that will be used in the whole project
+     */
     public ApiController(){
         mapper = new ObjectMapper();
         mapper.enable(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT);
     }
 
-    public JobBoard getJobBoard() {
-        return jobBoard;
-    }
-
-    public void setJobBoard(JobBoard jobBoard) {
-        this.jobBoard = jobBoard;
-    }
-
-
-
-    //getter e setter
+    /**
+     * this method gets a object of ObjectMapper type
+     * @return a object of ObjectMapper type
+     */
     public ObjectMapper getMapper(){ return mapper; }
-    public URL getUrl(){ return url; }
+
+    /**
+     * this method sets a URL object
+     * @param url url that will be set
+     */
     public void setUrl(URL url){ this.url = url; }
 
-
-    //metodo parsing aggiornato
+    /**
+     * this method reads a json from a url and commutes the json to objects, if there is only an object, the method saves it to a Job.class,
+     * if there are many objects the method saves them to a HashSet
+     * @param jobs HashSet structure that will be populated
+     * @throws IOException if the mapper fails to read the json
+     */
     public void save(HashSet<Job> jobs) throws IOException{
         try {
-            //jobs.clear();
-            jobs.addAll(mapper.readValue(this.url, new TypeReference<HashSet<Job>>() {})); //mappo json array
-
-        }catch(Exception e){
-            jobs.add(mapper.readValue(this.url, Job.class)); //mappo json object
+            jobs.addAll(mapper.readValue(this.url, new TypeReference<HashSet<Job>>() {}));
+        }catch(JsonMismatch e){
+            jobs.add(mapper.readValue(this.url, Job.class));
         }
 
     }
 
+    /**
+     * this method fills a HashSet of Job type by using the save method
+     * @param offer HashSet of Job type that will be filled
+     * @param url url that the save method will get the json from
+     */
     public void fill(JobBoard offer, URL url){
         this.url = url;
         try{
@@ -66,13 +70,11 @@ public class ApiController extends Controller{
 
     }
 
-    //metodi per creare le richieste url
     /**
-     * Ritorna un oggetto URL a partire da una Stringa
-     * dopo aver veridicato che la sintassi sia corretta
-     * @param url Stringa che si vuole trasformare in URL
-     * @return Ritorna un oggetto URL da poter utilizzare
-     * @throws MalformedURLException se c'e un errore nella sintassi
+     * this method commutes a string to a URL object after verifying all the syntax is correct
+     * @param url String object that will be commute to a URL
+     * @return a URL object
+     * @throws MalformedURLException if the String is not in the correct format
      */
     public static URL createUrl(String url) throws MalformedURLException{
         try {
@@ -86,11 +88,10 @@ public class ApiController extends Controller{
     }
 
     /**
-     * Questo metodo grazie all'utilizzo di un Bit Flag permette di generare una chiamata con filtri
-     * @param s contiene i parametri da inserire come valori nella chiamata
-     * //@param flags contiene quali filtri l'uente ha inserito e quindi quali
-     *              chiavi aggiungere alla chiamata
-     * @return Ritorna un URL per poter effettuare una chiamata filtrata
+     * this method allows to make a customized query by adding to the default query key-value pairs with a specific API syntax,
+     * the flag contains the parameters that the user has selected (bit flag)
+     * @param s is a String array that contains the parameters we want to add to the query
+     * @return a URL that will allow to make a customized query
      */
     public static URL query(String[] s) throws MalformedURLException{
         String temp = baseUrl;
@@ -98,8 +99,8 @@ public class ApiController extends Controller{
         int cont = 0;
         if(flags != null){
             if (flags.contains(Parameters.TYPE)) {
-                temp += "full_time=%s";
-                temp = String.format(temp, "true");
+                temp += "full_time=%s";                                                //%s is a placeholder for the parameters
+                temp = String.format(temp, "true");                                    //format replaces the placeholder with a value
                 first = false;
             }
 

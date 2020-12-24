@@ -12,14 +12,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashSet;
 
-//todo usare il mapper di ApiController
-//todo classe per leggere da file configuration file
 
 public class FileController {
 
-    //questa classe apre i buffer di input e output per
-    //salavre e leggere i dati sui lavori trovati e sui
-    //lavori salvati dall'utente
     private String filename;
     private File file;
     private ApiController controller = new ApiController();
@@ -37,7 +32,7 @@ public class FileController {
     }
 
     /**
-     *
+     * this method saves as json the jobs contained in a HashSet to file
      * @param jobs hashset of Job
      * @throws IOException generates an exception if the I/O operations fail
      */
@@ -52,9 +47,10 @@ public class FileController {
         }
     }
 
+
     /**
-     *
-     * @return a HashSet of Job
+     * this method reads the json from file and populates a HashSet with it
+     * @param jobs HashSet that will be filled
      * @throws IOException generates an exception if the I/O operations fail
      */
     public void readJobsFromFile(HashSet<Job> jobs) throws IOException {
@@ -66,13 +62,12 @@ public class FileController {
         else {
             ObjectMapper mapper = new ObjectMapper();
             jobs.addAll(mapper.readValue(file, new TypeReference<HashSet<Job>>() {}));
-            //return mapper.readValue(file, new TypeReference<HashSet<Job>>() {});//controller.getMapper().readValue(file, new TypeReference<HashSet<Job>>() {});
         }
     }
 
     /**
-     *
-     * @throws FileNotFoundException generates an exception if the file is not found
+     * this method deletes all the jobs from file
+     * @throws FileNotFoundException if the file is not found
      */
     public void empty () throws FileNotFoundException {
         PrintWriter writer = new PrintWriter("PickedJobs.txt");

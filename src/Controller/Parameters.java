@@ -2,9 +2,8 @@ package Controller;
 import java.util.EnumSet;
 
 /**
- * enumeratore che contiene i filtri che possono essere applicati per la ricerca del lavoro
+ * enumerator that contains all the filters that can be applied
  */
-
 public enum Parameters {
     TYPE,
     LOCATION,

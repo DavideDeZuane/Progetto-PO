@@ -2,8 +2,6 @@ package GUI;
 
 import Model.Job;
 import Model.StatsJobBoard;
-import org.jfree.chart.JFreeChart;
-import org.jfree.data.category.DefaultCategoryDataset;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -20,13 +18,20 @@ public class StatsJobsSavedPanel extends JFrame {
     private JPanel statsJobsSavedPanel;
     private final StatsJobBoard statsJobBoard;
 
-    private GuiStatsPanelMenagement guiStatsPanelMenagement;
+    private GuiStatsPanelManagement guiStatsPanelMenagement;
 
+    /**
+     * this constructor is implemented to make the user take a look at the stats made from the jobs saved panel
+     * - the user can press on the show chart to see charts
+     * - the user can type in a key word and see how many times that word occurred in the jobs found description
+     * - the user can type in a number and see how many jobs were created number days ago
+     * @param jobs HashSet that contains all the jobs found
+     */
     public StatsJobsSavedPanel(HashSet<Job> jobs){
         statsJobBoard = new StatsJobBoard();
         statsJobBoard.setJobs(jobs);
 
-        guiStatsPanelMenagement = new GuiStatsPanelMenagement(statsJobsSavedPanel, "Stats jobs found", jobs, statsJobBoard);
+        guiStatsPanelMenagement = new GuiStatsPanelManagement(statsJobsSavedPanel, "Stats jobs found", jobs, statsJobBoard);
         guiStatsPanelMenagement.setCharts();
         guiStatsPanelMenagement.setTextLabelStats(lblJobTot, lblFullTimePercent);
         guiStatsPanelMenagement.setPanel(600, 145);

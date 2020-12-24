@@ -1,16 +1,22 @@
 package Model;
 
-import java.text.ParseException;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 public class StatsJobBoard extends JobBoard{
 
+    /**
+     * constructor
+     */
     public StatsJobBoard(){
         super();
     }
 
-    //questa funzione calcola la percentuale di lavori full time rispetto a quelli part time
+
+    /**
+     * this method calculates the percentage of full time jobs
+     * @return the percentage of full time jobs
+     */
     public float calculatePercentage() {
         int cont = 0;
         if(checkJobSize())
@@ -26,8 +32,12 @@ public class StatsJobBoard extends JobBoard{
         return fullTimePercentage = (float) ((cont*100)/ jobs.size());
     }
 
-    //questa funzione genera le statistiche in base a quanti lavori sono stati caricati sull'hashset period giorni fa
-    public int dateOfCreation(int period) throws ParseException {
+    /**
+     * this method finds out how many jobs were created starting from a specified number of days ago
+     * @param period number of days
+     * @return the number of jobs that were created a specified number of days ago
+     */
+    public int dateOfCreation(int period) {
         int recent = 0;
         if(checkJobSize())
             return -1;
@@ -35,25 +45,21 @@ public class StatsJobBoard extends JobBoard{
         {
             for (Job j : jobs)
             {
-                //DateTimeFormatter f = DateTimeFormatter.forPattern("EEE MMM dd hh:mm:ss ZZZ yyyy");
-                //LocalDateTime dateTime = f.parseLocalDateTime("2012-01-10 23:13:26");
-                //DateFormat df = new SimpleDateFormat;//
-                //DateFormat.LONG
-                //Date date = df.parse(j.getCreated_at());
                 Date date = new Date(j.getCreated_at());
                 long diffInMillies = Math.abs(new Date(System.currentTimeMillis()).getTime() - date.getTime());
                 long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
                 if(diff<=period)
                     recent++;
-                /*DateFormat alfrescoDateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
-                Date dataRispostaDate = alfrescoDateFormat.parse(j.getCreated_at());*/
-                /*DateFormatter formatter = new DateFormatter();
-                formatter.stringToValue(j.getCreated_at());*/
             }
         }
         return recent;
     }
 
+    /**
+     * this method creates a vector of 30 doubles, from index 0 to index 30 of the vector there is a correspondent number witch represents
+     * the number of jobs created on that day assuming that today is day 0
+     * @return a vector of doubles
+     */
     public double[] dateOfCreationBis()
     {
         if (checkJobSize())
@@ -74,37 +80,13 @@ public class StatsJobBoard extends JobBoard{
             }
     }
 
-    /*//questa funzione genera statistiche in base a quale parole chiavi l'utente immette
-    // restituendo il numero di occorrenze di quella parola chiave nella description del lavoro
+    /**
+     * this method takes as input a string witch represents a word the user wants to search for, the method returns the number of occurrences
+     * of that word in the jobs descriptions
+     * @param word word the user wants to search for in the jobs descriptions
+     * @return the number of occurrences of a certain word
+     */
     public int keyWords (String word)
-    {
-        int count = 0;
-        if(jobs.size()==0)
-            return -1;
-        else
-        {
-            for (Job j : jobs)
-            {
-                String s =j.getDescription();
-                //s = System.Text.RegularExpressions.Regex.Replace(s, "<[^>]*>","");
-                s = s.replaceAll("\\<.*?\\>", "");
-                s = s.replaceAll("\\n","");
-                s = s.replaceAll("[.,]","");
-                // split the string by spaces in a
-                String a[] = s.split(" ");
-                for (String value : a) {
-                    if (word.equals(value))
-                        count++;
-                }
-            }
-        }
-        return count;
-    }*/
-
-    //questa funzione genera statistiche in base a quale parole chiavi l'utente immette
-    // restituendo il numero di occorrenze di quella parola chiave nella description del lavoro
-    //(case sensitive case)
-    public int keyWords (String word/*, boolean cs*/)
     {
         int count = 0;
         if(super.checkJobSize())
@@ -115,20 +97,16 @@ public class StatsJobBoard extends JobBoard{
             {
 
                 String s =j.getDescription();
-                //s = System.Text.RegularExpressions.Regex.Replace(s, "<[^>]*>","");
                 s = s.replaceAll("\\<.*?\\>", "");
                 s = s.replaceAll("\\n","");
                 s = s.replaceAll("[.,]","");
-                // split the string by spaces in a
+
                 String a[] = s.split(" ");
 
-                // search for pattern in a
 
                 for (String value : a) {
-                    // if match found increase count
-                    //if (!cs)
+
                     {
-                        //word=word.toLowerCase();
                         value=value.toLowerCase();
                     }
                     if (word.equals(value))

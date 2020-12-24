@@ -8,13 +8,13 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashSet;
 
+
 public class CheckOffer extends Controller implements Runnable{
     private HashSet<Job> saved = new HashSet<>();
 
     public CheckOffer(){}
 
     public void save(HashSet<Job> jobs) throws IOException{
-        //saved = new HashSet<>();
         this.saved = jobs;
         try {
             FileController file = new FileController("PickedJobs.txt");

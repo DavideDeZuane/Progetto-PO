@@ -1,33 +1,16 @@
 package GUI;
 
-import Model.StatsJobBoard;
-import org.jfree.chart.JFreeChart;
-import org.jfree.data.general.DefaultPieDataset;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
-
 import Model.Job;
 import Model.StatsJobBoard;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartFrame;
-import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.axis.TickUnitSource;
-import org.jfree.chart.plot.PiePlot;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.HashSet;
 
-public class GuiStatsPanelMenagement extends GuiMenagement implements GuiStatsPanel{
+public class GuiStatsPanelManagement extends GuiManagement implements GuiStatsPanel{
 
     private JPanel statsJobsFoundPanel;
     private JLabel lblFullTimePercent;
@@ -44,11 +27,17 @@ public class GuiStatsPanelMenagement extends GuiMenagement implements GuiStatsPa
     private DrawCharts drawCharts;
     private JFreeChart barChart;
     private JFreeChart pieChart;
+    private JFreeChart barchart;
 
-
-    JFreeChart barchart;
-
-    public GuiStatsPanelMenagement(JPanel panel, String namePanel, HashSet<Job> jobs, String keyWord, StatsJobBoard statsJobBoard){
+    /**
+     * constructor
+     * @param panel panel
+     * @param namePanel name of the panel
+     * @param jobs HashSet of Job
+     * @param keyWord key word
+     * @param statsJobBoard object of StatsJobBoard type
+     */
+    public GuiStatsPanelManagement(JPanel panel, String namePanel, HashSet<Job> jobs, String keyWord, StatsJobBoard statsJobBoard){
         super(panel, namePanel);
         this.statsJobBoard = statsJobBoard;
         this.statsJobBoard.setJobs(jobs);
@@ -56,13 +45,26 @@ public class GuiStatsPanelMenagement extends GuiMenagement implements GuiStatsPa
 
     }
 
-    public GuiStatsPanelMenagement(JPanel panel, String namePanel, HashSet<Job> jobs, StatsJobBoard statsJobBoard){
+    /**
+     * constructor
+     * @param panel panel
+     * @param namePanel name of the panel
+     * @param jobs HashSet of Job
+     * @param statsJobBoard object of StatsJobBoard type
+     */
+    public GuiStatsPanelManagement(JPanel panel, String namePanel, HashSet<Job> jobs, StatsJobBoard statsJobBoard){
         super(panel, namePanel);
         this.statsJobBoard = statsJobBoard;
         this.statsJobBoard.setJobs(jobs);
 
     }
 
+    /**
+     *
+     * @param lblJobTot JLabel that/////////////
+     * @param lblFullTimePercent
+     * @param lblKeyWordRepeat
+     */
     public void setTextLabelStats(JLabel lblJobTot, JLabel lblFullTimePercent, JLabel lblKeyWordRepeat){
         lblJobTot.setText(String.valueOf(statsJobBoard.getNumOfJobs()));
         lblFullTimePercent.setText(String.valueOf(statsJobBoard.calculatePercentage()) + "%");
@@ -74,15 +76,23 @@ public class GuiStatsPanelMenagement extends GuiMenagement implements GuiStatsPa
         else{
             lblKeyWordRepeat.setText("There aren't key word.");
         }
-
-
     }
 
+    /**
+     *
+     * @param lblJobTot
+     * @param lblFullTimePercent
+     */
     public void setTextLabelStats(JLabel lblJobTot, JLabel lblFullTimePercent){
         lblJobTot.setText(String.valueOf(statsJobBoard.getNumOfJobs()));
         lblFullTimePercent.setText(String.valueOf(statsJobBoard.calculatePercentage()) + "%");
     }
 
+    /**
+     * this method will set a panel with the given width and height
+     * @param width width of the panel
+     * @param height height of the panel
+     */
     public void setPanel(int width, int height){
         add(super.getPanel());
         setTitle(super.getNamePanel()); //600, 300
@@ -91,6 +101,12 @@ public class GuiStatsPanelMenagement extends GuiMenagement implements GuiStatsPa
         setVisible(true);
     }
 
+    /**
+     * this method allows the user to type in a keyword and a number of days and returns the occurrences of the key word in the jobs description
+     * and the number of jobs that were created in the last "number typed" days
+     * @param txtPeriod label where the user will type in a number witch represents the days
+     * @param keyWord key word the user will type in
+     */
     public void check(JTextField txtPeriod, String keyWord){
 
         statsJobBoard.setKeyWord(keyWord);
@@ -111,6 +127,10 @@ public class GuiStatsPanelMenagement extends GuiMenagement implements GuiStatsPa
         }
     }
 
+    /**
+     * this method allows the user to type a number of days and returns the number of jobs that were created in the last "number typed" days
+     * @param txtPeriod label where the user will type in a number witch represents the days
+     */
     public void check(JTextField txtPeriod){
 
         try {
@@ -123,15 +143,18 @@ public class GuiStatsPanelMenagement extends GuiMenagement implements GuiStatsPa
         }
     }
 
+    /**
+     * this method sets a pie chart and a bar chart by creating a object of the class DrawCharts
+     */
     public void setCharts(){
-
         drawCharts = new DrawCharts (this.statsJobBoard.getJobs(), barChart, pieChart, statsJobBoard);
         drawCharts.drawPieChart();
         drawCharts.drawBarChart();
-
-
     }
 
+    /**
+     * this method will allow to see the charts
+     */
     public void showChart(){
         drawCharts.setPanel();
     }
