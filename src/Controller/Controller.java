@@ -16,11 +16,16 @@ public abstract class Controller {
     public static String idQuery(String id){ return String.format(ApiController.requestIdUrl, id); }
     public abstract void save(HashSet<Job> jobs) throws IOException;
 
+
     protected static String requestIdUrl = "https://jobs.github.com/positions/%s.json";
     protected static String baseUrl = "https://jobs.github.com/positions.json?";
     private static final Properties prop = new Properties();
     private static final File configFile = new File("Resources/Configuration/config.properties");
 
+    /**
+     * this method reads from the configFile
+     * @throws IOException if the I/O operations fail or get interrupted
+     */
     public static void readProp() throws IOException{
         FileInputStream ip = new FileInputStream(configFile);
         prop.load(ip);
@@ -29,6 +34,11 @@ public abstract class Controller {
         ip.close();
     }
 
+    /**
+     * this method sets the configFile
+     * @param tmp String that represents the name of the user
+     * @throws IOException if the I/O operations fail or get interrupted
+     */
     public static void setProp (String tmp) throws IOException{
         FileWriter writer = new FileWriter(configFile);
         prop.setProperty("message", "Welcome to Femto");

@@ -1,20 +1,14 @@
 package GUI;
 
 import Controller.FileController;
-import Model.JobBoard;
 import Model.PickedJobs;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.awt.Desktop;
 
 public class JobsFoundPanel extends JFrame {
     private JPanel jobsFoundPanel;
@@ -38,7 +32,7 @@ public class JobsFoundPanel extends JFrame {
 
     private FileController fileController = new FileController("PickedJobs.txt");
 
-    private GuiJobsPanelMenagement guiJobsPanelMenagement;
+    private GuiJobsPanelManagement guiJobsPanelManagement;
 
     private final int widthPanel = 625;
     private final int heightPanel = 725;
@@ -50,9 +44,9 @@ public class JobsFoundPanel extends JFrame {
 
         this.job = job;
 
-        guiJobsPanelMenagement = new GuiJobsPanelMenagement(jobsFoundPanel, "Jobs Found Panel");
-        guiJobsPanelMenagement.createTable(this.tableJobs, this.job, this.widthTable, this.heightTable);
-        guiJobsPanelMenagement.setPanel(this.widthPanel, this.heightPanel);
+        guiJobsPanelManagement = new GuiJobsPanelManagement(jobsFoundPanel, "Jobs Found Panel");
+        guiJobsPanelManagement.createTable(this.tableJobs, this.job, this.widthTable, this.heightTable);
+        guiJobsPanelManagement.setPanel(this.widthPanel, this.heightPanel);
 
         fileController.readJobsFromFile(pickedJobs.getJobs());
 
@@ -84,11 +78,11 @@ public class JobsFoundPanel extends JFrame {
 
                 try {
 
-                    if(job.getCompany_url(guiJobsPanelMenagement.getTableJobs().getSelectedRow(), job.getJobs()).toString().equals("http://http")){
+                    if(job.getCompany_url(guiJobsPanelManagement.getTableJobs().getSelectedRow(), job.getJobs()).toString().equals("http://http")){
                         JOptionPane.showMessageDialog(jobsFoundPanel, "The link is not available");
                     }
                     else{
-                        desktop.browse(job.getCompany_url(guiJobsPanelMenagement.getTableJobs().getSelectedRow(), job.getJobs()).toURI());
+                        desktop.browse(job.getCompany_url(guiJobsPanelManagement.getTableJobs().getSelectedRow(), job.getJobs()).toURI());
                     }
 
                 }catch (IOException ioException) {
@@ -107,7 +101,7 @@ public class JobsFoundPanel extends JFrame {
             public void actionPerformed(ActionEvent e) {
 
 
-                guiJobsPanelMenagement.saveAllJobs(job, pickedJobs);
+                guiJobsPanelManagement.saveJob(job, pickedJobs);
                 /*
                 if(job.getJobs().isEmpty()){
                     JOptionPane.showMessageDialog(jobsFoundPanel, "Any job to save.");
@@ -134,7 +128,7 @@ public class JobsFoundPanel extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                guiJobsPanelMenagement.saveJob(job, pickedJobs);
+                guiJobsPanelManagement.saveJob(job, pickedJobs);
 
             }
         });
@@ -142,7 +136,7 @@ public class JobsFoundPanel extends JFrame {
         btnExit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                guiJobsPanelMenagement.dispose();
+                guiJobsPanelManagement.dispose();
             }
         });
 
@@ -150,7 +144,7 @@ public class JobsFoundPanel extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                guiJobsPanelMenagement.showHowToApply(job);
+                guiJobsPanelManagement.showHowToApply(job);
 
             }
         });

@@ -16,35 +16,64 @@ import java.util.HashSet;
 //todo implementare il metodo fill per riempire wareHouse
 //todo estrarre campo how_to_apply
 
+
 public class ApiController extends Controller{
+
 
     private URL url;
     private final ObjectMapper mapper;
 
+
     private JobBoard jobBoard = new JobBoard();
 
+    /**
+     * constructor
+     */
     public ApiController(){
         mapper = new ObjectMapper();
         mapper.enable(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT);
     }
 
+    /**
+     * this method gets a object of JobBoard type
+     * @return a object of JobBoard type
+     */
     public JobBoard getJobBoard() {
         return jobBoard;
     }
 
+    /**
+     * this method sets a object of JobBoard type
+     * @param jobBoard object of the JobBoard class
+     */
     public void setJobBoard(JobBoard jobBoard) {
         this.jobBoard = jobBoard;
     }
 
-
-
-    //getter e setter
+    /**
+     * this method gets a object of ObjectMapper type
+     * @return a object of ObjectMapper type
+     */
     public ObjectMapper getMapper(){ return mapper; }
+
+    /**
+     * this method gets a Url
+     * @return a URL type
+     */
     public URL getUrl(){ return url; }
+
+    /**
+     * this method sets a URL object
+     * @param url url that will be set
+     */
     public void setUrl(URL url){ this.url = url; }
 
-
-    //metodo parsing aggiornato
+    /**
+     * this method reads a json from a url and commutes the json to objects, if there is only an object, the method saves it to a Job.class,
+     * if there are many objects the method saves them to a HashSet
+     * @param jobs HashSet structure that will be populated
+     * @throws IOException if the mapper fails to read the json
+     */
     public void save(HashSet<Job> jobs) throws IOException{
         try {
             //jobs.clear();
@@ -56,6 +85,11 @@ public class ApiController extends Controller{
 
     }
 
+    /**
+     * this method fills a HashSet of Job type by using the save method
+     * @param offer HashSet of Job type that will be filled
+     * @param url url that the save method will get the json from
+     */
     public void fill(JobBoard offer, URL url){
         this.url = url;
         try{
@@ -68,11 +102,10 @@ public class ApiController extends Controller{
 
     //metodi per creare le richieste url
     /**
-     * Ritorna un oggetto URL a partire da una Stringa
-     * dopo aver veridicato che la sintassi sia corretta
-     * @param url Stringa che si vuole trasformare in URL
-     * @return Ritorna un oggetto URL da poter utilizzare
-     * @throws MalformedURLException se c'e un errore nella sintassi
+     * this method commutes a string to a URL object after verifying all the syntax is correct
+     * @param url String object that will be commute to a URL
+     * @return a URL object
+     * @throws MalformedURLException if the String is not in the correct format
      */
     public static URL createUrl(String url) throws MalformedURLException{
         try {
@@ -86,11 +119,9 @@ public class ApiController extends Controller{
     }
 
     /**
-     * Questo metodo grazie all'utilizzo di un Bit Flag permette di generare una chiamata con filtri
-     * @param s contiene i parametri da inserire come valori nella chiamata
-     * //@param flags contiene quali filtri l'uente ha inserito e quindi quali
-     *              chiavi aggiungere alla chiamata
-     * @return Ritorna un URL per poter effettuare una chiamata filtrata
+     * this method allows to make a customized query
+     * @param s is a String array that contains the parameters we want to add to the query
+     * @return a URL that will allow to make a customized query
      */
     public static URL query(String[] s) throws MalformedURLException{
         String temp = baseUrl;

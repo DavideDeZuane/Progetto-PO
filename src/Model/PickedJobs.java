@@ -6,14 +6,16 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashSet;
 
-/**
- * @author Chiara
- */
+
 public class PickedJobs extends JobBoard {
 
     private String fileName = "PickedJobs.txt";
     private FileController fileController = new FileController(fileName);
 
+    /**
+     * constructor of the class
+     * @throws IOException
+     */
     public PickedJobs() throws IOException {
         super();
         //fileController = new FileController(fileName);
@@ -22,30 +24,27 @@ public class PickedJobs extends JobBoard {
         }
     }
 
-    //aggiunto da ben
-    /*
-    public boolean setJobsFromFile() throws IOException {
-        fileController = new FileController(fileName);
-
-        if(fileController.readJobsFromFile() == null){
-            return false;
-        }
-        else{
-            jobs.addAll(fileController.readJobsFromFile());
-            return true;
-        }
-    }*/
-
+    /**
+     * this method prints out the file name
+     * @return the file name where the jobs will be printed on
+     */
     public String getFileName() {
         return fileName;
     }
 
+    /**
+     * this method sets the name of the file the jobs will be printed on
+     * @param fileName file name where the jobs will be printed on
+     */
     public void setFileName(String fileName) {
         this.fileName = fileName;
     }
 
-    //bdihcbeihbcihebrihcbeibci
-    //aggiunge un lavoro all'hash e salva
+    /**
+     * this method adds a jobs to the HashSet and saves it to the file
+     * @param job job to add to the hashset
+     * @throws IOException is the I/O operations fail or get interrupted
+     */
     public void add(Job job) throws IOException {
 
         for (Job j : jobs)
@@ -57,7 +56,11 @@ public class PickedJobs extends JobBoard {
 
     }
 
-    //elimina un lavoro
+    /**
+     * this method deletes a jobs from the hashset on from the txt file
+     * @param id id of the job that will be deleted
+     * @throws IOException is the I/O operations fail or get interrupted
+     */
     public void deleteJob(String id) throws IOException {
         boolean found = false;
         for (Job j : jobs)
@@ -68,9 +71,11 @@ public class PickedJobs extends JobBoard {
             }
     }
 
+    /**
+     * this method adds all the jobs to the hashset
+     * @param jobs HashSet of type Job to fill
+     */
     public void addAll(HashSet<Job> jobs){
-        /*if(jobs==null)
-            System.out.println("");*/
         for(Job j : jobs){
             try {
                 this.add(j);
@@ -81,30 +86,9 @@ public class PickedJobs extends JobBoard {
 
     }
 
-    /*
-    public void Update() throws Exception {
-        //scorre jobs e per ogni lavoro se non è più presente lo cancella
-        for (Job j : jobs) {
-            if (!CheckOffer.verify(j)) {
-                this.deleteJob(j.getId());
-                fileController.save(jobs);
-            }
-        }
-    }*/
-/*
-    public Boolean verifyJobsPresent(){
-
-        try {
-            if(fileController.readJobsFromFile() == null)
-                return false;
-            else{
-                return true;
-            }
-        } catch (IOException e) {
-            return false;
-        }
-    }
-*/
+    /**
+     * this method deletes all the jobs from the txt file
+     */
     public void deleteAll(){
         try {
             fileController.empty();
@@ -112,13 +96,4 @@ public class PickedJobs extends JobBoard {
             e.printStackTrace();
         }
     }
-
-    /*public Job searchForJob(String id)
-    {
-        for(Job j : this.jobs)
-        {
-            if(j.getId().equals(id)) return j;
-        }
-        return null;
-    }*/
 }

@@ -1,6 +1,5 @@
 package GUI;
 
-import Controller.CheckOffer;
 import Model.Job;
 import Model.JobBoard;
 import Model.PickedJobs;
@@ -11,7 +10,7 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.util.Iterator;
 
-public class GuiJobsPanelMenagement extends GuiMenagement implements GuiJobsPanel{
+public class GuiJobsPanelManagement extends GuiManagement implements GuiJobsPanel{
 
     private JTable tableJobs;
     private final static int COLUMNS = 4;
@@ -20,7 +19,7 @@ public class GuiJobsPanelMenagement extends GuiMenagement implements GuiJobsPane
 
     private Object[] columnHeaders = {"Type","Company","Location","Title"};
 
-    public GuiJobsPanelMenagement(JPanel panel, String namePanel){
+    public GuiJobsPanelManagement(JPanel panel, String namePanel){
         super(panel, namePanel);
         //this.panel = panel;
         //this.namePanel = namePanel;

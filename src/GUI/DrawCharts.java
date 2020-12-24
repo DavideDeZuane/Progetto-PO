@@ -19,6 +19,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.HashSet;
 
+
 public class DrawCharts{
 
     private JFreeChart chart;
@@ -30,6 +31,13 @@ public class DrawCharts{
     private JFreeChart pieChart;
     private HashSet<Job> jobs;
 
+    /**
+     * constructor
+     * @param jobs HashSet of Job
+     * @param barChart bar chart
+     * @param pieChart pie chart
+     * @param statsJobBoard Object of the class StatsJobBoard
+     */
     public DrawCharts(HashSet<Job> jobs, JFreeChart barChart, JFreeChart pieChart, StatsJobBoard statsJobBoard){
         this.statsJobBoard = statsJobBoard;
         this.barChart = barChart;
@@ -37,38 +45,33 @@ public class DrawCharts{
         this.jobs = jobs;
 }
 
-    public JFreeChart getChart() {
-        return chart;
-    }
-
-    public DefaultPieDataset getDataset() {
-        return dataset;
-    }
-
-    public XYSeries getSeries() {
-        return series;
-    }
-
-    public XYSeriesCollection getSeriesCollection() {
-        return seriesCollection;
-    }
-
-    public StatsJobBoard getStatsJobBoard() {
-        return statsJobBoard;
-    }
-
+    /**
+     * this method gets a bar chart
+     * @return a bar chart
+     */
     public JFreeChart getBarChart() {
         return barChart;
     }
 
+    /**
+     * this method gets a pie chart
+     * @return a pie chart
+     */
     public JFreeChart getPieChart() {
         return pieChart;
     }
 
+    /**
+     * this method gets the HashSet of Job
+     * @return the HashSet of Job jobs
+     */
     public HashSet<Job> getJobs() {
         return jobs;
     }
 
+    /**
+     * this method creates a bar chart from a certain dataset
+     */
     public void drawBarChart()
 {
     series = new XYSeries("Number of Jobs");
@@ -87,15 +90,10 @@ public class DrawCharts{
     //plot1.getRangeAxis().setRange(0, 12); //da migliorare
 }
 
-public void setPanel(){
-    JFrame fr = new JFrame("Chart");
-    fr.getContentPane().add(new ChartPanel(this.getPieChart()), BorderLayout.WEST);
-    fr.getContentPane().add(new ChartPanel(this.getBarChart()), BorderLayout.EAST);
-    fr.pack();
-    fr.setVisible(true);
-}
-
-public void drawPieChart()
+    /**
+     * this method creates a pie chart from a certain dataset
+     */
+    public void drawPieChart()
 {
     dataset = new DefaultPieDataset();
     this.dataset.setValue("Full Time", statsJobBoard.calculatePercentage());
@@ -104,4 +102,15 @@ public void drawPieChart()
     ChartFrame frame = new ChartFrame("Charts", pieChart);
     PiePlot plot = (PiePlot) pieChart.getPlot();
     plot.setIgnoreNullValues(true);}
+
+    /**
+     * this method creates a panel that contains the pie chart and the bar chart
+     */
+    public void setPanel(){
+        JFrame fr = new JFrame("Chart");
+        fr.getContentPane().add(new ChartPanel(this.getPieChart()), BorderLayout.WEST);
+        fr.getContentPane().add(new ChartPanel(this.getBarChart()), BorderLayout.EAST);
+        fr.pack();
+        fr.setVisible(true);
+    }
 }

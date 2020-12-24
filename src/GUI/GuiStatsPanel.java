@@ -1,27 +1,40 @@
 package GUI;
 
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartFrame;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.axis.TickUnitSource;
-import org.jfree.chart.plot.PiePlot;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.data.general.DefaultPieDataset;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
-
 import javax.swing.*;
-import java.awt.*;
 
 public interface GuiStatsPanel {
+    /**
+     * @param lblJobTot JLabel that/////////////
+     * @param lblFullTimePercent
+     * @param lblKeyWordRepeat
+     */
     public void setTextLabelStats(JLabel lblJobTot, JLabel lblFullTimePercent, JLabel lblKeyWordRepeat);
+
+    /**
+     * @param lblJobTot
+     * @param lblFullTimePercent
+     */
     public void setTextLabelStats(JLabel lblJobTot, JLabel lblFullTimePercent);
+
+    /**
+     * @param width width of the panel
+     * @param height height of the panel
+     */
     public void setPanel(int width, int height);
+
+    /**
+     * @param txtPeriod
+     * @param keyWord
+     */
     public void check(JTextField txtPeriod, String keyWord);
+
+    /**
+     *
+     * @param txtPeriod
+     */
     public void check(JTextField txtPeriod);
+
     public void setCharts();
+
     public void showChart();
 }
