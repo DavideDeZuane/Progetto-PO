@@ -86,10 +86,10 @@ a limitazioni e ad aggiunte di funzionalità che hanno modificato le relazioni d
 
 ## FrameWork
 I prinicipali framework utilizzati per la realizzazione dell'applicazione sono i seguenti:
-+ [Swing](https://docs.oracle.com/javase/7/docs/api/javax/swing/package-summary.html) 
-+ [Jackson JSON](https://github.com/FasterXML/jackson/wiki/Jackson-Release-2.12)
-+ [Jsoup](https://jsoup.org)
-+ [JFreeChart](https://sourceforge.net/projects/jfreechart/files/1.%20JFreeChart/1.0.19/)
++ **Swing** -> utilizzato per realizzare la GUI.  [(Download)](https://docs.oracle.com/javase/7/docs/api/javax/swing/package-summary.html)
++ **Jackson JSON** -> utilizzato per effettuare il parsing della risposta API.  [(Download)](https://github.com/FasterXML/jackson/wiki/Jackson-Release-2.12)
++ **Jsoup** -> utilizzato per rimuovere i tag HTML dai campi dell'oggetto JSON.  [(Download)](https://jsoup.org)
++ JFreeChart -> utilizzato per implementare i grafici.  [(Download)](https://sourceforge.net/projects/jfreechart/files/1.%20JFreeChart/1.0.19/)
 
 
 
