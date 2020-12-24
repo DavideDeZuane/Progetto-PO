@@ -131,6 +131,7 @@ Appena avviata l'applicazione, si presenterà all'utente la seguente finestra:
 ![](Images/Funzionamento/SchermataPrincipale.png)
 
 
+Nota: è stata aggiunta la possibilità di inserire 2 location.
 
  Indice        | Descrizione |  Key |  Value |
  :-----------: | ----------- | :-----------: | :-----------: |
