@@ -31,6 +31,9 @@ Attraverso dei filtri abbiamo la possibilità di scegliere solo la categoria che
 >+ **Latitudine** e **Longitudine**: utilizzabili in sostituzinone alla località a patto che vengano utilizzati entrambi.
 >+ **Full Time**: per limitari i risultati a solo offerte di lavoro full time.
 
+Abbiamo deciso di non utilizare i filtri latitudine e longitudine per la nostra applicazione poichè risulta più intuitivo cercare una città con il suo nome o iniziali
+rispetto alle sue coordine geografiche.
+
 Tali filtri vanno inseriti con una certa sintassi all'interno della richiesta; un esempio è il seguente:
 > https://jobs.github.com/positions.json?description=python&full_time=true&location=sf
 
@@ -46,7 +49,7 @@ della nostra Applicazione.
 
  + **Use-Case Diagram**
 
-> ![Panel](Images/UML/UseCase.png)
+> ![](Images/UML/UseCase.png)
 
 Brevemente:
 + l'utente si interfaccia e interagiste con il frontend (un insieme di panelli della GUI) 
@@ -69,6 +72,7 @@ Brevemente:
 
 Nota: abbiamo scelto di utilizzare come struttura dati un HashSet poichè a nostro parere è il migliore in queste situazioni.
 Implementando l'interfaccia Set non può contenere due elementi uguali ed in particolare rende le operazioni di estrazione, inserimento e rimozione molto veloci.
+Nel nostro caso funge da memoria temporanea quindi la nostra scelta è caduta suu questa struttura dati.
 
 ---
 
@@ -81,6 +85,7 @@ In questo modo nell'eventualità che venga cambiato l'URL dell'API basterà camb
 ```properties
     url = https://jobs.github.com/positions.json?
     idurl = https://jobs.github.com/positions/.json
+    
     ... ulterirori proprietà come eventuali path di file etc ...
 ```
 ---
@@ -100,7 +105,7 @@ I prinicipali framework e spftware utilizzati per la realizzazione dell'applicaz
 + **Jsoup**          -> utilizzato per rimuovere i tag HTML dai campi dell'oggetto JSON.  [(Download)](https://jsoup.org)
 + **JFreeChart**     -> utilizzato per implementare i grafici.  [(Download)](https://sourceforge.net/projects/jfreechart/files/1.%20JFreeChart/1.0.19/)
 + **IntellIJ IDEA**  -> IDE dove si è svolto lo sviluppo del programma
-+ **Maven**c         -> strumento che permette di gestire i progetti e le dipendenze
++ **Maven**          -> strumento che permette di gestire i progetti e le dipendenze
 + **JUnit**          -> utilizzato per eseguire test sul codice
 
 
@@ -130,7 +135,7 @@ Il seguente è un esempio di una richiesta in cui come parametri sono stati inse
 L'URL che l'utente avrebbe dovuto creare sarebbe stato il seguente:
 > https://jobs.github.com/positions.json?full_time=true&description=java&location=Berlino 
 
-Grazie al programma si astrae questa fase e premendo il tasto search otteniamo la seguente finestra:
+Grazie al programma astraiamo questa fase e premendo il tasto search otteniamo la seguente finestra:
     
 ![Jobs Found](Images/Funzionamento/LavoriTrovati.png)
 
