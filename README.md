@@ -83,6 +83,9 @@ Questi diagrammi sono abbastanza lontani dalla realizzazione finale del progetto
 a limitazioni e ad aggiunte di funzionalità che hanno modificato le relazioni definite inizalmente.
 
 
+# Istruzioni d'Installazione e Uso
+
+Qui vanno messe le istruzioni per spiegare all'utente come installare l'applicazione 
 
 ## FrameWork
 I prinicipali framework utilizzati per la realizzazione dell'applicazione sono i seguenti:
