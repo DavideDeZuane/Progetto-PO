@@ -7,18 +7,31 @@ import Model.Job;
 import Model.JobBoard;
 import Model.PickedJobs;
 
+import Exception.GuiOptionPaneException;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.URISyntaxException;
 import java.util.Iterator;
+
+import static Controller.CheckOffer.verify;
 
 public class GuiJobsPanelManagement extends GuiManagement implements GuiJobsPanel{
 
     private JTable tableJobs;
     private final static int COLUMNS = 4;
+
+    private int COLUMSUPDATE = 5;
+
+
+    CheckOffer checkOffer = new CheckOffer();
+
 
     private Object[] columnHeaders = {"Type","Company","Location","Title"};
 
@@ -45,6 +58,41 @@ public class GuiJobsPanelManagement extends GuiManagement implements GuiJobsPane
         add(scrollPane);
         setSize(width, height);
         setVisible(true);
+    }
+
+    //overloading
+    public void createTable(JTable tableJobs, int width, int height, Object[] columnHeaders){
+        this.tableJobs = tableJobs;
+
+
+        try {
+            this.tableJobs = new JTable(this.readTable(), columnHeaders);
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        //this.tableJobs = new JTable(this.setTable(job.getJobs().iterator(), job.getNumOfJobs(), COLUMNS), columnHeaders);
+        this.tableJobs.setPreferredScrollableViewportSize(new Dimension(500,50));
+        this.tableJobs.setFillsViewportHeight(true);
+
+
+        JScrollPane scrollPane = new JScrollPane(this.tableJobs);
+        add(scrollPane);
+        setSize(width, height);
+        setVisible(true);
+    }
+
+    public Object[][] readTable() throws IOException, ClassNotFoundException {
+        ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(new FileInputStream("Update.txt")));
+        Object[][] table = new Object[2][5];
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 5; j++) {
+                table[i][j] = in.readObject();
+            }
+        }
+        return table;
     }
 
     public JTable getTableJobs() {
@@ -114,18 +162,20 @@ public class GuiJobsPanelManagement extends GuiManagement implements GuiJobsPane
                     new JobsFoundPanel(job, pickedJobs);
 
                 } else
-                    JOptionPane.showMessageDialog(super.getPanel(), "     Bro, jobs ain't found");
+                    throw new GuiOptionPaneException("     Bro, jobs ain't found");
             }
             else{
                 if(txtLocation1.getText().equals("")){
-                    JOptionPane.showMessageDialog(super.getPanel(), " You must insert the location");
+                    throw new GuiOptionPaneException(" You must insert the location");
                 }
                 else{
-                    JOptionPane.showMessageDialog(super.getPanel(), "You can't insert the same location in the fields");
+                    throw new GuiOptionPaneException("You can't insert the same location in the fields");
                 }
             }
-        } catch (IOException exception) {
+        }catch (IOException exception) {
             JOptionPane.showMessageDialog(super.getPanel(), "Invalid filters");
+        }catch (GuiOptionPaneException guiOptionPaneException) {
+            JOptionPane.showMessageDialog(super.getPanel(), guiOptionPaneException.getMessage());
         }
 
     }
@@ -134,7 +184,7 @@ public class GuiJobsPanelManagement extends GuiManagement implements GuiJobsPane
         try {
 
             if(job.getHow_to_apply(index, job.getJobs()).toString().equals("")){
-                JOptionPane.showMessageDialog(super.getPanel(), "The how to apply is not available");
+                throw new GuiOptionPaneException("The how to apply is not available");
             }
             else{
                 Object[] options = { "Copy on clip board", "Exit" };
@@ -152,6 +202,9 @@ public class GuiJobsPanelManagement extends GuiManagement implements GuiJobsPane
 
             }
 
+        }catch(GuiOptionPaneException guiOptionPaneException){
+            JOptionPane.showMessageDialog(super.getPanel(), guiOptionPaneException.getMessage());
+
         }catch(Exception exception){
             JOptionPane.showMessageDialog(super.getPanel(),"     Bro, jobs ain't found");
         }
@@ -162,7 +215,7 @@ public class GuiJobsPanelManagement extends GuiManagement implements GuiJobsPane
         try {
 
             if(job.getCompany_url(index, job.getJobs()).toString().equals("http://http")){
-                JOptionPane.showMessageDialog(super.getPanel(), "The link is not available");
+                throw new GuiOptionPaneException("The link is not available");
             }
             else{
                 desktop.browse(job.getCompany_url(index, job.getJobs()).toURI());
@@ -173,6 +226,8 @@ public class GuiJobsPanelManagement extends GuiManagement implements GuiJobsPane
 
         } catch (URISyntaxException uriSyntaxException) {
             JOptionPane.showMessageDialog(super.getPanel(), "The link is wrong");
+        }catch (GuiOptionPaneException guiOptionPaneException){
+            JOptionPane.showMessageDialog(super.getPanel(), guiOptionPaneException.getMessage());
         }catch(Exception exception){
             JOptionPane.showMessageDialog(super.getPanel(),"     Bro, jobs ain't found");
         }
@@ -181,46 +236,25 @@ public class GuiJobsPanelManagement extends GuiManagement implements GuiJobsPane
     public void saveJob(PickedJobs job, PickedJobs pickedJobs, int index){
 
         try {
-
             if(job.getJobs().isEmpty()){
-                JOptionPane.showMessageDialog(super.getPanel(), "Any job to save.");
+                throw new GuiOptionPaneException("Any job to save.");
             }
             else{
                 if(getTableJobs().getSelectedRow() == -1){
-                    JOptionPane.showMessageDialog(super.getPanel(), "You have not selected any job.");
+                    throw new GuiOptionPaneException("You have not selected any job.");
                 }
                 else{
-                    //pickedJobs.add(job.getJob(index, job.getJobs()));
-
-                    //pickedJobs.add(job, index);
-
                     if(pickedJobs.add(job, index)){
                         pickedJobs.add(job.getJob(index, job.getJobs()));
-                        JOptionPane.showMessageDialog(super.getPanel(), "Job saved successfully in " + pickedJobs.getFileName());
+                        throw new GuiOptionPaneException("Job saved successfully in " + pickedJobs.getFileName());
                     }
                     else{
-                        JOptionPane.showMessageDialog(super.getPanel(), "Job is already present in the data base");
+                        throw new GuiOptionPaneException("Job is already present in the data base");
                     }
-
-                    /*
-                    boolean flag = true;
-
-                    for(Job j : pickedJobs.getJobs()){
-                        if(j.getId().equals(job.getJob(index, job.getJobs()).getId())){
-                            flag = false;
-                        }
-                    }
-
-                    if(flag){
-                        pickedJobs.add(job.getJob(index, job.getJobs()));
-                        JOptionPane.showMessageDialog(super.getPanel(), "Job saved successfully in " + pickedJobs.getFileName());
-                    }
-                    else{
-                        JOptionPane.showMessageDialog(super.getPanel(), "Job is already present in the data base");
-                    }*/
                 }
             }
-
+        }catch (GuiOptionPaneException guiOptionPaneException){
+            JOptionPane.showMessageDialog(super.getPanel(), guiOptionPaneException.getMessage());
         }catch(Exception exception){
             JOptionPane.showMessageDialog(super.getPanel(),"     Bro, jobs ain't found");
             exception.printStackTrace();
@@ -229,35 +263,17 @@ public class GuiJobsPanelManagement extends GuiManagement implements GuiJobsPane
 
     public void saveAllJobs(PickedJobs job, PickedJobs pickedJobs){
 
-        if(job.getJobs().isEmpty()){
-            JOptionPane.showMessageDialog(super.getPanel(), "Any job to save.");
-        }else {
+        try {
+            if (job.getJobs().isEmpty()) {
+                throw new GuiOptionPaneException("Any job to save.");
+            } else {
 
-            pickedJobs.addAll(job);
+                pickedJobs.addAll(job);
 
-            /*
-
-            boolean flag = true;
-
-            for(Job i : job.getJobs()){
-                flag = true;
-                for(Job j : pickedJobs.getJobs()){
-                    if(j.getId().equals(i.getId())) {
-                        flag = false;
-                        break;
-                    }
-                }
-                if(flag){
-                    try {
-                        pickedJobs.add(i);
-                    } catch (IOException exception) {
-                        exception.printStackTrace();
-                    }
-                }
-
-            }*/
-
-            JOptionPane.showMessageDialog(super.getPanel(), "Jobs saved successfully in " + pickedJobs.getFileName());
+                throw new GuiOptionPaneException("Jobs saved successfully in " + pickedJobs.getFileName());
+            }
+        }catch (GuiOptionPaneException guiOptionPaneException){
+            JOptionPane.showMessageDialog(super.getPanel(), guiOptionPaneException.getMessage());
         }
     }
 

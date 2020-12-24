@@ -17,6 +17,7 @@ public class BootStrapPanel extends JFrame{
     private JButton btnShowJobsSaved;
     private JCheckBox fullTime;
     private JTextField txtLocation2;
+    private JButton btnShowStatus;
 
     private PickedJobs job;
 
@@ -25,7 +26,15 @@ public class BootStrapPanel extends JFrame{
 
     private GuiJobsPanelManagement guiJobsPanelManagement;
 
-
+    /**
+     * this constructor makes a panel and implements some buttons
+     * - the search button finds jobs by using the query method in the ApiController class,
+     *   if there are no jobs found, the user will be warned by a message, otherwise the constructor
+     *   will open a new panel that shows the jobs found, if the filters typed in by the user are invalid,
+     *   the constructor will throw an exception
+     * - the show saved panel button opens a JobSavedPanel that allows the user to see the jobs that were saved
+     *   and warns the user with a message if there are no jobs found
+     */
     public BootStrapPanel() {
 
         guiJobsPanelManagement = new GuiJobsPanelManagement(rootPanel, "IT Found Jobs");
@@ -88,6 +97,32 @@ public class BootStrapPanel extends JFrame{
                 }else{
                     JOptionPane.showMessageDialog(rootPanel,"bro, there ain't saved jobs");
                 }
+            }
+        });
+
+        btnShowStatus.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //guiJobsPanelManagement.createTable();
+
+                PickedJobs pickedJobs = null;
+                FileController fileController = null;
+                try {
+                    pickedJobs = new PickedJobs();
+                    fileController = new FileController("PickedJobs.txt");
+                    fileController.readJobsFromFile(pickedJobs.getJobs());
+                }catch (IOException exception) {
+                    JOptionPane.showMessageDialog(rootPanel,"bro, there ain't saved jobs");
+                    //exception.printStackTrace();
+                }
+
+                if(!pickedJobs.getJobs().isEmpty()){
+                    new StatusJobs(pickedJobs);
+                }else{
+                    JOptionPane.showMessageDialog(rootPanel,"bro, there ain't saved jobs");
+                }
+
+                //new StatusJobs();
             }
         });
     }

@@ -6,6 +6,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
+import Exception.GuiOptionPaneException;
 
 import javax.swing.*;
 import java.util.HashSet;
@@ -60,10 +61,11 @@ public class GuiStatsPanelManagement extends GuiManagement implements GuiStatsPa
     }
 
     /**
-     *
-     * @param lblJobTot JLabel that/////////////
-     * @param lblFullTimePercent
-     * @param lblKeyWordRepeat
+     * this method checks if the user typed in a key word, if so the method will tell the user how many times that key word
+     * was repeated in the jobs descriptions
+     * @param lblJobTot label where with the total number of jobs
+     * @param lblFullTimePercent label with the percentage of full time jobs
+     * @param lblKeyWordRepeat label with the number of times that the keyword is repeated
      */
     public void setTextLabelStats(JLabel lblJobTot, JLabel lblFullTimePercent, JLabel lblKeyWordRepeat){
         lblJobTot.setText(String.valueOf(statsJobBoard.getNumOfJobs()));
@@ -74,14 +76,14 @@ public class GuiStatsPanelManagement extends GuiManagement implements GuiStatsPa
                     statsJobBoard.keyWords(statsJobBoard.getKeyWord()) + " times in the job descriptions.");
         }
         else{
-            lblKeyWordRepeat.setText("There aren't key word.");
+            lblKeyWordRepeat.setText("No key word");
         }
     }
 
     /**
-     *
-     * @param lblJobTot
-     * @param lblFullTimePercent
+     * this method sets the text of the two labels
+     * @param lblJobTot label where with the total number of jobs
+     * @param lblFullTimePercent label with the percentage of full time jobs
      */
     public void setTextLabelStats(JLabel lblJobTot, JLabel lblFullTimePercent){
         lblJobTot.setText(String.valueOf(statsJobBoard.getNumOfJobs()));
@@ -89,7 +91,7 @@ public class GuiStatsPanelManagement extends GuiManagement implements GuiStatsPa
     }
 
     /**
-     * this method will set a panel with the given width and height
+     * this method sets a panel with the specified dimentions
      * @param width width of the panel
      * @param height height of the panel
      */
@@ -113,16 +115,18 @@ public class GuiStatsPanelManagement extends GuiManagement implements GuiStatsPa
 
         try {
             if (!this.statsJobBoard.getKeyWord().equals(""))
-                JOptionPane.showMessageDialog(super.getPanel(), "There were created " +
+                throw new GuiOptionPaneException("There were created " +
                         statsJobBoard.dateOfCreation(Integer.parseInt(txtPeriod.getText())) + " offers in the last " +
                         txtPeriod.getText() + " days with key word: " + statsJobBoard.getKeyWord());
-
             else
-                JOptionPane.showMessageDialog(super.getPanel(), "There were created " +
+                throw new GuiOptionPaneException("There were created " +
                         statsJobBoard.dateOfCreation(Integer.parseInt(txtPeriod.getText())) + " offers in the last " +
                         txtPeriod.getText() + " days.");
 
-        }catch (Exception exception){
+        }catch (GuiOptionPaneException guiOptionPaneException){
+            JOptionPane.showMessageDialog(super.getPanel(),guiOptionPaneException.getMessage());
+        }
+        catch (Exception exception){
             JOptionPane.showMessageDialog(super.getPanel(),"  Bro, you can't write this.");
         }
     }

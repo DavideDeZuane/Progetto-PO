@@ -9,12 +9,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.URISyntaxException;
 import java.util.Iterator;
 
 public interface GuiJobsPanel {
     public void createTable(JTable tableJobs, JobBoard job, int width, int height);
+    public void createTable(JTable tableJobs, int width, int height, Object[] columnHeaders);
+    public Object[][] readTable() throws IOException, ClassNotFoundException;
     public JTable getTableJobs();
     public void setTableJobs(JTable tableJobs);
     public void setPanel(int width, int height);

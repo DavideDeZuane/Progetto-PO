@@ -22,7 +22,16 @@ public abstract class Controller {
      * the values for there parameters can be found inside the config.properties file
      */
     protected static String requestIdUrl;
-    protected static String baseUrl;
+    public static String baseUrl;
+
+    /**
+     * this method returns the properties from the config.propeties file
+     * @return prop
+     */
+    public static Properties getProp() {
+        return prop;
+    }
+
     private static final Properties prop = new Properties();
     private static final File configFile = new File("Resources/Configuration/config.properties");
 
