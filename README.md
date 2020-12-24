@@ -74,6 +74,8 @@ Nota: abbiamo scelto di utilizzare come struttura dati un HashSet poichè a nost
 Implementando l'interfaccia Set non può contenere due elementi uguali ed in particolare rende le operazioni di estrazione, inserimento e rimozione molto veloci.
 Nel nostro caso funge da memoria temporanea quindi la nostra scelta è caduta suu questa struttura dati.
 
+
+
 ---
 
 + **Sequence Diagram** 
@@ -107,7 +109,6 @@ I prinicipali framework e spftware utilizzati per la realizzazione dell'applicaz
 + **IntellIJ IDEA**  -> IDE dove si è svolto lo sviluppo del programma
 + **Maven**          -> strumento che permette di gestire i progetti e le dipendenze
 + **JUnit**          -> utilizzato per eseguire test sul codice
-
 
 
 ## Funzionamento
@@ -156,13 +157,35 @@ Anche qui sono presenti altri tasti che permettono all'utente di utilizzare le s
 All'interno di Show Stats sarà presente un altro tasto che presenta all'utente un istogramma e un diagramma a tortra sulle caratteristiche dei lavori trovati
 ![](Images/Funzionamento/Grafici.png)
 
+![](Images/Funzionamento/HowToApply.png)
+Questa finestra permette all'utente di visualizzare le informazioni necessarie per presentare la domanda.
+Il tasto Copy permette di copiare il contenuto del pannello, in questo modo se sono presenti eventuali link potranno essere utilizzati.
 
 
 ## Approfondimenti
 
++ **HashCode**
+```java
+    @Override
+    public boolean equals(Object o){
+    if(this == o) return true;
+    if(o == null || getClass() != o.getClass()) return false;
+    Job job = (Job) o;
+    return id.equals(Job.id) && type.equals(job.type) && url.equals(job.url) && created_at.equals(job.created_at)
+            && comapny_url.equals(job.created_at) && comany.equals(job.company) && title.equals(job.title) 
+            && description.equals(job.description) && how_to_apply.equals(job.how_to_apply)
+            && company_logo.equals(job.company_logo);
+    }
+    
+    @Override
+    public int hashCode(){
+        return Objects.hash(id, type, url, created_at, company, company_url, location, title, description, how_to_apply, compamy_logo);
+    }
+```
 
 
-**Mulithreading**
++ **Mulithreading**
+
 Nel nostro progetto abbiamo cercato il multithreaing per verificare se tra un avvio dell'applicazione e l'altro le offerte che l'utente stava
 osservando hanno subito modifiche o sono scadute.
 Per evitare che questa verifica fosse troppo dispendiosa a livello di tempo abbiamo deciso di eseguirla su un thread differente per massimizzare
@@ -198,6 +221,7 @@ Link utili per approfondire il multithreading:
 - [ ] Aggiunta del multithreadung per il controllo delle offerte
 - [ ] Storico delle Statistiche
 - [ ] implementare una form che permetta all'utente di modificare il file config.properties
+- [ ] Aggiumgere una barra di caricamento per ingannare l'attesa durante il caricamento della ricerca delle offerte
 
 
 ## Developers
