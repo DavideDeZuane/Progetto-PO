@@ -152,7 +152,7 @@ osservando hanno subito modifiche o sono scadute.
 Per evitare che questa verifica fosse troppo dispendiosa a livello di tempo abbiamo deciso di eseguirla su un thread differente per massimizzare
 l'utilizzo della CPU e quindi diminuire i tempi di attesa.
 
-Abbiamo realizzato una Classe adetta a questo compito che implenta l'interfaccia Runnable.
+Abbiamo realizzato una Classe addetta a questo compito che implenta l'interfaccia Runnable.
 Lanciando questo sottoprocesso in un thread parallelo avremmo:
 + tramite read: letto le offerta salvate dall'utente e presenti in un file in formato JSON;
 + tramite read: cercare di stabilire una connessione mandando una richiesta che ha come parametro l'id univoco;
