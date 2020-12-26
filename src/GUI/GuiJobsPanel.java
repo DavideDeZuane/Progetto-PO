@@ -18,8 +18,8 @@ import java.util.Iterator;
 
 public interface GuiJobsPanel {
     public void createTable(JTable tableJobs, JobBoard job, int width, int height);
-    public void createTable(JTable tableJobs, int width, int height, Object[] columnHeaders);
-    public Object[][] readTable() throws IOException, ClassNotFoundException;
+    public void createTable(JTable tableJobs, JobBoard job, int width, int height, Object[] columnHeaders);
+    public Object[][] readTable(int numJobs) throws IOException, ClassNotFoundException;
     public JTable getTableJobs();
     public void setTableJobs(JTable tableJobs);
     public void setPanel(int width, int height);

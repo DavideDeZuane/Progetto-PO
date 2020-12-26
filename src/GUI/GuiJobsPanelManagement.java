@@ -61,33 +61,36 @@ public class GuiJobsPanelManagement extends GuiManagement implements GuiJobsPane
     }
 
     //overloading
-    public void createTable(JTable tableJobs, int width, int height, Object[] columnHeaders){
+    public void createTable(JTable tableJobs, JobBoard job, int width, int height, Object[] columnHeaders){
         this.tableJobs = tableJobs;
 
 
         try {
-            this.tableJobs = new JTable(this.readTable(), columnHeaders);
+            this.tableJobs = new JTable(this.readTable(job.getJobs().size()), columnHeaders);
+            this.tableJobs.setPreferredScrollableViewportSize(new Dimension(500,50));
+            this.tableJobs.setFillsViewportHeight(true);
+
+
+            JScrollPane scrollPane = new JScrollPane(this.tableJobs);
+            add(scrollPane);
+            setSize(width, height);
+            setVisible(true);
         } catch (IOException exception) {
-            exception.printStackTrace();
+            JOptionPane.showMessageDialog(super.getPanel(), "Bro, please wait! I am checking jobs status.");
+
+            //exception.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
 
         //this.tableJobs = new JTable(this.setTable(job.getJobs().iterator(), job.getNumOfJobs(), COLUMNS), columnHeaders);
-        this.tableJobs.setPreferredScrollableViewportSize(new Dimension(500,50));
-        this.tableJobs.setFillsViewportHeight(true);
 
-
-        JScrollPane scrollPane = new JScrollPane(this.tableJobs);
-        add(scrollPane);
-        setSize(width, height);
-        setVisible(true);
     }
 
-    public Object[][] readTable() throws IOException, ClassNotFoundException {
+    public Object[][] readTable(int numJobs) throws IOException, ClassNotFoundException {
         ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(new FileInputStream("Update.txt")));
-        Object[][] table = new Object[2][5];
-        for (int i = 0; i < 2; i++) {
+        Object[][] table = new Object[numJobs][5];
+        for (int i = 0; i < numJobs; i++) {
             for (int j = 0; j < 5; j++) {
                 table[i][j] = in.readObject();
             }
@@ -281,18 +284,23 @@ public class GuiJobsPanelManagement extends GuiManagement implements GuiJobsPane
 
         Object[] options = { "Yes", "No" };
 
-        int result = JOptionPane.showOptionDialog(null, "           Are you sure?", "Warning",
-                JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
-                null, options, options[0]);
+        if(index == -1){
+            JOptionPane.showMessageDialog(super.getPanel(),"          Unselected job.");
+        }
+        else {
+            int result = JOptionPane.showOptionDialog(null, "           Are you sure?", "Warning",
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                    null, options, options[0]);
 
-        if (result == JOptionPane.YES_OPTION){
-            try {
-                job.deleteJob(job.getJob(index, job.getJobs()).getId());
-                dispose();
-                new JobsSavedPanel(job);
+            if (result == JOptionPane.YES_OPTION) {
+                try {
+                    job.deleteJob(job.getJob(index, job.getJobs()).getId());
+                    dispose();
+                    new JobsSavedPanel(job);
 
-            } catch (IOException exception) {
-                exception.printStackTrace();
+                } catch (IOException exception) {
+                    exception.printStackTrace();
+                }
             }
         }
     }
