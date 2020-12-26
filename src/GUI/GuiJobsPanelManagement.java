@@ -2,21 +2,21 @@ package GUI;
 
 import Controller.ApiController;
 import Controller.CheckOffer;
+import Controller.FileController;
 import Controller.GuiController;
 import Model.Job;
 import Model.JobBoard;
 import Model.PickedJobs;
 
 import Exception.GuiOptionPaneException;
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
+import com.fasterxml.jackson.databind.ObjectWriter;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.*;
 import java.net.URISyntaxException;
 import java.util.Iterator;
 
@@ -294,9 +294,22 @@ public class GuiJobsPanelManagement extends GuiManagement implements GuiJobsPane
 
             if (result == JOptionPane.YES_OPTION) {
                 try {
+
                     job.deleteJob(job.getJob(index, job.getJobs()).getId());
+
+
+                    FileController fileController = new FileController("PickedJobs.txt");
+                    fileController.save(job.getJobs());
+
                     dispose();
-                    new JobsSavedPanel(job);
+                    if(!job.getJobs().isEmpty()){
+                        new JobsSavedPanel(job);
+                    }
+                    else{
+                        fileController.empty();
+                    }
+                    //job.getJobs().clear();
+
 
                 } catch (IOException exception) {
                     exception.printStackTrace();
