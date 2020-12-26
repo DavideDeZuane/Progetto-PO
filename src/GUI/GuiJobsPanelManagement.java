@@ -297,7 +297,7 @@ public class GuiJobsPanelManagement extends GuiManagement implements GuiJobsPane
 
                     job.deleteJob(job.getJob(index, job.getJobs()).getId());
 
-
+                    //correzione
                     FileController fileController = new FileController("PickedJobs.txt");
                     fileController.save(job.getJobs());
 
