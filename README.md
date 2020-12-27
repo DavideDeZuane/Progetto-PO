@@ -112,9 +112,12 @@ Una volta scaricato il codice, lanciare l'IntellIJ ed eseguire i seguenti passi:
 
 Ora è possibile lanciare l'applicazione e utilizzare il programma
 
-Un piccolo video sulle potenzialità dell'applicazione è il seguente:
-[Watch me](https://www.youtube.com/watch?v=qxJ28zLheL8&feature=youtu.be)
-![](https://img.youtube.com/vi/watch?v=qxJ28zLheL8&feature=youtu.be/gqdefault.jpg)
+---
+
+Un piccolo video sulle potenzialità dell'applicazione è il seguente: [Watch me](https://www.youtube.com/watch?v=qxJ28zLheL8&feature=youtu.be)
+
+![](Images/FemtoProject.gif)
+
  
 
 ## FrameWork e Software
