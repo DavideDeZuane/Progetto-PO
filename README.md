@@ -9,6 +9,7 @@ offerte di lavoro e su tali offerte generare delle statistiche.
 
 ## L'Applicazione
 L'API [GitHub Jobs](https://jobs.github.com/api) consente di cercare lavori in formato JSON, dove ad ogni **`chiave`** è associato un **`valore`**.
+
 L'offerta di lavoro generica restituita dall'API ha la seguente forma:
 ```json
 {
@@ -29,18 +30,17 @@ Attraverso dei filtri abbiamo la possibilità di scegliere solo la categoria che
 >+ **Description**: un termine contenuto all'interno della descrizione dell'offerta.
 >+ **Location**: città in cui siamo intenzionati a fare la ricerca delle offerte.
 >+ **Latitudine** e **Longitudine**: utilizzabili in sostituzinone alla località a patto che vengano utilizzati entrambi.
->+ **Full Time**: per limitari i risultati a solo offerte di lavoro full time.
+>+ **Full Time**: per limitare i risultati a solo offerte di lavoro full time.
 
-Abbiamo deciso di non utilizare i filtri latitudine e longitudine per la nostra applicazione poichè risulta più intuitivo cercare una città con il suo nome o iniziali
-rispetto alle sue coordine geografiche.
+Abbiamo deciso di non utilizzare i filtri latitudine e longitudine per la nostra applicazione poichè risulta più intuitivo cercare una città con il suo nome o iniziali rispetto alle sue coordinate geografiche.
 
 Tali filtri vanno inseriti con una certa sintassi all'interno della richiesta; un esempio è il seguente:
 > https://jobs.github.com/positions.json?description=python&full_time=true&location=sf
 
 Per un utente medio risulta difficoltoso riuscire a compilare una richiesta simile e leggerne il risultato. 
-Per ovviere a questo problema abbiamo pensato di integrare nel nostro programma:
-+ **Frontend**: un interfaccia che permetta all'utente di inserire facilmente i filtri da applicare alla ricerca;
-+ **Backend**: un insieme di classi e strutture dati che permettono all'utente di visualizzare, in un formato a cui è abituato, il risultato della ricerca.
+Per ovviare a questo problema abbiamo pensato di integrare nel nostro programma:
++ **Front-end**: un interfaccia che permetta all'utente di inserire facilmente i filtri da applicare alla ricerca;
++ **Back-end**: un insieme di classi e strutture dati che permettono all'utente di visualizzare, in un formato semplificato, il risultato della ricerca.
 
 
 ## UML
@@ -52,11 +52,11 @@ della nostra Applicazione.
 > ![](Images/UML/UseCase.png)
 
 Brevemente:
-+ l'utente si interfaccia e interagiste con il frontend (un insieme di panelli della GUI) 
-+ il risultato delle iterazione viene passato al backend che effettua richieste
++ l'utente si interfaccia e interagiste con il front-end (un insieme di panelli della GUI) 
++ il risultato delle iterazione viene passato al back-end che effettua richieste
      + interroga l'API fornita
      + ne elabora le risposte 
-     + presenta il risultato dell'elelaborazione all'utente, offrendo alcune funzionalità come statistiche e salvare lavori.
+     + presenta il risultato dell'elaborazione all'utente, offrendo alcune funzionalità come statistiche e salvare alcuni lavori.
 
 ---
 
@@ -70,9 +70,9 @@ Brevemente:
 |  Controller | Package che conterrà tutte le classi che si occuperanno di manipolare dati temporanei ed eventaulmente renderli persistenti  |  
 | Model | Package che contine tutte le strutture dati dinamiche neccessarie ad un acquisizione temporanea dei dati  |
 
-Nota: abbiamo scelto di utilizzare come struttura dati un HashSet poichè a nostro parere è il migliore in queste situazioni.
+Nota: abbiamo scelto di utilizzare come struttura dati un HashSet poiché a nostro parere è il migliore in queste situazioni.
 Implementando l'interfaccia Set non può contenere due elementi uguali ed in particolare rende le operazioni di estrazione, inserimento e rimozione molto veloci.
-Nel nostro caso funge da memoria temporanea quindi la nostra scelta è caduta suu questa struttura dati.
+Nel nostro caso funge da memoria temporanea quindi la nostra scelta è caduta su questa struttura dati.
 
 
 
@@ -81,7 +81,7 @@ Nel nostro caso funge da memoria temporanea quindi la nostra scelta è caduta su
 + **Sequence Diagram** 
 > ![](Images/UML/SequenceDiagramUpdate.png)
 
-Sarà presente anche un file di configurazione contenente gli URL per effettuare le chiamte all'API.
+Sarà presente anche un file di configurazione contenente gli URL per effettuare le chiamate all'API.
 In questo modo nell'eventualità che venga cambiato l'URL dell'API basterà cambiarlo nel file configurazione senza intervenire direttamente sul programma.
 
 ```properties
@@ -92,8 +92,7 @@ In questo modo nell'eventualità che venga cambiato l'URL dell'API basterà camb
 ```
 ---
 
-Questi diagrammi sono abbastanza lontani dalla realizzazione finale del progetto; questo perchè durante la fase di sviluppo siamo andati incontro
-a limitazioni e ad aggiunte di funzionalità che hanno modificato le relazioni definite inizalmente.
+Questi diagrammi sono abbastanza lontani dalla realizzazione finale del progetto; questo perchè durante la fase di sviluppo siamo andati incontro a limitazioni e ad aggiunte di funzionalità che hanno modificato le relazioni definite inizialmente.
 
 
 # Istruzioni d'Installazione e Uso
@@ -112,10 +111,17 @@ Una volta scaricato il codice, lanciare l'IntellIJ ed eseguire i seguenti passi:
 ![](Images/SetUp/InvalidateCache.png)
 
 Ora è possibile lanciare l'applicazione e utilizzare il programma
+
+---
+
+Un piccolo video sulle potenzialità dell'applicazione è il seguente: [Watch me](https://www.youtube.com/watch?v=qxJ28zLheL8&feature=youtu.be)
+
+![](Images/FemtoProject.gif)
+
  
 
-## FrameWork e SoftWare
-I prinicipali framework e spftware utilizzati per la realizzazione dell'applicazione sono i seguenti:
+## FrameWork e Software
+I principali framework e software utilizzati per la realizzazione dell'applicazione sono i seguenti:
 + **Swing**          -> utilizzato per realizzare la GUI.  [(Download)](https://docs.oracle.com/javase/7/docs/api/javax/swing/package-summary.html)
 + **Jackson JSON**   -> utilizzato per effettuare il parsing della risposta API.  [(Download)](https://github.com/FasterXML/jackson/wiki/Jackson-Release-2.12)
 + **Jsoup**          -> utilizzato per rimuovere i tag HTML dai campi dell'oggetto JSON.  [(Download)](https://jsoup.org)
@@ -169,7 +175,7 @@ Anche qui sono presenti altri tasti che permettono all'utente di utilizzare le s
 | **11.** |Permette di salvare tutti i lavori trovati |
 | **12.** | Fa ritornare il programma alla finestra precedente, in cui è necessario inserire i filtri |
 
-All'interno di Show Stats sarà presente un altro tasto che presenta all'utente un istogramma e un diagramma a tortra sulle caratteristiche dei lavori trovati
+All'interno di Show Stats sarà presente un altro tasto che presenta all'utente un istogramma e un diagramma a torta sulle caratteristiche dei lavori trovati
 ![](Images/Funzionamento/Grafici.png)
 
 ![](Images/Funzionamento/HowToApply.png)
@@ -198,25 +204,24 @@ Il tasto Copy permette di copiare il contenuto del pannello, in questo modo se s
     }
 ```
 Durante lo sviluppo ci siamo accorti che provando ad aggiungere un offerta di lavoro già presenta, essa veniva aggiunta lo stesso.
-Per ovvierare a ciò abbiamo eseguito un Overriding dei metodi **equals** e **hashCode**, poichè eseguendo tale ovverifding stiamo determinando con quali campi
-calcolare l'hash. 
+Per ovvierare a ciò abbiamo eseguito un Overriding dei metodi **equals** e **hashCode**, poichè eseguendo tale ovverriding stiamo determinando con quali campi calcolare l'hash. 
 
-Poichè con il meotodo di defautl era sufficiente che si trattase di istanze differrenti per farlli considerare oggetti diversi.
+Poichè con il metodo di defautl era sufficiente che si trattasse di istanze differrenti per farlli considerare oggetti diversi.
 Poichè a noi non interessa se siano due istanze differenti o no, ma che non abbiano lo stesso contenuto.
 
  ## **Mulithreading**
 
-Nel nostro progetto abbiamo cercato di introdurre il multithreaing per verificare se tra un avvio dell'applicazione e l'altro le offerte che l'utente stava
+Nel nostro progetto abbiamo cercato di introdurre il multithreading per verificare se tra un avvio dell'applicazione e l'altro le offerte che l'utente stava
 osservando hanno subito modifiche (comprendendo anche il caso in cui siano scadute) o se sono invariate.
 
 Per evitare che questa verifica fosse troppo dispendiosa a livello di tempo abbiamo deciso di eseguirla su un thread differente per massimizzare
 l'utilizzo della CPU e quindi diminuire i tempi di attesa.
 
-Abbiamo realizzato una Classe addetta a questo compito che implenta l'interfaccia Runnable.
-Lanciando questo sottoprocesso in un thread parallelo avremmo:
+Abbiamo realizzato una Classe addetta a questo compito che implementa l'interfaccia Runnable.
+Lanciando questo sotto-processo in un thread parallelo avremmo:
 + tramite read: letto le offerta salvate dall'utente e presenti in un file in formato JSON;
 + tramite verify: cercare di stabilire una connessione mandando una richiesta che ha come parametro l'id univoco;
-   anallizzando il **codice di stato** della risposta avremmo stabilito se l'offerta fosse ancora presente o se fosse stata rimossa
+   analizzando il **codice di stato** della risposta avremmo stabilito se l'offerta fosse ancora presente o se fosse stata rimossa
 + tramite updateTable: aggiornato i lavori del File cambiando quelle offerte che non erano più presenti con un font Rosso
 
 ```java
@@ -231,12 +236,12 @@ Lanciando questo sottoprocesso in un thread parallelo avremmo:
         }
 ```
 
-SerializeTable() è un metodo che permette di prendere i lavori dal file e creare una tabella aggiungengdo una colonna in cui verrà specificato lo stato dell'offerta.
-Un esmpio è il seguente:
+SerializeTable() è un metodo che permette di prendere i lavori dal file e creare una tabella aggiungendo una colonna in cui verrà specificato lo stato dell'offerta.
+Un esempio è il seguente:
 
 ![](Images/Funzionamento/StatusJobs.png)
 
-Abbiamo odovuto creare una funzione in grado di deserializzare il contenuto del file.
+Abbiamo dovuto creare una funzione in grado di deserializzare il contenuto del file.
 ```java
     public Object[][] readTable() throws IOException, ClassNotFoundException {
         ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(new FileInputStream("Update.txt")));
@@ -250,7 +255,7 @@ Abbiamo odovuto creare una funzione in grado di deserializzare il contenuto del 
     }
 ```
 
-Questo metodo ritorna una tabella che verrà stampata da uno dei menager implementati dalla GUI.
+Questo metodo ritorna una tabella che verrà stampata da uno dei manager implementati dalla GUI.
 
 Tuttavia per questioni di tempo e di difficoltà nell'implementazione non siamo riusciti ad implementare questa funzionalità che risulta ancora lenta e macchinosa.
 Sarà una funzionalità che con più calma potrà essere inserita
@@ -260,11 +265,11 @@ Link utili per approfondire il multithreading:
 + <https://www.javatpoint.com/multithreading-in-java>
 + <https://docs.oracle.com/javase/tutorial/essential/concurrency/procthread.html>
 
-## Possibili migliormaneti
-- [ ] MiIglioramento del multithreadung per il controllo delle offerte
+## Possibili miglioramenti
+- [ ] Migliorore il multithreadung per il controllo delle offerte
 - [ ] Storico delle Statistiche
 - [ ] implementare una form che permetta all'utente di modificare il file config.properties
-- [ ] Aggiumgere una barra di caricamento per ingannare l'attesa durante il caricamento della ricerca delle offerte
+- [ ] Aggiungere una barra di caricamento per ingannare l'attesa durante il caricamento della ricerca delle offerte
 
 
 ## Developers
