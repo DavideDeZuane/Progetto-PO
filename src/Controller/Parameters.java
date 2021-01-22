@@ -9,5 +9,5 @@ public enum Parameters {
     LOCATION,
     DESCRIPTION;
 
-    public static EnumSet<Parameters> parametri = EnumSet.noneOf(Parameters.class);
+    //public static EnumSet<Parameters> parametri = EnumSet.noneOf(Parameters.class);
 }

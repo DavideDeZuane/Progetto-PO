@@ -1,16 +1,17 @@
-package GUI;
+package GUI.Jobs.Backend;
 
 import Controller.ApiController;
 import Controller.CheckOffer;
 import Controller.FileController;
 import Controller.GuiController;
+import GUI.GuiManagement;
+import GUI.Jobs.Frontend.JobsFoundPanel;
+import GUI.Jobs.Frontend.JobsSavedPanel;
 import Model.Job;
 import Model.JobBoard;
 import Model.PickedJobs;
 
 import Exception.GuiOptionPaneException;
-import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
-import com.fasterxml.jackson.databind.ObjectWriter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,9 +21,7 @@ import java.io.*;
 import java.net.URISyntaxException;
 import java.util.Iterator;
 
-import static Controller.CheckOffer.verify;
-
-public class GuiJobsPanelManagement extends GuiManagement implements GuiJobsPanel{
+public class GuiJobsPanelManagement extends GuiManagement implements GuiJobsPanel {
 
     private JTable tableJobs;
     private final static int COLUMNS = 4;
@@ -109,6 +108,16 @@ public class GuiJobsPanelManagement extends GuiManagement implements GuiJobsPane
     public void setPanel(int width, int height){
         add(super.getPanel());
         setTitle(super.getNamePanel());
+        setSize(width, height);
+        setResizable(false);
+        setVisible(true);
+
+    }
+
+    public void setPanel(int width, int height, int x, int y){
+        add(super.getPanel());
+        setTitle(super.getNamePanel());
+        setLocation(x, y);
         setSize(width, height);
         setResizable(false);
         setVisible(true);
@@ -300,6 +309,9 @@ public class GuiJobsPanelManagement extends GuiManagement implements GuiJobsPane
                     //correzione
                     FileController fileController = new FileController("PickedJobs.txt");
                     fileController.save(job.getJobs());
+
+                    //memorizzazione coordinate
+                    fileController.writeLocationForm(getX(),getY());
 
                     dispose();
                     if(!job.getJobs().isEmpty()){

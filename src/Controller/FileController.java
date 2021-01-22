@@ -6,10 +6,7 @@ import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.HashSet;
 
 
@@ -18,6 +15,9 @@ public class FileController {
     private String filename;
     private File file;
     private ApiController controller = new ApiController();
+
+    private static String X = "0";
+    private static String Y = "0";
 
     /**
      * the constructor creates a new file if it does not exist
@@ -29,6 +29,77 @@ public class FileController {
         file = new File(filename);
         if(!file.exists())
             file.createNewFile();
+    }
+
+    public static String getX() {
+        return X;
+    }
+
+    public static void setX(String x) {
+        X = x;
+    }
+
+    public static String getY() {
+        return Y;
+    }
+
+    public static void setY(String y) {
+        Y = y;
+    }
+
+    public void writeLocationForm(int x, int y){
+
+        PrintWriter writer = null;
+        try {
+            writer = new PrintWriter(new FileWriter("Location.txt"));
+
+            writer.println(x);
+            writer.println(y);
+            writer.close();
+
+        } catch(FileNotFoundException e) {
+            e.printStackTrace();
+        } catch(IOException exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    public void readLocationForm(String x, String y){
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader("Location.txt"));
+
+            x = reader.readLine();
+            y = reader.readLine();
+
+            System.out.println(getX());
+            System.out.println(getY());
+
+            reader.close();
+        } catch(FileNotFoundException e) {
+            e.printStackTrace();
+        } catch(IOException exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    public static void readLocationForm(){
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader("Location.txt"));
+
+            setX(reader.readLine());
+            setY(reader.readLine());
+
+            System.out.println(getX());
+            System.out.println(getY());
+
+            reader.close();
+        } catch(FileNotFoundException e) {
+            e.printStackTrace();
+        } catch(IOException exception) {
+            exception.printStackTrace();
+        }
     }
 
     /**

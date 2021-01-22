@@ -2,6 +2,7 @@ package Controller;
 
 import Model.Job;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
@@ -11,7 +12,7 @@ import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Properties;
 
-public abstract class Controller {
+public abstract class Controller{
 
     protected static EnumSet<Parameters> flags = EnumSet.noneOf(Parameters.class);
     public static String idQuery(String id){ return String.format(ApiController.requestIdUrl, id); }

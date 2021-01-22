@@ -1,5 +1,6 @@
-package GUI;
+package GUI.Stats.Frontend;
 
+import GUI.Stats.Backend.GuiStatsPanelManagement;
 import Model.Job;
 import Model.StatsJobBoard;
 

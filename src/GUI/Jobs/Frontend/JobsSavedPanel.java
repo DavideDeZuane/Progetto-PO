@@ -1,5 +1,8 @@
-package GUI;
+package GUI.Jobs.Frontend;
 
+import Controller.FileController;
+import GUI.Jobs.Backend.GuiJobsPanelManagement;
+import GUI.Stats.Frontend.StatsJobsSavedPanel;
 import Model.PickedJobs;
 
 import javax.swing.*;
@@ -27,6 +30,10 @@ public class JobsSavedPanel extends JFrame{
     private final int widthTable = 625;
     private final int heightTable = 600;
 
+    private String X = "0";
+    private String Y = "0";
+
+
     //private Object[] columnHeaders = {"Type","Company","Location","Title", "Status"};
 
     /**
@@ -45,7 +52,10 @@ public class JobsSavedPanel extends JFrame{
 
         guiJobsPanelMenagement = new GuiJobsPanelManagement(jobsSavedPanel, "Jobs Saved Panel");
         guiJobsPanelMenagement.createTable(this.tableJobs, this.pickedJobs, this.widthTable, this.heightTable);
-        guiJobsPanelMenagement.setPanel(this.widthPanel, this.heightPanel);
+
+        FileController.readLocationForm();
+
+        guiJobsPanelMenagement.setPanel(this.widthPanel, this.heightPanel, Integer.parseInt(FileController.getX()), Integer.parseInt(FileController.getY()));
 
 
         btnStats.addActionListener(new ActionListener() {

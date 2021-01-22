@@ -1,6 +1,8 @@
-package GUI;
+package GUI.Jobs.Frontend;
 
 import Controller.FileController;
+import GUI.Jobs.Backend.GuiJobsPanelManagement;
+import GUI.Stats.Frontend.StatsJobsFoundPanel;
 import Model.PickedJobs;
 
 import javax.swing.*;

@@ -1,5 +1,6 @@
-package GUI;
+package GUI.Jobs.Frontend;
 
+import GUI.Jobs.Backend.GuiJobsPanelManagement;
 import Model.PickedJobs;
 
 import javax.swing.*;

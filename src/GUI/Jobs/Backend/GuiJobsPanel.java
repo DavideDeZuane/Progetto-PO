@@ -1,6 +1,9 @@
-package GUI;
+package GUI.Jobs.Backend;
 
 import Controller.ApiController;
+import Controller.FileController;
+import GUI.Jobs.Frontend.JobsFoundPanel;
+import GUI.Jobs.Frontend.JobsSavedPanel;
 import Model.Job;
 import Model.JobBoard;
 import Model.PickedJobs;
@@ -17,12 +20,14 @@ import java.net.URISyntaxException;
 import java.util.Iterator;
 
 public interface GuiJobsPanel {
+
     public void createTable(JTable tableJobs, JobBoard job, int width, int height);
     public void createTable(JTable tableJobs, JobBoard job, int width, int height, Object[] columnHeaders);
     public Object[][] readTable(int numJobs) throws IOException, ClassNotFoundException;
     public JTable getTableJobs();
     public void setTableJobs(JTable tableJobs);
     public void setPanel(int width, int height);
+    public void setPanel(int width, int height, int x, int y);
     public Object[][] setTable(Iterator iterator, int raws, int columns);
     public void search(PickedJobs job, PickedJobs pickedJobs, JTextField txtLocation1, JTextField txtLocation2, JTextField txtDescription, JCheckBox fullTime);
     public void showHowToApply(PickedJobs job, int index);

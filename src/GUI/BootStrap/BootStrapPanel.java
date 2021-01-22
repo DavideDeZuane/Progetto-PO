@@ -1,6 +1,9 @@
-package GUI;
+package GUI.BootStrap;
 
 import Controller.FileController;
+import GUI.Jobs.Backend.GuiJobsPanelManagement;
+import GUI.Jobs.Frontend.JobsSavedPanel;
+import GUI.Jobs.Frontend.StatusJobs;
 import Model.PickedJobs;
 
 import javax.swing.*;

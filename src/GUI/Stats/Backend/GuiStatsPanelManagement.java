@@ -1,5 +1,7 @@
-package GUI;
+package GUI.Stats.Backend;
 
+import GUI.Stats.Frontend.DrawCharts;
+import GUI.GuiManagement;
 import Model.Job;
 import Model.StatsJobBoard;
 import org.jfree.chart.JFreeChart;
@@ -11,7 +13,7 @@ import Exception.GuiOptionPaneException;
 import javax.swing.*;
 import java.util.HashSet;
 
-public class GuiStatsPanelManagement extends GuiManagement implements GuiStatsPanel{
+public class GuiStatsPanelManagement extends GuiManagement implements GuiStatsPanel {
 
     private JPanel statsJobsFoundPanel;
     private JLabel lblFullTimePercent;

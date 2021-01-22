@@ -1,4 +1,4 @@
-package GUI;
+package GUI.Stats.Frontend;
 
 import Model.Job;
 import Model.StatsJobBoard;

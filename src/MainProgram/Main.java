@@ -7,7 +7,7 @@ package MainProgram;
 
 import Controller.CheckOffer;
 import Controller.Controller;
-import GUI.BootStrapPanel;
+import GUI.BootStrap.BootStrapPanel;
 
 import java.io.IOException;
 
@@ -44,6 +44,7 @@ public class Main {
         System.out.println(offerte);*/
         Controller.readProp();
         BootStrapPanel bootStrapPanel = new BootStrapPanel();
+        //new BootStrapPanel();
 /*
         URL url = null;
         String[] param = new String[10];
