@@ -17,8 +17,7 @@ import java.net.URL;
 import java.util.EnumSet;
 import java.util.HashSet;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 class TestController {
 
@@ -45,21 +44,23 @@ class TestController {
     @Test
     @DisplayName("Test: verifica validità url")
     void test1(){
-        assertThrows(MalformedURLException.class, ()->ApiController.createUrl(urlsbagliato));
+        assertThrows(MalformedURLException.class, ()->ApiController.createUrl(urlsbagliato)); //con questo metodo forzo l'eccezione
         //poichè l'URL non è ben formattato (manca lo schema) genera un'eccezione
     }
 
     @Test
     @DisplayName("Test: lettura file config.properties")
     void test2() throws IOException {
-        assertThrows(IOException.class, ()->Controller.readProp());
+        //assertThrows(IOException.class, ()->Controller.readProp());
+        assertDoesNotThrow(()->Controller.readProp()); //controllo se trova il file readConfig, se lo trova
+        //non deve generare l'eccezione
     }
 
     @Test
     @DisplayName("Test: verifica proprietà file config.properties")
     void test3()
     {
-        assertEquals(Controller.baseUrl, Controller.getProp().getProperty("url"));
+        assertEquals(Controller.baseUrl, Controller.getProp().getProperty("url")); //verifica se legge correttamente i campi del file config
     }
 
     @Test
@@ -68,5 +69,7 @@ class TestController {
     {
         assertThrows(MismatchedInputException.class, ()->jobs.addAll(apiController.getMapper().readValue(url, new TypeReference<HashSet<Job>>() {})));
         //abbiamo verificato che l'eccezione è stata lanciata in quanto si cerca di leggere un json object come un json array
+        //mi aspetto un eccezione perchè tento di leggere un oggetto come fosse un json array per mezzo della collection hashset
+        //vedi apicontoller
     }
 }

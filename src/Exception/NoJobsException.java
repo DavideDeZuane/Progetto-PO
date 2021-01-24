@@ -3,6 +3,8 @@ package Exception;
 //this exception is useful to implement the multithreading
 public class NoJobsException extends Exception{
 
+    //eccezione non utilizzata
+
     /**
      * constructor
      */

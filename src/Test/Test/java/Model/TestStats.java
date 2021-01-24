@@ -25,7 +25,7 @@ class TestStats {
 
     @BeforeEach
     void setUp() throws MalformedURLException {
-        statsJobBoard = new StatsJobBoard();
+        statsJobBoard = new StatsJobBoard(); //per vedere se le statistiche funzionano
         jobs = new HashSet<>();
         j = new Job( "ddfb088a-92d4-4d82-aad3-87de06b3d999", "Full Time", new URL("https://jobs.github.com/positions/ddfb088a-92d4-4d82-aad3-87de06b3d999"),
                 "Thu Dec 17 13:55:57 UTC 2020", "ITS Berlin GmbH", new URL("https://de.dpdhl.jobs/itsgermany"), "Berlin", "(Senior) DevOps and IT Operations Engineer (m/w/d)",
@@ -48,6 +48,9 @@ class TestStats {
                 ()->assertEquals(0, statsJobBoard.dateOfCreation(3)),
                 ()-> assertEquals(0, statsJobBoard.dateOfCreation(5)),
                 ()-> assertEquals(1, statsJobBoard.dateOfCreation(20)));
+
+        //in expected ho i lavori chee mi aspetto siano stati creati in tot giorni
+        //statsJobBoard.dateOfCreation(3) num di lavori creati in quel period
         //il test è passato
     }
 
@@ -59,6 +62,8 @@ class TestStats {
         statsJobBoard.setJobs(jobs);
         assertAll("STATS2",
                 ()->assertEquals(statsJobBoard.calculatePercentage(), 100));
+
+        //vedo se la percentuale di lavori part time e full time funziona
     }
 
     @Test
@@ -69,5 +74,7 @@ class TestStats {
         statsJobBoard.setJobs(jobs);
         //statsJobBoard.keyWords("ciao");
         assertEquals(1, statsJobBoard.keyWords("ciao"));
+        //testa le keywords
+        //in expect mi aspetto le volte in cui compare la keyword
     }
 }

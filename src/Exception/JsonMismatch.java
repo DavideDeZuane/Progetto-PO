@@ -10,6 +10,6 @@ public class JsonMismatch extends IOException {
     public JsonMismatch()
     {
         super("Attempting to read a json object as json array");
-    }
+    } //non utilizzata poichè già esiste di sistema da jackson
 
 }
